@@ -24,7 +24,7 @@ Create a REST API that manages a database of Star Wars characters. Users should 
 
 ## Project Structure
 
-```sh
+```bash
 project-root/
 ├── backend/
 │ ├── controllers/
