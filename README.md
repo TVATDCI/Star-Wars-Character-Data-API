@@ -24,6 +24,7 @@ Create a REST API that manages a database of Star Wars characters. Users should 
 
 ## Project Structure
 
+```sh
 project-root/
 ├── backend/
 │ ├── controllers/
@@ -46,6 +47,7 @@ project-root/
 ├── README.md
 ├── .gitignore
 └── .env
+```
 
 ## Requirements
 
