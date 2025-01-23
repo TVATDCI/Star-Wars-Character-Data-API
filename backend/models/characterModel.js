@@ -1,4 +1,5 @@
 // Building the character model (how the data should be structured in the database)
+// Then exporting the model to be used in the controllers/characterController.js
 import mongoose from "mongoose";
 
 const characterSchema = new mongoose.Schema({
@@ -25,3 +26,5 @@ const characterSchema = new mongoose.Schema({
 const Character = mongoose.model("Character", characterSchema);
 
 export default Character;
+
+// Next stop creating controllers/characterController.js file to handle the CRUD operations for the characters data.
