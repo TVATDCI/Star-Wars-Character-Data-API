@@ -28,10 +28,14 @@ Create a REST API that manages a database of Star Wars characters. Users should 
 project-root/
 ├── backend/
 │   ├── controllers/
+│   │   └── characterController.js
 │   ├── models/
+│   │   └── characterModel.js
 │   ├── routes/
+│   │   └── characterRoutes.js
 │   ├── app.js
 │   ├── config/
+│   │   └── db.js
 │   ├── middleware/
 │   ├── libs/
 │   │   └── seeds.js
