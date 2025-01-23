@@ -6,10 +6,12 @@
     "scripts": {
         "client-setup": "npm i && cd client && npm i && npm run build",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node server.js"
+        "start": "node server.js",
+        "seed": "node libs/seeds.js"
     },
     "dependencies": {
         "express": "^4.21.2",
         "mongoose": "^8.9.5",
         "dotenv": "^16.4.7"
+        }
     }
