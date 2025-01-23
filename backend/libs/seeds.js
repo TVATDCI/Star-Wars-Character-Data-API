@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Define the schema for the Character model
 const characterSchema = new mongoose.Schema({
   name: { type: String, required: true },
   species: { type: String, required: true },
@@ -26,6 +27,7 @@ const characterSchema = new mongoose.Schema({
 
 const Character = mongoose.model("Character", characterSchema);
 
+// Define the characters data to be inserted!
 const characters = [
   {
     name: "Luke Skywalker",
@@ -153,10 +155,7 @@ const characters = [
 ];
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Connected to MongoDB");
     return Character.insertMany(characters);
