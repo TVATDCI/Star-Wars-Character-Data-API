@@ -27,23 +27,25 @@ Create a REST API that manages a database of Star Wars characters. Users should 
 ```bash
 project-root/
 ├── backend/
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── app.js
-│ ├── config/
-│ ├── middleware/
-│ ├── node_modules/
-│ └── package.json
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── app.js
+│   ├── config/
+│   ├── middleware/
+│   ├── libs/
+│   │   └── seeds.js
+│   ├── node_modules/
+│   └── package.json
 ├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── App.jsx
-│ │ ├── index.js
-│ │ └── App.css
-│ ├── public/
-│ ├── node_modules/
-│ └── package.json
+│   ├── src/
+│   │   ├── components/
+│   │   ├── App.jsx
+│   │   ├── index.js
+│   │   └── App.css
+│   ├── public/
+│   ├── node_modules/
+│   └── package.json
 ├── README.md
 ├── .gitignore
 └── .env
