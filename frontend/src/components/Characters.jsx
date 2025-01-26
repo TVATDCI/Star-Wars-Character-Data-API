@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Characters({ onSelectCharacter }) {
+function Characters({ onSelectCharacter, returnToInfo }) {
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
@@ -24,6 +24,9 @@ function Characters({ onSelectCharacter }) {
           </li>
         ))}
       </ul>
+      <button onClick={returnToInfo} className="text-blue-500 mt-2">
+        Return to Info
+      </button>
     </div>
   );
 }

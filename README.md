@@ -40,12 +40,15 @@ project-root/
 │   │   └── db.js
 │   ├── middleware/
 │   ├── libs/
-│   │   └── seeds.js
+│   │   ├── seeds.js
+│   │   └── data.js
 │   ├── node_modules/
 │   └── package.json
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
+│   │   │   ├── Characters.jsx
+│   │   │   └── CharacterDetail.jsx
 │   │   ├── App.jsx
 │   │   ├── index.js
 │   │   └── App.css

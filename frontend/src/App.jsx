@@ -24,6 +24,11 @@ function App() {
     setView("characters");
   };
 
+  // Handle return to Info
+  const HandleReturnToInfo = () => {
+    setView("info");
+  };
+
   return (
     <div
       className="h-screen flex items-center justify-center"
@@ -48,7 +53,10 @@ function App() {
         </div>
       )}
       {view === "characters" && (
-        <Characters onSelectCharacter={handleSelectCharacter} />
+        <Characters
+          onSelectCharacter={handleSelectCharacter}
+          returnToInfo={HandleReturnToInfo}
+        />
       )}
       {view === "characterDetail" && (
         <CharacterDetail
