@@ -12,7 +12,7 @@ dotenv.config();
 connectDB();
 // Initialize middleware
 const app = express();
-// Also use the cors middleware for cross-origin requests
+// Also use the cors middleware for cross-origin requests.In this case, frontend requests!
 app.use(cors());
 
 // Middleware to parse the body but only with tester like Postman or others
