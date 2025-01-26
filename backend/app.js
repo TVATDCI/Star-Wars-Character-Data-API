@@ -1,5 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
+// Import cors to allow requests from any origin
+import cors from "cors";
+// Import the connectDB function from the db.js file
 import connectDB from "./config/db.js";
 // Import the character routes from the routes folder
 import characterRoutes from "./routes/characterRoutes.js";
@@ -9,6 +12,8 @@ dotenv.config();
 connectDB();
 // Initialize middleware
 const app = express();
+// Also use the cors middleware for cross-origin requests
+app.use(cors());
 
 // Middleware to parse the body but only with tester like Postman or others
 app.use(express.json());
