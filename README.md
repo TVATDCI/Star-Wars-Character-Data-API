@@ -19,7 +19,7 @@ This project is a Star Wars-themed CRUD API exercise designed to help developers
   - [Example Character Data](#example-character-data)
   - [Expected API Responses](#expected-api-responses)
   - [Project Guidelines](#project-guidelines)
-    - [editable version is at the branch characters-form!](#editable-version-is-at-the-branch-characters-form)
+  - [editable version is at the branch characters-form!](#editable-version-is-at-the-branch-characters-form)
 
 ## Project Overview
 
@@ -49,8 +49,8 @@ project-root/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Characters.jsx
-│   │   │   └── CharacterDetail.jsx
-|   |   |   └── CharactersForm.jsx
+│   │   │   ├── CharacterDetail.jsx
+│   │   │   └── CharacterForm.jsx
 │   │   ├── App.jsx
 │   │   ├── index.js
 │   │   └── App.css
@@ -168,4 +168,4 @@ Create a `Character` model with the following fields:
 - Include appropriate comments
 - Follow RESTful naming conventions
 
-### editable version is at the branch characters-form!
+## editable version is at the branch characters-form!
