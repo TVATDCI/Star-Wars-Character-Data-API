@@ -19,6 +19,7 @@ This project is a Star Wars-themed CRUD API exercise designed to help developers
   - [Example Character Data](#example-character-data)
   - [Expected API Responses](#expected-api-responses)
   - [Project Guidelines](#project-guidelines)
+    - [editable version is at the branch charactersForm!](#editable-version-is-at-the-branch-charactersform)
 
 ## Project Overview
 
@@ -166,4 +167,4 @@ Create a `Character` model with the following fields:
 - Include appropriate comments
 - Follow RESTful naming conventions
 
-This exercise will help you practice MongoDB/Mongoose operations, REST API design, and backend development principles while working with a fun Star Wars theme. Good luck!
+### editable version is at the branch charactersForm!
