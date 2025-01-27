@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function CharacterDetail({ characterId, onBack }) {
+function CharacterDetail({ characterId, onBack, onEdit }) {
   const [character, setCharacter] = useState(null);
 
   useEffect(() => {
@@ -19,6 +19,13 @@ function CharacterDetail({ characterId, onBack }) {
       <button onClick={onBack} className="text-blue-500 mb-4">
         Back
       </button>
+      <button
+        onClick={() => onEdit(characterId)}
+        className="bg-yellow-500 text-white p-2 rounded mb-4"
+      >
+        Edit
+      </button>
+
       <h2 className="text-2xl text-red-600 font-bold mb-4">{character.name}</h2>
       <p className="text-lg text-neutral-200 ">
         <span className="gradient-text">Species:</span>

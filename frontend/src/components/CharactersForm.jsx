@@ -37,6 +37,22 @@ function CharacterForm({ characterId, onSave, onCancel }) {
     }));
   };
 
+  const handleStatsChange = (e) => {
+    const { name, value } = e.target;
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      stats: { ...prevCharacter.stats, [name]: value },
+    }));
+  };
+
+  const handleArrayChange = (e, field) => {
+    const { value } = e.target;
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      [field]: value.split(","),
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const method = characterId ? "PUT" : "POST";
@@ -100,12 +116,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           type="number"
           name="forceRating"
           value={character.stats.forceRating}
-          onChange={(e) =>
-            setCharacter((prevCharacter) => ({
-              ...prevCharacter,
-              stats: { ...prevCharacter.stats, forceRating: e.target.value },
-            }))
-          }
+          onChange={handleStatsChange}
           placeholder="Force Rating"
           className="mb-2 p-2 w-full"
         />
@@ -113,12 +124,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           type="number"
           name="combatSkill"
           value={character.stats.combatSkill}
-          onChange={(e) =>
-            setCharacter((prevCharacter) => ({
-              ...prevCharacter,
-              stats: { ...prevCharacter.stats, combatSkill: e.target.value },
-            }))
-          }
+          onChange={handleStatsChange}
           placeholder="Combat Skill"
           className="mb-2 p-2 w-full"
         />
@@ -126,15 +132,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           type="number"
           name="pilotingAbility"
           value={character.stats.pilotingAbility}
-          onChange={(e) =>
-            setCharacter((prevCharacter) => ({
-              ...prevCharacter,
-              stats: {
-                ...prevCharacter.stats,
-                pilotingAbility: e.target.value,
-              },
-            }))
-          }
+          onChange={handleStatsChange}
           placeholder="Piloting Ability"
           className="mb-2 p-2 w-full"
         />
@@ -142,16 +140,62 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           type="number"
           name="diplomacyRating"
           value={character.stats.diplomacyRating}
-          onChange={(e) =>
-            setCharacter((prevCharacter) => ({
-              ...prevCharacter,
-              stats: {
-                ...prevCharacter.stats,
-                diplomacyRating: e.target.value,
-              },
-            }))
-          }
+          onChange={handleStatsChange}
           placeholder="Diplomacy Rating"
+          className="mb-2 p-2 w-full"
+        />
+        <input
+          type="text"
+          name="weapons"
+          value={character.weapons.join(",")}
+          onChange={(e) => handleArrayChange(e, "weapons")}
+          placeholder="Weapons (comma separated)"
+          className="mb-2 p-2 w-full"
+        />
+        <input
+          type="text"
+          name="vehicles"
+          value={character.vehicles.join(",")}
+          onChange={(e) => handleArrayChange(e, "vehicles")}
+          placeholder="Vehicles (comma separated)"
+          className="mb-2 p-2 w-full"
+        />
+        <label className="mb-2 p-2 w-full">
+          <input
+            type="checkbox"
+            name="isJedi"
+            checked={character.isJedi}
+            onChange={(e) =>
+              setCharacter((prevCharacter) => ({
+                ...prevCharacter,
+                isJedi: e.target.checked,
+              }))
+            }
+          />
+          Is Jedi
+        </label>
+        <input
+          type="text"
+          name="apprentices"
+          value={character.apprentices.join(",")}
+          onChange={(e) => handleArrayChange(e, "apprentices")}
+          placeholder="Apprentices (comma separated)"
+          className="mb-2 p-2 w-full"
+        />
+        <input
+          type="text"
+          name="master"
+          value={character.master}
+          onChange={handleChange}
+          placeholder="Master"
+          className="mb-2 p-2 w-full"
+        />
+        <input
+          type="text"
+          name="notableAchievements"
+          value={character.notableAchievements.join(",")}
+          onChange={(e) => handleArrayChange(e, "notableAchievements")}
+          placeholder="Notable Achievements (comma separated)"
           className="mb-2 p-2 w-full"
         />
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
