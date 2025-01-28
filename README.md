@@ -19,7 +19,14 @@ This project is a Star Wars-themed CRUD API exercise designed to help developers
   - [Example Character Data](#example-character-data)
   - [Expected API Responses](#expected-api-responses)
   - [Project Guidelines](#project-guidelines)
-  - [editable version is at the branch characters-form!](#editable-version-is-at-the-branch-characters-form)
+  - [editable version in the branch characters-form is now merged.](#editable-version-in-the-branch-characters-form-is-now-merged)
+  - [register-login-token-saved-logout-token-removed is tested](#register-login-token-saved-logout-token-removed-is-tested)
+    - [It is in auth-routes version](#it-is-in-auth-routes-version)
+    - [Updated Project Structure](#updated-project-structure)
+    - [Additional Implementation](#additional-implementation)
+      - [User Authentication](#user-authentication)
+      - [Updated `app.js`](#updated-appjs)
+    - [Summary](#summary)
 
 ## Project Overview
 
@@ -168,4 +175,158 @@ Create a `Character` model with the following fields:
 - Include appropriate comments
 - Follow RESTful naming conventions
 
-## editable version is at the branch characters-form!
+## editable version in the branch characters-form is now merged.
+
+## register-login-token-saved-logout-token-removed is tested
+
+### It is in auth-routes version
+
+### Updated Project Structure
+
+````markdown
+## Project Structure
+
+```bash
+project-root/
+├── backend/
+│   ├── controllers/
+│   │   ├── characterController.js
+│   │   └── userController.js
+│   ├── models/
+│   │   ├── characterModel.js
+│   │   └── userModel.js
+│   ├── routes/
+│   │   ├── characterRoutes.js
+│   │   └── userRoutes.js
+│   ├── app.js
+│   ├── config/
+│   │   └── db.js
+│   ├── middleware/
+│   ├── libs/
+│   │   ├── seeds.js
+│   │   └── data.js
+│   ├── node_modules/
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Characters.jsx
+│   │   │   ├── CharacterDetail.jsx
+│   │   │   ├── CharacterForm.jsx
+│   │   │   ├── LoginForm.jsx
+│   │   │   └── RegisterForm.jsx
+│   │   ├── App.jsx
+│   │   ├── index.js
+│   │   └── App.css
+│   ├── public/
+│   ├── node_modules/
+│   └── package.json
+├──
+
+README.md
+
+
+├── .gitignore
+└── .env
+```
+````
+
+### Additional Implementation
+
+#### User Authentication
+
+- **User Registration**: Implemented a registration route to allow users to register with an email and password. The user data is stored in MongoDB.
+- **User Login**: Implemented a login route to authenticate users. Upon successful login, a JWT token is generated and sent to the client.
+- **Protected Routes**: Added middleware to protect character routes, ensuring only authenticated users can access them.
+- **Frontend Authentication**: Added login and registration forms in the frontend. The user can log in, and their email is displayed along with a logout button.
+
+#### Updated `app.js`
+
+```javascript
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./config/db.js";
+import characterRoutes from "./routes/characterRoutes.js";
+import User from "./models/userModel.js";
+import jwt from "jsonwebtoken";
+
+dotenv.config();
+
+connectDB();
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// Register a new user
+app.post("/register", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
+
+  try {
+    const newUser = new User({ email, password });
+    await newUser.save();
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    res.status(400).json({ error: "Email already exists" });
+  }
+});
+
+// Login Route
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email, password });
+
+  if (user) {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.json({ token });
+  } else {
+    res.status(401).json({ error: "Invalid credentials" });
+  }
+});
+
+// Middleware to authenticate token
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"];
+  if (!token) return res.status(401).json({ error: "Access denied" });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: "Invalid token" });
+    req.user = user;
+    next();
+  });
+};
+
+// Use character routes with authentication
+app.use("/api/characters", authenticateToken, characterRoutes);
+
+app.get("/", (req, res) => {
+  res.send("API is running...🚀");
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+### Summary
+
+- **Updated Project Structure**: Reflects the new files and directories added for user authentication.
+- **User Authentication**: Implemented registration, login, and protected routes.
+- **Frontend Authentication**: Added login and registration forms, and displayed user email with a logout button.
+
+This updated `README.md` should provide a clear overview of the project structure and the additional implementations for user authentication.### Summary
+
+- **Updated Project Structure**: Reflects the new files and directories added for user authentication.
+- **User Authentication**: Implemented registration, login, and protected routes.
+- **Frontend Authentication**: Added login and registration forms, and displayed user email with a logout button.
+
+Happy Coding 😊
