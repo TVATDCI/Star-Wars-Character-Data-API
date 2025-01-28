@@ -16,15 +16,20 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
 
   return (
     <div className="bg-neutral-800/20 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
-      <button onClick={onBack} className="text-blue-500 mb-4">
-        Back
-      </button>
-      <button
-        onClick={() => onEdit(characterId)}
-        className="bg-yellow-500 text-red-600 px-1 rounded ml-2 mb-4"
-      >
-        Edit
-      </button>
+      <div className="flex justify-between items-center ">
+        <button
+          onClick={onBack}
+          className="text-blue-500 hover:text-cyan-400 transition-colors duration-800  mb-4 cursor-pointer "
+        >
+          Back
+        </button>
+        <button
+          onClick={() => onEdit(characterId)}
+          className="bg-yellow-500 text-red-600 px-1 rounded ml-2 mb-4"
+        >
+          Edit
+        </button>
+      </div>
 
       <h2 className="text-2xl text-red-600 font-bold mb-4">{character.name}</h2>
       <p className="text-lg text-neutral-200 ">

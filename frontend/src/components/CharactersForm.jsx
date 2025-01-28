@@ -75,7 +75,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
   };
 
   return (
-    <div className="bg-neutral-900/10 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
+    <div className="bg-neutral-900/15 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
       <form onSubmit={handleSubmit}>
         <h2 className="text-2xl text-red-600 font-bold mb-4">
           {characterId ? "Edit Character" : "Add Character"}
@@ -86,7 +86,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           value={character.name}
           onChange={handleChange}
           placeholder="Name"
-          className="mb-2 p-2 w-full"
+          className="mb-2 p-2 w-full "
         />
         <input
           type="text"

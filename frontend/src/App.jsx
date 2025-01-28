@@ -57,16 +57,16 @@ function App() {
           <h1 className="text-3xl text-red-600 font-bold mb-2 ">
             Star Wars Character Database API
           </h1>
-          <p className="text-lg gradient-text">
+          <p className="text-lg gradient-text mb-6">
             Create a REST API that manages a database of Star Wars characters.
             Users should be able to create, read, update, and delete character
             information through various endpoints.
           </p>
           <a
-            className="text-blue-500 hover:text-neutral-300 -cyan-900 transition-colors duration-800 cursor-pointer"
+            className=" text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
             onClick={() => setView("characters")}
           >
-            Characters
+            Characters Lists
           </a>
         </div>
       )}

@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Characters({
-  onSelectCharacter,
-  returnToInfo,
-  onAddCharacter,
-  onEditCharacter,
-}) {
+function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
@@ -49,7 +44,7 @@ function Characters({
             className="mb-2 text-neutral-200 hover:text-red-500 transition-colors duration-800 cursor-pointer flex justify-between"
           >
             <span
-              className="gradient-text cursor-pointer"
+              className="text-red-400 cursor-pointer hover:text-red-600 "
               onClick={() => onSelectCharacter(character._id)}
             >
               {character.name}
@@ -63,7 +58,10 @@ function Characters({
           </li>
         ))}
       </ul>
-      <button onClick={returnToInfo} className="text-blue-500 mt-2">
+      <button
+        onClick={returnToInfo}
+        className=" text-blue-500 hover:text-cyan-400 transition-colors duration-800  mt-2"
+      >
         Return to Info
       </button>
     </div>
