@@ -5,6 +5,10 @@ import Characters from "./components/Characters";
 import CharacterDetail from "./components/CharacterDetail";
 import CharactersForm from "./components/CharactersForm";
 
+// reg-auth components
+import LoginForm from "./components/reg-auth/LoginForm";
+import RegisterForm from "./components/reg-auth/RegisterForm";
+
 function App() {
   const [background, setBackground] = useState("");
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
@@ -45,6 +49,16 @@ function App() {
   // Handle Save Character
   const handleSaveCharacter = () => {
     setView("characters");
+  };
+
+  // Handle Login
+  const handleLogin = () => {
+    setView("info");
+  };
+
+  // Handle Register
+  const handleRegister = () => {
+    setView("login");
   };
 
   return (
