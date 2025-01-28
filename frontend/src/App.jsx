@@ -3,6 +3,7 @@ import "./App.css";
 
 import Characters from "./components/Characters";
 import CharacterDetail from "./components/CharacterDetail";
+import CharactersForm from "./components/CharactersForm";
 
 function App() {
   const [background, setBackground] = useState("");
@@ -29,6 +30,23 @@ function App() {
     setView("info");
   };
 
+  // Handle Add Character
+  const handleAddCharacter = () => {
+    setSelectedCharacterId(null);
+    setView("charactersForm");
+  };
+
+  // Handle Edit Character
+  const handleEditCharacter = (id) => {
+    setSelectedCharacterId(id);
+    setView("charactersForm");
+  };
+
+  // Handle Save Character
+  const handleSaveCharacter = () => {
+    setView("characters");
+  };
+
   return (
     <div
       className="h-screen flex items-center justify-center"
@@ -45,7 +63,7 @@ function App() {
             information through various endpoints.
           </p>
           <a
-            className="text-blue-500 hover:text-cyan-900 transition-colors duration-800 cursor-pointer"
+            className="text-blue-500 hover:text-neutral-300 -cyan-900 transition-colors duration-800 cursor-pointer"
             onClick={() => setView("characters")}
           >
             Characters
@@ -56,12 +74,21 @@ function App() {
         <Characters
           onSelectCharacter={handleSelectCharacter}
           returnToInfo={HandleReturnToInfo}
+          onAddCharacter={handleAddCharacter}
         />
       )}
       {view === "characterDetail" && (
         <CharacterDetail
           characterId={selectedCharacterId}
           onBack={handleBack}
+          onEdit={handleEditCharacter}
+        />
+      )}
+      {view === "charactersForm" && (
+        <CharactersForm
+          characterId={selectedCharacterId}
+          onSave={handleSaveCharacter}
+          onCancel={handleBack}
         />
       )}
     </div>
