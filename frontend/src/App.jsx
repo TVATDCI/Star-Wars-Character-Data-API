@@ -4,8 +4,6 @@ import "./App.css";
 import Characters from "./components/Characters";
 import CharacterDetail from "./components/CharacterDetail";
 import CharactersForm from "./components/CharactersForm";
-
-// reg-auth components
 import LoginForm from "./components/reg-auth/LoginForm";
 import RegisterForm from "./components/reg-auth/RegisterForm";
 
@@ -13,50 +11,43 @@ function App() {
   const [background, setBackground] = useState("");
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
   const [view, setView] = useState("info");
+
   useEffect(() => {
     const imgUrl = "https://www.transparenttextures.com/patterns/stardust.png";
     setBackground(imgUrl);
   }, []);
 
-  // Handle Character Selection - Once the view changes to characterDetail.jsx, the selected character's id is passed as a prop
   const handleSelectCharacter = (id) => {
     setSelectedCharacterId(id);
     setView("characterDetail");
   };
 
-  // Handle Back Button
   const handleBack = () => {
     setView("characters");
   };
 
-  // Handle return to Info
-  const HandleReturnToInfo = () => {
+  const handleReturnToInfo = () => {
     setView("info");
   };
 
-  // Handle Add Character
   const handleAddCharacter = () => {
     setSelectedCharacterId(null);
     setView("charactersForm");
   };
 
-  // Handle Edit Character
   const handleEditCharacter = (id) => {
     setSelectedCharacterId(id);
     setView("charactersForm");
   };
 
-  // Handle Save Character
   const handleSaveCharacter = () => {
     setView("characters");
   };
 
-  // Handle Login
   const handleLogin = () => {
     setView("info");
   };
 
-  // Handle Register
   const handleRegister = () => {
     setView("login");
   };
@@ -77,17 +68,29 @@ function App() {
             information through various endpoints.
           </p>
           <a
-            className=" text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+            className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
             onClick={() => setView("characters")}
           >
             Characters Lists
+          </a>
+          <a
+            className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+            onClick={() => setView("login")}
+          >
+            Login
+          </a>
+          <a
+            className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+            onClick={() => setView("register")}
+          >
+            Register
           </a>
         </div>
       )}
       {view === "characters" && (
         <Characters
           onSelectCharacter={handleSelectCharacter}
-          returnToInfo={HandleReturnToInfo}
+          returnToInfo={handleReturnToInfo}
           onAddCharacter={handleAddCharacter}
         />
       )}
@@ -105,6 +108,8 @@ function App() {
           onCancel={handleBack}
         />
       )}
+      {view === "login" && <LoginForm onLogin={handleLogin} />}
+      {view === "register" && <RegisterForm onRegister={handleRegister} />}
     </div>
   );
 }
