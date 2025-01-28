@@ -11,6 +11,7 @@ function App() {
   const [background, setBackground] = useState("");
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
   const [view, setView] = useState("info");
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const imgUrl = "https://www.transparenttextures.com/patterns/stardust.png";
@@ -44,12 +45,19 @@ function App() {
     setView("characters");
   };
 
-  const handleLogin = () => {
+  const handleLogin = (user) => {
+    setUser(user);
     setView("info");
   };
 
   const handleRegister = () => {
     setView("login");
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("token");
+    setView("info");
   };
 
   return (
@@ -67,24 +75,44 @@ function App() {
             Users should be able to create, read, update, and delete character
             information through various endpoints.
           </p>
-          <a
-            className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
-            onClick={() => setView("characters")}
-          >
-            Characters Lists
-          </a>
-          <a
-            className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
-            onClick={() => setView("login")}
-          >
-            Login
-          </a>
-          <a
-            className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
-            onClick={() => setView("register")}
-          >
-            Register
-          </a>
+          {user ? (
+            <div className="flex flex-col items-center">
+              <span className="text-green-500 mb-4">{user.email}</span>
+              <button
+                className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mb-4"
+                onClick={() => setView("characters")}
+              >
+                Characters Lists
+              </button>
+              <button
+                className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <a
+                className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+                onClick={() => setView("characters")}
+              >
+                Characters Lists
+              </a>
+              <a
+                className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+                onClick={() => setView("login")}
+              >
+                Login
+              </a>
+              <a
+                className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+                onClick={() => setView("register")}
+              >
+                Register
+              </a>
+            </>
+          )}
         </div>
       )}
       {view === "characters" && (

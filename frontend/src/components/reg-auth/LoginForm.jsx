@@ -16,7 +16,7 @@ function LoginForm({ onLogin }) {
     const data = await response.json();
     if (response.ok) {
       localStorage.setItem("token", data.token);
-      onLogin();
+      onLogin({ email }); // Pass the user email to the onLogin callback
     } else {
       alert(data.error);
     }
