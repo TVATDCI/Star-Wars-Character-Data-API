@@ -38,7 +38,7 @@ function Characters({
       <h2 className="text-2xl text-red-600 font-bold mb-4">Characters</h2>
       <button
         onClick={onAddCharacter}
-        className="text-white-500 mb-4 bg-green-700 rounded cursor-pointer"
+        className="text-white mb-4 bg-green-700 rounded cursor-pointer px-1 hover:bg-green-900 transition-colors duration-800"
       >
         Add Character
       </button>
@@ -46,7 +46,7 @@ function Characters({
         {characters.map((character) => (
           <li
             key={character._id}
-            className="mb-2 text-neutral-200 hover:text-red-500 transition-colors duration-800 cursor-pointer"
+            className="mb-2 text-neutral-200 hover:text-red-500 transition-colors duration-800 cursor-pointer flex justify-between"
           >
             <span
               className="gradient-text cursor-pointer"
@@ -56,7 +56,7 @@ function Characters({
             </span>
             <button
               onClick={() => handleDelete(character._id)}
-              className="bg-red-500 text-neutral-200 p-1 rounded ml-2"
+              className="bg-red-500 text-neutral-200 px-1 rounded ml-2 hover:bg-red-700  transition-colors duration-800"
             >
               Delete
             </button>

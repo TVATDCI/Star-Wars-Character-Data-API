@@ -21,7 +21,7 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
       </button>
       <button
         onClick={() => onEdit(characterId)}
-        className="bg-yellow-500 text-white p-2 rounded mb-4"
+        className="bg-yellow-500 text-red-600 px-1 rounded ml-2 mb-4"
       >
         Edit
       </button>
