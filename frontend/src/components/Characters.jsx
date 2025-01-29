@@ -110,3 +110,20 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
 }
 
 export default Characters;
+
+{
+  /**
+
+Characters.jsx Component did not handle the case where the token is missing or invalid. The component should check for the presence of the token and handle the case where the token is missing or invalid.
+
+ The reason was the component was not properly handling the case where the token is missing or invalid. I need to ensure that the component checks for the presence of the token and handles the case where the token is missing or invalid.
+
+Redirect to Login if Token is Missing
+
+
+** Check for the presence of the token and handle the case where the token is missing or invalid.
+**Update `App.jsx`**: Ensure that the token is removed from local storage upon logout and that the user is redirected to the login view if the token is missing or invalid.
+
+**With these changes, the application should properly handle token validation and restrict access to protected routes if the token is missing or invalid.
+   */
+}
