@@ -55,8 +55,10 @@ function App() {
   };
 
   const handleLogout = () => {
+    console.log("Logging out...");
     setUser(null);
     localStorage.removeItem("token");
+    console.log("Token removed:", localStorage.getItem("token"));
     setView("info");
   };
 
