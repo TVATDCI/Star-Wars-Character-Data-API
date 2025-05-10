@@ -28,15 +28,25 @@ app.use(express.json());
 app.post("/register", async (req, res) => {
   const { email, password } = req.body;
 
+  //BUG: Check if email and password are provided
+  console.log("Registering user:", email, password);
+  console.log("Request body:", req.body);
+
   if (!email || !password) {
+    //BUG: Return an error if email or password is not provided
+    console.log("Email or password is missing");
     return res.status(400).json({ error: "Email and password are required" });
   }
 
   try {
     const newUser = new User({ email, password });
     await newUser.save();
+    //BUG: Return a success message if user is registered successfully
+    console.log("User registered successfully");
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
+    //BUG: Check if the error is due to duplicate email
+    console.error("Error registering user:", error);
     res.status(400).json({ error: "Email already exists" });
   }
 });
@@ -46,10 +56,16 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email, password });
 
+  //BUG: Check if user is found
+  console.log("Logging in user HIT");
+  console.log("Request body:", req.body);
+
   if (user) {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+    //BUG: Return the token if user is found
+    console.log("User logged in successfully, token generated");
     res.json({ token });
   } else {
     res.status(401).json({ error: "Invalid credentials" });
