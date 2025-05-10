@@ -41,6 +41,7 @@ project-root/
 │   │   └── characterController.js
 │   ├── models/
 │   │   └── characterModel.js
+|   │   └── userModel.js
 │   ├── routes/
 │   │   └── characterRoutes.js
 │   ├── app.js
