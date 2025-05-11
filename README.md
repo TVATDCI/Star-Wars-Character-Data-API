@@ -10,24 +10,27 @@ This project is a Star Wars-themed CRUD API exercise designed to help developers
   - [Table of Contents](#table-of-contents)
   - [Project Overview](#project-overview)
   - [Project Structure](#project-structure)
-    - [.then/.catch](#thencatch)
+  - [Async/Await vs .then/.catch](#asyncawait-vs-thencatch)
+    - [Async/Await](#asyncawait)
     - [Key Differences](#key-differences)
   - [Logout Functionality Recap](#logout-functionality-recap)
     - [Current State](#current-state)
-    - [Next Steps](#next-steps)
+    - [Next Steps for development](#next-steps-for-development)
   - [Editable Version in the Branch Characters-Form is Now Merged](#editable-version-in-the-branch-characters-form-is-now-merged)
   - [Register-Login-Token-Saved-Logout-Token-Removed is Tested](#register-login-token-saved-logout-token-removed-is-tested)
     - [It is in Auth-Routes Version](#it-is-in-auth-routes-version)
     - [Now they are all merged to the main](#now-they-are-all-merged-to-the-main)
-    - [**Next Steps**](#next-steps-1)
+    - [**Next Steps**](#next-steps)
 
 ## Project Overview
 
 Create a REST API that manages a database of Star Wars characters. Users should be able to create, read, update, and delete character information through various endpoints.
 
+---
+
 ## Project Structure
 
-````bash
+```bash
 project-root/
 ├── backend/
 │ │ ├── characterController.js
@@ -62,6 +65,8 @@ project-root/
 └── .env
 ```
 
+---
+
 ## Async/Await vs .then/.catch
 
 ### Async/Await
@@ -70,6 +75,7 @@ project-root/
 - **Error Handling**: Use `try/catch` blocks to handle errors.
 - **Sequential Execution**: Makes asynchronous code look synchronous, which is easier to follow.
 - **Example**:
+  \*\*Example
   ```javascript
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,6 +96,8 @@ project-root/
       console.error("Error during login:", error);
     }
   };
+  ```
+
 ````
 
 ### .then/.catch
@@ -97,8 +105,9 @@ project-root/
 - **Syntax**: Uses chained `.then()` for success and `.catch()` for errors.
 - **Error Handling**: Errors are caught in the `.catch()` block.
 - **Readability**: Can become harder to read with nested `.then()` calls (callback hell).
-- **Example**:
-  ```javascript
+
+**Example**:
+```javascript
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch("http://localhost:5000/login", {
@@ -119,7 +128,7 @@ project-root/
         console.error("Error during login:", error);
       });
   };
-  ```
+````
 
 ### Key Differences
 
@@ -159,7 +168,9 @@ project-root/
     });
     ```
 
-### Next Steps
+---
+
+### Next Steps for development
 
 1. **Implement Bearer Token Logic**:
 
