@@ -71,6 +71,14 @@ app.post("/login", async (req, res) => {
     res.status(401).json({ error: "Invalid credentials" });
   }
 });
+
+// #Logout Route
+app.post("/logout", (req, res) => {
+  // Invalidate the token on the client side by removing it from local storage
+  console.log("Logging out user");
+  res.json({ message: "Logged out successfully" });
+});
+
 // Here begins the character routes V1
 app.use("/api/characters", characterRoutes);
 
