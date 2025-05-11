@@ -10,12 +10,18 @@ This project is a Star Wars-themed CRUD API exercise designed to help developers
   - [Table of Contents](#table-of-contents)
   - [Project Overview](#project-overview)
   - [Project Structure](#project-structure)
-  - [Expected API Responses](#expected-api-responses)
-  - [Project Guidelines](#project-guidelines)
-  - [editable version in the branch characters-form is now merged.](#editable-version-in-the-branch-characters-form-is-now-merged)
-  - [register-login-token-saved-logout-token-removed is tested](#register-login-token-saved-logout-token-removed-is-tested)
-    - [It is in auth-routes version](#it-is-in-auth-routes-version)
-    - [Updated Project Structure](#updated-project-structure)
+  - [Async/Await vs .then/.catch](#asyncawait-vs-thencatch)
+    - [Async/Await](#asyncawait)
+    - [.then/.catch](#thencatch)
+    - [Key Differences](#key-differences)
+  - [Logout Functionality Recap](#logout-functionality-recap)
+    - [Current State](#current-state)
+    - [Next Steps](#next-steps)
+  - [Editable Version in the Branch Characters-Form is Now Merged](#editable-version-in-the-branch-characters-form-is-now-merged)
+  - [Register-Login-Token-Saved-Logout-Token-Removed is Tested](#register-login-token-saved-logout-token-removed-is-tested)
+    - [It is in Auth-Routes Version](#it-is-in-auth-routes-version)
+    - [Now they are all merged to the main](#now-they-are-all-merged-to-the-main)
+    - [**Next Steps**](#next-steps-1)
 
 ## Project Overview
 
@@ -56,118 +62,170 @@ project-root/
 ├── .gitignore
 └── .env
 
-````
+## Async/Await vs .then/.catch
 
-## Requirements
+### Async/Await
 
-### Database Structure
+- **Syntax**: Cleaner and more readable, especially for complex logic.
+- **Error Handling**: Use `try/catch` blocks to handle errors.
+- **Sequential Execution**: Makes asynchronous code look synchronous, which is easier to follow.
+- **Example**:
+  ```javascript
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Token received:", data.token);
+        localStorage.setItem("token", data.token);
+      } else {
+        console.error("Login failed:", data.error);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
+  ```
 
-Create a `Character` model with the following fields:
+### .then/.catch
 
-- **name** (String, required)
-- **species** (String, required)
-- **homeworld** (String, required)
-- **affiliation** (String, required) - (e.g., "Rebel Alliance", "Galactic Empire")
-- **stats**:
-  - forceRating (Number, 0-100)
-  - combatSkill (Number, 0-100)
-  - pilotingAbility (Number, 0-100)
-  - diplomacyRating (Number, 0-100)
-- **weapons** (Array of Strings)
-- **vehicles** (Array of Strings)
-- **isJedi** (Boolean)
-- **apprentices** (Array of Strings)
-- **master** (String)
-- **notableAchievements** (Array of Strings)
-- **createdAt** (Date, auto-generated)
-- **updatedAt** (Date, auto-generated)
+- **Syntax**: Uses chained `.then()` for success and `.catch()` for errors.
+- **Error Handling**: Errors are caught in the `.catch()` block.
+- **Readability**: Can become harder to read with nested `.then()` calls (callback hell).
+- **Example**:
+  ```javascript
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.token) {
+          console.log("Token received:", data.token);
+          localStorage.setItem("token", data.token);
+        } else {
+          console.error("Login failed:", data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
+      });
+  };
+  ```
 
-### Required Endpoints
+### Key Differences
 
-**Base URL:** `/api/characters`
+| Feature        | `async/await`                   | `.then/.catch`                      |
+| -------------- | ------------------------------- | ----------------------------------- |
+| Syntax         | Cleaner and more readable       | Can become verbose with chaining    |
+| Error Handling | `try/catch` blocks              | `.catch()` method                   |
+| Readability    | Easier for sequential logic     | Harder with nested `.then()` calls  |
+| Use Case       | Preferred for modern JavaScript | Useful for simple, quick operations |
 
-- `GET /` - Get all characters
-- `GET /:id` - Get a single character by ID
-- `GET /species/:species` - Get characters by species
-- `GET /affiliation/:affiliation` - Get characters by affiliation
-- `POST /` - Create a new character
-- `PUT /:id` - Update a character by ID
-- `DELETE /:id` - Delete a character by ID
-- `GET /force-above/:threshold` - Get characters with force rating above a certain threshold
-- `GET /jedi` - Get all Jedi characters
+---
 
-### Additional Features to Implement
+## Logout Functionality Recap
 
-- Input validation for all fields
-- Error handling for invalid requests
-- Proper HTTP status codes for responses
-- Query parameters for filtering results
-- Sorting capabilities for list endpoints
-- Pagination for list endpoints
+### Current State
 
-### Bonus Challenges
+- **Frontend Logout**:
 
-- Add search functionality by character name
-- Implement field selection (allow clients to specify which fields to return)
-- Add authentication middleware
-- Create endpoints for batch operations
-- Add rate limiting
-- Implement request logging
+  - The `handleLogout` function in `App.jsx` removes the token from `localStorage` and resets the `user` state.
+  - Example:
+    ```javascript
+    const handleLogout = () => {
+      console.log("Logging out...");
+      setUser(null);
+      localStorage.removeItem("token");
+      console.log("Token removed:", localStorage.getItem("token")); // Should log `null`
+      setView("info");
+    };
+    ```
 
-## Testing Requirements
+- **Backend `/logout`**:
+  - Currently, there is no `/logout` route in the backend. This is fine for a stateless JWT-based authentication system.
+  - If needed, a `/logout` route could simply return a success message:
+    ```javascript
+    app.post("/logout", (req, res) => {
+      res.json({ message: "Logged out successfully" });
+    });
+    ```
 
-- Test all endpoints using Postman or similar tool
-- Create at least 10 different character entries
-- Test all CRUD operations
-- Verify error handling
-- Test pagination and filtering
+### Next Steps
 
-## Example Character Data
+1. **Implement Bearer Token Logic**:
 
-```json
-{
-  "name": "Luke Skywalker",
-  "species": "Human",
-  "homeworld": "Tatooine",
-  "affiliation": "Rebel Alliance",
-  "stats": {
-    "forceRating": 95,
-    "combatSkill": 88,
-    "pilotingAbility": 92,
-    "diplomacyRating": 75
-  },
-  "weapons": ["Lightsaber", "Blaster"],
-  "vehicles": ["X-wing Starfighter", "Snowspeeder"],
-  "isJedi": true,
-  "apprentices": ["Ben Solo", "Grogu"],
-  "master": "Obi-Wan Kenobi",
-  "notableAchievements": [
-    "Destroyed the First Death Star",
-    "Redeemed Darth Vader"
-  ]
-}
-````
+   - Protect routes like `/api/characters` by requiring a valid token in the `Authorization` header.
+   - Example middleware:
 
-## Expected API Responses
+     ```javascript
+     const authenticateToken = (req, res, next) => {
+       const token = req.headers["authorization"]?.split(" ")[1];
+       if (!token) return res.status(401).json({ error: "Access denied" });
 
-- Successful requests should return appropriate data and 2xx status codes
-- Failed requests should return error messages and appropriate 4xx/5xx status codes
-- List endpoints should support pagination with `limit` and `skip` parameters
-- Responses should include total count for paginated results
+       jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+         if (err) return res.status(403).json({ error: "Invalid token" });
+         req.user = user;
+         next();
+       });
+     };
+     ```
 
-## Project Guidelines
+2. **Frontend Token Usage**:
 
-- Set up proper folder structure (routes, controllers, models)
-- Use environment variables for configuration
-- Implement proper error handling middleware
-- Add input validation
-- Include appropriate comments
-- Follow RESTful naming conventions
+   - Include the token in the `Authorization` header for authenticated requests:
+     ```javascript
+     const token = localStorage.getItem("token");
+     fetch("http://localhost:5000/protected-route", {
+       method: "GET",
+       headers: {
+         Authorization: `Bearer ${token}`,
+       },
+     });
+     ```
 
-## editable version in the branch characters-form is now merged.
+3. **Enhance Logout**:
+   - Ensure the token is removed from `localStorage` and the app state is reset.
 
-## register-login-token-saved-logout-token-removed is tested
+---
 
-### It is in auth-routes version
+## Editable Version in the Branch Characters-Form is Now Merged
 
-### Updated Project Structure
+## Register-Login-Token-Saved-Logout-Token-Removed is Tested
+
+### It is in Auth-Routes Version
+
+### Now they are all merged to the main
+
+### **Next Steps**
+
+1. **Optional Backend `/logout`**:
+
+   - If you want to add a `/logout` route, it could simply return a success message. For example:
+     ```javascript
+     app.post("/logout", (req, res) => {
+       res.json({ message: "Logged out successfully" });
+     });
+     ```
+   - However, this is not strictly necessary unless you want to implement token invalidation.
+
+2. **Protected Routes**:
+
+   - The next step is to implement Bearer token logic to protect routes like `/api/characters`. This ensures only authenticated users can access certain endpoints.
+   - Implement Bearer token logic in the backend to protect routes.
+   - Update the frontend to include the token in the `Authorization` header for authenticated requests.
+
+3. **Recap of Current Flow**:
+   - **Register**: User registers via `/register` and gets added to the database.
+   - **Login**: User logs in via `/login`, receives a JWT token, and stores it in localStorage
+   - **Logout**: User clicks the "Logout" button, which removes the token from localStorage and resets the app state.
+
+---
