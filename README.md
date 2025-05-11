@@ -10,8 +10,6 @@ This project is a Star Wars-themed CRUD API exercise designed to help developers
   - [Table of Contents](#table-of-contents)
   - [Project Overview](#project-overview)
   - [Project Structure](#project-structure)
-  - [Async/Await vs .then/.catch](#asyncawait-vs-thencatch)
-    - [Async/Await](#asyncawait)
     - [.then/.catch](#thencatch)
     - [Key Differences](#key-differences)
   - [Logout Functionality Recap](#logout-functionality-recap)
@@ -29,6 +27,7 @@ Create a REST API that manages a database of Star Wars characters. Users should 
 
 ## Project Structure
 
+````bash
 project-root/
 ├── backend/
 │ │ ├── characterController.js
@@ -61,6 +60,7 @@ project-root/
 ├── README.md
 ├── .gitignore
 └── .env
+```
 
 ## Async/Await vs .then/.catch
 
@@ -90,7 +90,7 @@ project-root/
       console.error("Error during login:", error);
     }
   };
-  ```
+````
 
 ### .then/.catch
 
