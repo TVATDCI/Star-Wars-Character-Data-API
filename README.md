@@ -16,10 +16,10 @@ This project is a Star Wars-themed CRUD API exercise designed to help developers
   - [Logout Functionality Recap](#logout-functionality-recap)
     - [Current State](#current-state)
     - [Next Steps for development](#next-steps-for-development)
-  - [Editable Version in the Branch Characters-Form is Now Merged](#editable-version-in-the-branch-characters-form-is-now-merged)
-  - [Register-Login-Token-Saved-Logout-Token-Removed is Tested](#register-login-token-saved-logout-token-removed-is-tested)
-    - [It is in Auth-Routes Version](#it-is-in-auth-routes-version)
-    - [Now they are all merged to the main](#now-they-are-all-merged-to-the-main)
+      - [Editable Version in the Branch Characters-Form is Now Merged](#editable-version-in-the-branch-characters-form-is-now-merged)
+      - [Register-Login-Token-Saved-Logout-Token-Removed is Tested](#register-login-token-saved-logout-token-removed-is-tested)
+      - [It is in Auth-Routes Version](#it-is-in-auth-routes-version)
+      - [Now they are all merged to the main](#now-they-are-all-merged-to-the-main)
     - [**Next Steps**](#next-steps)
 
 ## Project Overview
@@ -208,13 +208,13 @@ project-root/
 
 ---
 
-## Editable Version in the Branch Characters-Form is Now Merged
+#### Editable Version in the Branch Characters-Form is Now Merged
 
-## Register-Login-Token-Saved-Logout-Token-Removed is Tested
+#### Register-Login-Token-Saved-Logout-Token-Removed is Tested
 
-### It is in Auth-Routes Version
+#### It is in Auth-Routes Version
 
-### Now they are all merged to the main
+#### Now they are all merged to the main
 
 ### **Next Steps**
 
