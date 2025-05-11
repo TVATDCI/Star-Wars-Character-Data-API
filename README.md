@@ -41,7 +41,7 @@ project-root/
 │   │   └── characterController.js
 │   ├── models/
 │   │   └── characterModel.js
-|   │   └── userModel.js
+│   │   └── userModel.js
 │   ├── routes/
 │   │   └── characterRoutes.js
 │   ├── app.js
@@ -55,10 +55,14 @@ project-root/
 │   └── package.json
 ├── frontend/
 │   ├── src/
+│   │   ├── reg-auth/
+│   │   │   ├── LoinForm.jsx
+│   │   │   ├── RegisterForm.jsx
 │   │   ├── components/
 │   │   │   ├── Characters.jsx
 │   │   │   ├── CharacterDetail.jsx
 │   │   │   └── CharacterForm.jsx
+│   │   │   └── NebulaCanvas.jsx
 │   │   ├── App.jsx
 │   │   ├── index.js
 │   │   └── App.css
