@@ -8,7 +8,7 @@ import connectDB from "./config/db.js";
 import characterRoutes from "./routes/characterRoutes.js";
 // Add models/userModel.js to extend register and auth routes with user registration and authentication
 // Import protect character routes from middleware/authMiddleware.js
-import authenticateToken from "./middleware/authMiddleware.js";
+//import authenticateToken from "./middleware/authMiddleware.js";
 import User from "./models/userModel.js";
 // npm install jsonwebtoken for token generation
 import jwt from "jsonwebtoken";
@@ -84,7 +84,7 @@ app.post("/logout", (req, res) => {
 });
 
 //#Protect character routes with authentication middleware
-app.use("/api/characters", authenticateToken, characterRoutes);
+//app.use("/api/characters", authenticateToken, characterRoutes);
 //#NOTE: This middleware function is a standalone. Al logic is inside the function.
 //#The character routes V1
 app.use("/api/characters", characterRoutes);

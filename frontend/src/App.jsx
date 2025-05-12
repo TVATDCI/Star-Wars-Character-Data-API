@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import starWarsLogo from "./assets/star-wars-gold.svg";
 
 import Characters from "./components/Characters";
 import CharacterDetail from "./components/CharacterDetail";
@@ -13,9 +14,16 @@ function App() {
   const [view, setView] = useState("info");
   const [user, setUser] = useState(null);
 
+  // Restore user state from localStorage when the app loads
   useEffect(() => {
     const imgUrl = "https://www.transparenttextures.com/patterns/stardust.png";
     setBackground(imgUrl);
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Simulate restoring user info (you can decode the token if needed)
+      setUser({ email: "Restored User" }); // Replace with actual user info if available
+    }
   }, []);
 
   const handleSelectCharacter = (id) => {
@@ -62,39 +70,64 @@ function App() {
     setView("info");
   };
 
+  const token = localStorage.getItem("token"); // Retrieve token from localStorage
+
   return (
     <div
-      className="h-screen flex items-center justify-center"
-      style={{ backgroundImage: `url(${background})`, backgroundSize: "cover" }}
+      className="h-screen flex flex-col items-center justify-center bg-cover bg-no-repeat"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
+      {/* Header/Logo */}
+      <header className="flex flex-col items-center text-center py-6">
+        <h2 className="text-2xl text-red-600 font-bold mb-4">Welcome to</h2>
+        <img
+          src={starWarsLogo}
+          alt="Star Wars Logo"
+          className="mb-4 w-48 sm:w-64 md:w-80 lg:w-[28rem] xl:w-[32rem] 2xl:w-[36rem] mx-auto"
+        />
+        <h2 className="text-2xl text-red-600 font-bold mb-4">
+          Character Database API
+        </h2>
+      </header>
+      {/* Main Content */}
       {view === "info" && (
-        <div className="bg-neutral-800/20 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
-          <h1 className="text-3xl text-red-600 font-bold mb-2 ">
-            Star Wars Character Database API
-          </h1>
-          <p className="text-lg gradient-text mb-6">
-            Create a REST API that manages a database of Star Wars characters.
-            Users should be able to create, read, update, and delete character
-            information through various endpoints.
+        <main className="text-center bg-neutral-800/20 backdrop-blur-sm p-8 rounded-xl shadow-2xl mt-6 w-full max-w-2xl mx-auto">
+          <p className="text-lg text-red-300 mb-6 leading-relaxed">
+            Create a{" "}
+            <span className="text-yellow-400 font-semibold">
+              REST API Admins dashboard
+            </span>{" "}
+            that manages a database of Star Wars characters. Admins should be
+            able to create, read, update, and delete character information
+            through various endpoints.
           </p>
           {user ? (
-            <div className="flex flex-col items-center">
-              <span className="text-green-500 mb-4">{user.email}</span>
-              <button
-                className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mb-4"
-                onClick={() => setView("characters")}
-              >
-                Characters Lists
-              </button>
-              <button
-                className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
+            <div className="flex flex-col items-center gap-4">
+              <h4 className="text-2xl text-red-400 font-semi-bold">
+                Welcome back, &nbsp;
+                <span className="text-green-500 mb-4">{user.email}!</span>
+              </h4>
+              <div className="flex flex-wrap justify-center gap-4 mt-4">
+                <button
+                  className="px-6 py-2 bg-cyan-600 hover:bg-cyan-950/30 text-white rounded-lg transition-colors duration-300"
+                  onClick={() => setView("characters")}
+                >
+                  Characters Lists
+                </button>
+                <button
+                  className="px-6 py-2 bg-red-400 hover:bg-red-600 text-white rounded-lg transition-colors duration-300"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           ) : (
-            <>
+            <div className="flex flex-col items-center gap-4 mt-6">
               <a
                 className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
                 onClick={() => setView("characters")}
@@ -113,9 +146,9 @@ function App() {
               >
                 Register
               </a>
-            </>
+            </div>
           )}
-        </div>
+        </main>
       )}
       {view === "characters" && (
         <Characters
