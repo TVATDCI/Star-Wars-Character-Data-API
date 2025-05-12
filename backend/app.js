@@ -9,6 +9,8 @@ import characterRoutes from "./routes/characterRoutes.js";
 // Add models/userModel.js to extend register and auth routes with user registration and authentication
 // Import protect character routes from middleware/authMiddleware.js
 import authenticateToken from "./middleware/authMiddleware.js";
+// Import the requiredAdmin middleware to protect routes
+import requireAdmin from "./middleware/requireAdmin.js";
 // Import publicRoutes routes for public access
 import publicRoutes from "./routes/publicRoutes.js";
 // Import the User model for user registration and authentication

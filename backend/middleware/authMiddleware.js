@@ -1,25 +1,35 @@
 import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
 
-//NOTE: This middleware function is a standalone function to check if the user is authenticated or not.
-//NOTE:dotenv.config();has not been called any where else in this application.
-//# Since it will be used in app.js. there is no need to import dotenv here.
-// # It is already imported in app.js.
+//#NOTE No need to call dotenv.config() here because it's already loaded in app.js
 
-const authenticateToken = (req, res, next) => {
+const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  console.log("Authorization Header:", authHeader);
 
-  if (!token) {
-    return res.sendStatus(401).json({ error: "Access denied" });
+  if (!authHeader?.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "No token provided" });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.sendStatus(403).json({ error: "Invalid token" });
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded Token:", decoded);
+
+    const user = await User.findById(decoded.userId).select("-password");
+    console.log("User Object:", user);
+
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
     }
-    // Attach user information to the request object
+
     req.user = user;
     next();
-  });
+  } catch (err) {
+    console.error("Token verification failed:", err);
+    return res.status(403).json({ error: "Invalid token" });
+  }
 };
+
 export default authenticateToken;
