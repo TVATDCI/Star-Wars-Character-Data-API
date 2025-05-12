@@ -31,29 +31,28 @@ app.use(express.json());
 // Create register route. This route will be responsible for registering users.
 //#Register a new user
 app.post("/register", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
-  //BUG: Check if email and password are provided
-  console.log("Registering user:", email, password);
+  console.log("Registering user:", email, password, role);
   console.log("Request body:", req.body);
 
-  //#Check if email and password are provided
   if (!email || !password) {
-    //BUG: Return an error if email or password is not provided
     console.log("Email or password is missing");
     return res.status(400).json({ error: "Email and password are required" });
   }
-  //#Saving the user to the database logic.
+
   try {
-    const newUser = new User({ email, password });
+    const newUser = new User({
+      email,
+      password,
+      role: role || "user", // ✅ Correct fallback here
+    });
+
     await newUser.save();
-    //BUG: Return a success message if user is registered successfully
     console.log("User registered successfully");
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    //BUG: Check if the error is due to duplicate email
     console.error("Error registering user:", error);
-    //#res if email already exists
     res.status(400).json({ error: "Email already exists" });
   }
 });
