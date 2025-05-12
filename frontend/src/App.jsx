@@ -98,7 +98,7 @@ function App() {
       </header>
       {/* Main Content */}
       {view === "info" && (
-        <main className="text-center bg-neutral-800/20 backdrop-blur-sm p-8 rounded-xl shadow-2xl mt-6 w-full max-w-2xl mx-auto">
+        <main className="text-center bg-neutral-800/10 backdrop-blur-sm p-8 rounded-xl shadow-2xl mt-6 w-full max-w-2xl mx-auto">
           <p className="text-lg text-red-300 mb-6 leading-relaxed">
             Create a{" "}
             <span className="text-yellow-400 font-semibold">

@@ -1,4 +1,5 @@
 // Initialize express router to be used in app.js
+// This is the route file for admins only!
 import express from "express";
 import {
   getCharacters,

@@ -4,11 +4,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 // Import the connectDB function from the db.js file
 import connectDB from "./config/db.js";
-// Import the character routes from the routes folder
+// Import the character routes from the routes folder - admins only!
 import characterRoutes from "./routes/characterRoutes.js";
 // Add models/userModel.js to extend register and auth routes with user registration and authentication
 // Import protect character routes from middleware/authMiddleware.js
-//import authenticateToken from "./middleware/authMiddleware.js";
+import authenticateToken from "./middleware/authMiddleware.js";
+// Import publicRoutes routes for public access
+import publicRoutes from "./routes/publicRoutes.js";
+// Import the User model for user registration and authentication
 import User from "./models/userModel.js";
 // npm install jsonwebtoken for token generation
 import jwt from "jsonwebtoken";
@@ -63,7 +66,7 @@ app.post("/login", async (req, res) => {
   //BUG: Check if user is found
   console.log("Logging in user HIT");
   console.log("Request body:", req.body);
-  //#Check if user is found in the database by token
+  //BUG: Check if user is found in the database by token
   if (user) {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
@@ -84,11 +87,17 @@ app.post("/logout", (req, res) => {
 });
 
 //#Protect character routes with authentication middleware
-//app.use("/api/characters", authenticateToken, characterRoutes);
-//#NOTE: This middleware function is a standalone. Al logic is inside the function.
-//#The character routes V1
-app.use("/api/characters", characterRoutes);
+app.use("/api/characters", authenticateToken, characterRoutes);
+//NOTE: This middleware function is a standalone. Al logic is inside the function.
 
+//#The character routes V1
+// app.use("/api/characters", characterRoutes);
+// V1 is commented out. The V2 is the one with authentication middleware.
+
+//#Public routes for public access V2
+app.use("/api/public", publicRoutes);
+
+//# server health check/fallback route
 app.get("/", (req, res) => {
   res.send("API is running ...🚀");
 });
