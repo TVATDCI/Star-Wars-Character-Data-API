@@ -20,9 +20,10 @@ function App() {
     setBackground(imgUrl);
 
     const token = localStorage.getItem("token");
-    if (token) {
+    const storedUserEmail = localStorage.getItem("userEmail");
+    if (token && storedUserEmail) {
       // Simulate restoring user info (you can decode the token if needed)
-      setUser({ email: "Restored User" }); // Replace with actual user info if available
+      setUser({ email: storedUserEmail });
     }
   }, []);
 
@@ -67,6 +68,8 @@ function App() {
     setUser(null);
     localStorage.removeItem("token");
     console.log("Token removed:", localStorage.getItem("token"));
+    localStorage.removeItem("userEmail");
+    console.log("User email removed:", localStorage.getItem("userEmail"));
     setView("info");
   };
 

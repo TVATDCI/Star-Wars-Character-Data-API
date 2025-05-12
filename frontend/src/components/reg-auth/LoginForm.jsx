@@ -20,7 +20,7 @@ function LoginForm({ onLogin }) {
       if (response.ok) {
         console.log("Token received:", data.token); // Check if the token is received
         localStorage.setItem("token", data.token); // Store the token in local storage
-        // check in dev tools > application > local storage!
+        localStorage.setItem("userEmail", email); // Store EXTRA user email in local storage
         onLogin({ email }); // Pass the user email to the onLogin callback
       } else {
         console.error("Login failed:", data.error); // Debugging log
