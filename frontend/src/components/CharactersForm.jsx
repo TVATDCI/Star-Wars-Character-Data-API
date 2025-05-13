@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode"; // Again here. customhook will be as refactored in the future
+import { jwtDecode } from "jwt-decode";
 
 function CharacterForm({ characterId, onSave, onCancel }) {
-  const [userRole, setUserRole] = useState("user"); // default role to user
+  const [userRole, setUserRole] = useState("user");
   console.log("User role in CharacterForm:", userRole);
+
   const [character, setCharacter] = useState({
     name: "",
     species: "",
@@ -30,22 +31,35 @@ function CharacterForm({ characterId, onSave, onCancel }) {
       return;
     }
 
-    // Decode the token to get the user role
-    // repeating the logic from Characters.jsx
-    // It can be refactored with a custom hook in the future!!!
     try {
       const decodedToken = jwtDecode(token);
-      const role = decodedToken.role || "user"; // if the role is not present, default to user
-      setUserRole(role); // Otherwise set the user role in state
+      const role = decodedToken.role || "user";
+      setUserRole(role);
     } catch (error) {
       console.error("Error decoding token:", error);
       return;
     }
-    // Fetch character details if characterId is provided
+
     if (characterId) {
-      fetch(`http://localhost:5000/api/characters/${characterId}`)
+      fetch(`http://localhost:5000/api/characters/${characterId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
         .then((response) => response.json())
-        .then((data) => setCharacter(data))
+        .then((data) => {
+          setCharacter((prevCharacter) => ({
+            ...prevCharacter,
+            ...data,
+            stats: {
+              forceRating: data.stats?.forceRating || 0,
+              combatSkill: data.stats?.combatSkill || 0,
+              pilotingAbility: data.stats?.pilotingAbility || 0,
+              diplomacyRating: data.stats?.diplomacyRating || 0,
+            },
+          }));
+        })
         .catch((error) => console.error("Error fetching character:", error));
     }
   }, [characterId]);
