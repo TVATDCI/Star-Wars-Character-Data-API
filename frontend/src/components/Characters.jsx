@@ -109,10 +109,10 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   }
 
   return (
-    <div className="bg-neutral-800/20 backdrop-blur-sm p-6 rounded-2xl shadow-lg max-w-sm w-full">
+    <div className="text-center bg-neutral-800/10 backdrop-blur-sm p-8 rounded-xl shadow-2xl mt-6 w-full max-w-2xl mx-auto">
       <h2 className="text-2xl text-red-600 font-bold mb-4">Characters</h2>
 
-      <p className="text-sm text-neutral-300 italic mb-4">
+      <p className="text-sm text-green-400 italic mb-4">
         {userRole === "admin"
           ? "As an admin, you can manage the characters below."
           : "As a user, you can view the available characters."}
@@ -126,35 +126,37 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
           + Add Character
         </button>
       )}
-
-      {characters.length === 0 ? (
-        <p className="text-neutral-400 text-center">No characters found.</p>
-      ) : (
-        <ul className="space-y-2">
-          {characters.map((character) => (
-            <li
-              key={character._id}
-              className="flex justify-between items-center text-neutral-200 hover:text-red-500 transition duration-300"
-            >
-              <span
-                className="cursor-pointer hover:text-red-600"
-                onClick={() => onSelectCharacter(character._id)}
+      {/* Show characters list */}
+      <div className="bg-red-800/10 backdrop-blur-sm p-4 rounded-lg shadow-lg">
+        {characters.length === 0 ? (
+          <p className="text-neutral-400 text-center">No characters found.</p>
+        ) : (
+          <ul className="space-y-2">
+            {characters.map((character) => (
+              <li
+                key={character._id}
+                className="flex justify-between items-center text-neutral-200 hover:text-red-500 transition duration-300"
               >
-                {character.name}
-              </span>
-
-              {userRole === "admin" && (
-                <button
-                  onClick={() => handleDelete(character._id)}
-                  className="bg-red-500 text-white text-sm px-2 py-0.5 rounded hover:bg-red-700 transition duration-300"
+                <span
+                  className="cursor-pointer hover:text-red-600"
+                  onClick={() => onSelectCharacter(character._id)}
                 >
-                  Delete
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+                  {character.name}
+                </span>
+
+                {userRole === "admin" && (
+                  <button
+                    onClick={() => handleDelete(character._id)}
+                    className="bg-red-500 text-white text-sm px-2 py-0.5 rounded hover:bg-red-700 transition duration-300"
+                  >
+                    Delete
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <button
         onClick={returnToInfo}

@@ -68,13 +68,15 @@ function App() {
     console.log("Logging out...");
     setUser(null);
     localStorage.removeItem("token");
-    console.log("Token removed:", localStorage.getItem("token"));
     localStorage.removeItem("userEmail");
-    console.log("User email removed:", localStorage.getItem("userEmail"));
+    localStorage.removeItem("userRole"); // Remove userRole as well
+    console.log("Token and user details removed from localStorage");
     setView("info");
   };
 
   const token = localStorage.getItem("token"); // Retrieve token from localStorage
+
+  console.log("User role in App:", user?.role);
 
   return (
     <div
@@ -166,6 +168,8 @@ function App() {
           characterId={selectedCharacterId}
           onBack={handleBack}
           onEdit={handleEditCharacter}
+          onSave={handleSaveCharacter}
+          userRole={user?.role} // Ensure this is set correctly
         />
       )}
       {view === "charactersForm" && (
