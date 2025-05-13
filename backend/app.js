@@ -69,9 +69,13 @@ app.post("/login", async (req, res) => {
   console.log("Request body:", req.body);
   //BUG: Check if user is found in the database by token
   if (user) {
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
     //BUG: Return the token if user is found
     console.log("User logged in successfully, token generated");
     res.json({ token });
