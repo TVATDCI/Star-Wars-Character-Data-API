@@ -70,7 +70,7 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userRole"); // Remove userRole as well
-    console.log("Token and user details removed from localStorage");
+    console.log("Token, userEmail and userRole removed from localStorage");
     setView("info");
   };
 
@@ -169,7 +169,6 @@ function App() {
           onBack={handleBack}
           onEdit={handleEditCharacter}
           onSave={handleSaveCharacter}
-          userRole={user?.role} // Ensure this is set correctly
         />
       )}
       {view === "charactersForm" && (

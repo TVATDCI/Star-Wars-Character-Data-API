@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode"; // Again here. customhook will be as refactored in the future
 
 function CharacterForm({ characterId, onSave, onCancel }) {
+  const [userRole, setUserRole] = useState("user"); // default role to user
+  console.log("User role in CharacterForm:", userRole);
   const [character, setCharacter] = useState({
     name: "",
     species: "",
@@ -21,6 +24,24 @@ function CharacterForm({ characterId, onSave, onCancel }) {
   });
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found. Please log in.");
+      return;
+    }
+
+    // Decode the token to get the user role
+    // repeating the logic from Characters.jsx
+    // It can be refactored with a custom hook in the future!!!
+    try {
+      const decodedToken = jwtDecode(token);
+      const role = decodedToken.role || "user"; // if the role is not present, default to user
+      setUserRole(role); // Otherwise set the user role in state
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return;
+    }
+    // Fetch character details if characterId is provided
     if (characterId) {
       fetch(`http://localhost:5000/api/characters/${characterId}`)
         .then((response) => response.json())

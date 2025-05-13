@@ -5,6 +5,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [characters, setCharacters] = useState([]);
   const [error, setError] = useState(null);
   const [userRole, setUserRole] = useState("user"); // default role to user
+  console.log("User role in Characters:", userRole);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -123,7 +124,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
           onClick={onAddCharacter}
           className="bg-green-700 text-white font-semibold py-1 px-3 rounded hover:bg-green-900 transition duration-300 mb-4 w-full"
         >
-          + Add Character
+          Add Character
         </button>
       )}
       {/* Show characters list */}
