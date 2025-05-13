@@ -21,9 +21,10 @@ function App() {
 
     const token = localStorage.getItem("token");
     const storedUserEmail = localStorage.getItem("userEmail");
-    if (token && storedUserEmail) {
-      // Simulate restoring user info (you can decode the token if needed)
-      setUser({ email: storedUserEmail });
+    const storedUserRole = localStorage.getItem("userRole");
+    if (token && storedUserEmail && storedUserRole) {
+      // Set user state and roll from localStorage
+      setUser({ email: storedUserEmail, role: storedUserRole });
     }
   }, []);
 

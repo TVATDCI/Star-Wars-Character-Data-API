@@ -15,13 +15,17 @@ function LoginForm({ onLogin }) {
         },
         body: JSON.stringify({ email, password }),
       });
+
       const data = await response.json();
       console.log("Login response:", data); // check if the backend is returning the expected data
+      // #:(RBAC) role-based access control from the backend!
       if (response.ok) {
         console.log("Token received:", data.token); // Check if the token is received
         localStorage.setItem("token", data.token); // Store the token in local storage
         localStorage.setItem("userEmail", email); // Store EXTRA user email in local storage
-        onLogin({ email }); // Pass the user email to the onLogin callback
+        localStorage.setItem("userRole", data.role); // Store user role in local storage
+        // Pass user email and role to the onLogin callback
+        onLogin({ email, role: data.role }); // Pass the user email to the onLogin callback
       } else {
         console.error("Login failed:", data.error); // Debugging log
         alert(data.error);

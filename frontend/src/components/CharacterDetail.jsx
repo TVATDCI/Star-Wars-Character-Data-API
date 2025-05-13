@@ -4,12 +4,27 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
   const [character, setCharacter] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/characters/${characterId}`)
-      .then((response) => response.json())
-      .then((data) => setCharacter(data))
-      .catch((error) => console.error("Error fetching character:", error));
-  }, [characterId]);
+    const token = localStorage.getItem("token");
 
+    fetch(`http://localhost:5000/api/characters/${characterId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unauthorized or failed to fetch character");
+        }
+        return response.json();
+      })
+      .then((data) => setCharacter(data))
+      .catch((error) => {
+        console.error("Error fetching character:", error);
+        setCharacter(null); // Optional: reset character if failed
+      });
+  }, [characterId]);
+  // Show loading state
   if (!character) {
     return <div>Loading...</div>;
   }
@@ -69,8 +84,9 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
       </p>
       <p className="text-lg text-neutral-200">
         <span className="gradient-text">Is Jedi:</span>{" "}
-        {character.isJedi ? "No" : "No"}
+        {character.isJedi ? "Yes" : "No"}
       </p>
+
       <p className="text-lg text-neutral-200">
         <span className="gradient-text">Apprentices:</span>{" "}
         {character.apprentices.join(", ")}
