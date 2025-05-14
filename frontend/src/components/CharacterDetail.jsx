@@ -70,13 +70,16 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
       </p>
       {/* Header row */}
       <div className="flex justify-between items-center">
-        <button onClick={onBack} className="text-blue-400 hover:text-cyan-400">
+        <button
+          onClick={onBack}
+          className="text-blue-400 hover:text-neutral-100"
+        >
           ← Back
         </button>
         {userRole === "admin" && (
           <button
             onClick={() => onEdit(characterId)}
-            className="px-3 py-1 bg-yellow-600 rounded"
+            className="px-3 py-1 font-bold text-neutral-50 bg-yellow-600 hover:bg-yellow-400/10 rounded"
           >
             Edit
           </button>
