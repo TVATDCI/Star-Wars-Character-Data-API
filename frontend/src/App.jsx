@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import NebulaCanvas from "./components/spaceAtmos/NebulaCanvas";
 import starWarsLogo from "./assets/star-wars-gold.svg";
 
 import Characters from "./components/Characters";
@@ -83,37 +84,43 @@ function App() {
 
   return (
     <>
+      <NebulaCanvas className="z-0" />
       <div
-        className="h-screen flex flex-col items-center justify-center bg-cover bg-no-repeat"
+        className="h-screen flex flex-col items-center justify-center bg-cover bg-no-repeat bg-center"
         style={{
           backgroundImage: `url(${background})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          opacity: 0.8,
+          zIndex: 0.7,
         }}
       >
         {/* Header/Logo */}
-        <header className="flex flex-col items-center text-center py-6">
+        <header className="flex flex-col items-center text-center py-6 z-30 ">
           <h2 className="text-2xl text-red-600 font-bold mb-4">Welcome to</h2>
           <img
             src={starWarsLogo}
             alt="Star Wars Logo"
             className="mb-4 w-48 sm:w-64 md:w-80 lg:w-[28rem] xl:w-[32rem] 2xl:w-[36rem] mx-auto"
           />
-          <h2 className="text-2xl text-red-600 font-bold mb-4">
+          <h2 className="text-2xl text-red-600/50 font-bold mb-4">
             Character Database API
           </h2>
         </header>
         {/* Main Content */}
         {view === "info" && (
-          <main className="text-center bg-neutral-800/10 backdrop-blur-sm p-8 rounded-xl shadow-2xl mt-6 w-full max-w-2xl mx-auto">
-            <p className="text-lg text-red-300 mb-6 leading-relaxed">
+          <main className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-2 w-full max-w-2xl mx-auto">
+            <p className="text-lg text-neutral-100/20 mb-6 leading-relaxed">
               Create a{" "}
-              <span className="text-yellow-400 font-semibold">
+              <span className="text-yellow-400/50 font-semibold">
                 REST API Admins dashboard
               </span>{" "}
               that manages a database of Star Wars characters. Admins should be
               able to create, read, update, and delete character information
               through various endpoints.
+            </p>
+            <p className="text-lg text-yellow-400/50 mt-4 leading-relaxed italic ">
+              Please register or login to access the database.
             </p>
             {user ? (
               <div className="flex flex-col items-center gap-4">
@@ -137,21 +144,21 @@ function App() {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center gap-4 mt-4">
+              <div className="flex justify-between mb-flex-col items-center gap-4 mt-4">
                 <Button
-                  className="text-blue-400 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+                  className="text-neutral-100/20 hover:text-cyan-400 transition-colors duration-1000 cursor-pointer mt-4"
                   onClick={() => setView("characters")}
                 >
-                  Characters Lists
+                  Characters
                 </Button>
                 <Button
-                  className="text-blue-400 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+                  className="text-neutral-100/20 hover:text-cyan-400 transition-colors duration-1000 cursor-pointer mt-4"
                   onClick={() => setView("login")}
                 >
                   Login
                 </Button>
                 <Button
-                  className=" text-blue-400 hover:text-cyan-400 transition-colors duration-800 cursor-pointer mt-4"
+                  className="text-neutral-100/20 hover:text-cyan-400 transition-colors duration-1000 cursor-pointer mt-4"
                   onClick={() => setView("register")}
                 >
                   Register
@@ -159,7 +166,9 @@ function App() {
               </div>
             )}
             <ButtonX className="mt-4 ml-5 p-4" href={"/"}>
-              <span className="white text-red-600">I&apos;m LOST!</span>
+              <span className="white text-red-600 font-extrabold hover:text-red-300/0 transition-colors duration-1000">
+                I&apos;m LOST!
+              </span>
             </ButtonX>
           </main>
         )}
@@ -188,12 +197,6 @@ function App() {
         {view === "login" && <LoginForm onLogin={handleLogin} />}
         {view === "register" && <RegisterForm onRegister={handleRegister} />}
       </div>
-      <footer className="text-center mt-6">
-        <p className="text-sm text-gray-400">
-          &copy; {new Date().getFullYear()} Star Wars API. All rights reserved.
-        </p>
-        <p className="text-sm text-gray-400">Developed by ME</p>
-      </footer>
     </>
   );
 }
