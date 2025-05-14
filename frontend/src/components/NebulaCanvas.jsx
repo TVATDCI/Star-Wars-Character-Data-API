@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { debounce } from "lodash"; // Install lodash if not already installed
 
 // Nebula canvas
 const StyledCanvas = styled.canvas`
@@ -160,14 +161,14 @@ function NebulaCanvas() {
       requestAnimationFrame(animate);
     }
 
-    function resizeCanvas() {
+    const resizeCanvas = debounce(() => {
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
       createStars();
       createNebulaClouds();
-    }
+    }, 200); // Debounce with a 200ms delay
 
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
