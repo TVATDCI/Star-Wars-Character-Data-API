@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 // Nebula canvas
@@ -12,8 +12,10 @@ const StyledCanvas = styled.canvas`
 `;
 
 function NebulaCanvas() {
+  const canvasRef = useRef(null);
+
   useEffect(() => {
-    const canvas = document.getElementById("nebulaCanvas");
+    const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
     let width, height;
@@ -176,15 +178,7 @@ function NebulaCanvas() {
     };
   }, []);
 
-  return (
-    <>
-      <StyledCanvas id="nebulaCanvas" />
-      {/* <MeteorLayer>
-        <Meteor width={window.innerWidth} height={window.innerHeight} />
-      </MeteorLayer>
-        */}
-    </>
-  );
+  return <StyledCanvas ref={canvasRef} />;
 }
 
 export default NebulaCanvas;
