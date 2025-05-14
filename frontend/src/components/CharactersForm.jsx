@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import PropTypes from "prop-types";
 
 function CharacterForm({ characterId, onSave, onCancel }) {
   const [userRole, setUserRole] = useState("user");
@@ -247,5 +248,10 @@ function CharacterForm({ characterId, onSave, onCancel }) {
     </div>
   );
 }
+CharacterForm.propTypes = {
+  characterId: PropTypes.string,
+  onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};
 
 export default CharacterForm;

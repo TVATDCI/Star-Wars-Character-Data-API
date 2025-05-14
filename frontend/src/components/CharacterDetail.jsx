@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode"; // Using the same logic as in Characters.jsx
 
 function Detail({ label, value }) {
@@ -8,6 +9,15 @@ function Detail({ label, value }) {
     </p>
   );
 }
+
+Detail.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]).isRequired,
+};
 
 function CharacterDetail({ characterId, onBack, onEdit }) {
   const [userRole, setUserRole] = useState("user"); // default role to user
@@ -126,5 +136,10 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
     </div>
   );
 }
+CharacterDetail.propTypes = {
+  characterId: PropTypes.string.isRequired,
+  onBack: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+};
 
 export default CharacterDetail;

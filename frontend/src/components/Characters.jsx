@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode"; // Import jwtDecode to decode the JWT token
+import PropTypes from "prop-types"; // Import PropTypes for props validation
 
 function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [characters, setCharacters] = useState([]);
@@ -168,6 +169,11 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
     </div>
   );
 }
+Characters.propTypes = {
+  onSelectCharacter: PropTypes.func.isRequired,
+  returnToInfo: PropTypes.func.isRequired,
+  onAddCharacter: PropTypes.func.isRequired,
+};
 
 export default Characters;
 
