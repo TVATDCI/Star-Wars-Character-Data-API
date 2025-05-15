@@ -296,5 +296,5 @@ res.cookie("token", jwtToken, {
 - CSRF protection needs to be considered.
 
 $$
-{\color{red}Made \space \color{red} With \space \color{red}❤️ \space \color{blue}Headache }
+{\color{red}Made \space \color{red} With \space \color{red}❤️ \space \color{green}Headache }
 $$
