@@ -2,7 +2,7 @@
 
 <img src="/frontend/src/assets/star-wars-gold.svg" alt="Algorithm Challenge" width="200" align="right" style="margin-left: 10px;" />
 
-This project, for my study recap, is a Star Wars-themed CRUD API exercise designed to help developers practice building RESTful endpoints and working with MongoDB/Mongoose.
+"This Star Wars-themed API project is a full-stack backend exercise crafted to reinforce key skills in RESTful API development. Using Express.js and MongoDB with Mongoose, it allows developers to practice creating and testing CRUD operations, implementing validation, error handling, and working with dynamic routes. It's an engaging, hands-on way to apply theoretical knowledge in a themed and memorable context."
 
 ## Table of Contents
 
@@ -295,6 +295,6 @@ res.cookie("token", jwtToken, {
 - Slightly more complex to implement.
 - CSRF protection needs to be considered.
 
-```
-
-```
+$$
+{\color{red}Made \space \color{red} With \space \color{red}❤️ \space \color{blue}Headache }
+$$
