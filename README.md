@@ -14,13 +14,10 @@ This project is a Star Wars-themed CRUD API exercise designed to help developers
     - [Async/Await](#asyncawait)
     - [Key Differences](#key-differences)
   - [Logout Functionality Recap](#logout-functionality-recap)
-    - [Current State](#current-state)
-    - [Next Steps for development](#next-steps-for-development)
-      - [Editable Version in the Branch Characters-Form is Now Merged](#editable-version-in-the-branch-characters-form-is-now-merged)
-      - [Register-Login-Token-Saved-Logout-Token-Removed is Tested](#register-login-token-saved-logout-token-removed-is-tested)
-      - [It is in Auth-Routes Version](#it-is-in-auth-routes-version)
-      - [Now they are all merged to the main](#now-they-are-all-merged-to-the-main)
-    - [**Next Steps**](#next-steps)
+    - [Extra recap](#extra-recap)
+    - [JWT in Header vs HTTP-Only Cookie Authentication](#jwt-in-header-vs-http-only-cookie-authentication)
+      - [1. JWT in Authorization Header (Current Approach)](#1-jwt-in-authorization-header-current-approach)
+      - [2. JWT in HTTP-Only Cookies (More Secure)](#2-jwt-in-http-only-cookies-more-secure)
 
 ## Project Overview
 
@@ -33,36 +30,40 @@ Create a REST API that manages a database of Star Wars characters. Users should 
 ```bash
 project-root/
 ├── backend/
-│ │ ├── characterController.js
-│ │ └── userController.js
-│ ├── models/
-│ │ └── characterModel.js
-│ ├── routes/
-│ │ └── characterRoutes.js
-│ ├── app.js
 │ ├── config/
 │ │ └── db.js
-│ ├── middleware/
+│ ├── controller/
+│ │ └── characterController.js
 │ ├── libs/
 │ │ ├── seeds.js
-│ │ └── data.js
-│ ├── node_modules/
+│ ├── middleware/
+│ │ ├── authMiddleware.js
+│ │ └── requireAdmin.js
+│ ├── models/
+│ │ └── characterModel.js
+│ │ └── userModel.js
+│ ├── routes/
+│ │ └── characterRoutes.js
+│ │ └── publicRoutes.js
+│ ├── app.js
 │ └── package.json
 ├── frontend/
+│ ├── public/
 │ ├── src/
 │ │ ├── components/
 │ │ │ ├── Characters.jsx
 │ │ │ ├── CharacterDetail.jsx
 │ │ │ └── CharacterForm.jsx
 │ │ ├── App.jsx
-│ │ ├── index.js
 │ │ └── App.css
-│ ├── public/
-│ ├── node_modules/
+│ │ ├── index.css
+│ ├── main.jsx
+│ └── package-lock.json
 │ └── package.json
-├── README.md
+│ └── postcss.config.js
+│ └── tailwind.config.js
 ├── .gitignore
-└── .env
+├── README.md
 ```
 
 ---
@@ -107,6 +108,7 @@ project-root/
 - **Readability**: Can become harder to read with nested `.then()` calls (callback hell).
 
 **Example**:
+
 ```javascript
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -143,34 +145,43 @@ project-root/
 
 ## Logout Functionality Recap
 
-### Current State
+- In this single-page application (SPA) setup controlled by setView, there's no functional need to create a separate LogoutForm.jsx
+- Unless you're trying to keep your code modular or plan to reuse the logout UI. So, No, LogoutForm.jsx
 
-- **Frontend Logout**:
+**Frontend Logout**:
 
-  - The `handleLogout` function in `App.jsx` removes the token from `localStorage` and resets the `user` state.
-  - Example:
-    ```javascript
-    const handleLogout = () => {
-      console.log("Logging out...");
-      setUser(null);
-      localStorage.removeItem("token");
-      console.log("Token removed:", localStorage.getItem("token")); // Should log `null`
-      setView("info");
-    };
-    ```
+- The `handleLogout` function in `App.jsx` removes the token from `localStorage` and resets the `user` state.
 
-- **Backend `/logout`**:
-  - Currently, there is no `/logout` route in the backend. This is fine for a stateless JWT-based authentication system.
-  - If needed, a `/logout` route could simply return a success message:
-    ```javascript
-    app.post("/logout", (req, res) => {
-      res.json({ message: "Logged out successfully" });
-    });
-    ```
+**Example:**
+
+```javascript
+const handleLogout = () => {
+  console.log("Logging out...");
+  setUser(null);
+  localStorage.removeItem("token");
+  localStorage.removeItem("userEmail");
+  localStorage.removeItem("userRole"); // Remove userRole as well
+  console.log("Token, userEmail and userRole removed from localStorage");
+  setView("info");
+};
+
+<button className="style of your choice" onClick={handleLogout}>
+  Logout
+</button>;
+```
+
+**Backend `/logout`**:
+
+- Currently, there is no `/logout` route in the backend. This is fine for a stateless JWT-based authentication system.
+- If needed, a `/logout` route could simply return a success message:
+
+  ```javascript
+  app.post("/logout", (req, res) => {
+    res.json({ message: "Logged out successfully" });
+  });
+  ```
 
 ---
-
-### Next Steps for development
 
 1. **Implement Bearer Token Logic**:
 
@@ -208,16 +219,6 @@ project-root/
 
 ---
 
-#### Editable Version in the Branch Characters-Form is Now Merged
-
-#### Register-Login-Token-Saved-Logout-Token-Removed is Tested
-
-#### It is in Auth-Routes Version
-
-#### Now they are all merged to the main
-
-### **Next Steps**
-
 1. **Optional Backend `/logout`**:
 
    - If you want to add a `/logout` route, it could simply return a success message. For example:
@@ -230,7 +231,7 @@ project-root/
 
 2. **Protected Routes**:
 
-   - The next step is to implement Bearer token logic to protect routes like `/api/characters`. This ensures only authenticated users can access certain endpoints.
+   - Bearer token logic to protect routes like `/api/characters`. This ensures only authenticated users can access certain endpoints.
    - Implement Bearer token logic in the backend to protect routes.
    - Update the frontend to include the token in the `Authorization` header for authenticated requests.
 
@@ -240,3 +241,60 @@ project-root/
    - **Logout**: User clicks the "Logout" button, which removes the token from localStorage and resets the app state.
 
 ---
+
+### Extra recap
+
+### JWT in Header vs HTTP-Only Cookie Authentication
+
+When building authentication systems, you can store the JWT token in two main ways: **HTTP-only cookies** or in the **Authorization header (Bearer token)**.
+
+#### 1. JWT in Authorization Header (Current Approach)
+
+- **Storage**: The token is saved in `localStorage` or `sessionStorage`.
+- **How It Works**: Sent via the `Authorization` header with every request.
+- **Example**:
+
+  ```javascript
+  fetch("http://localhost:5000/api/characters", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  ```
+
+- Pros:
+  - Easy to implement.
+  - Works well for APIs and SPA setups like React apps.
+- Cons:
+  - Vulnerable to XSS attacks if your site is not secure.
+  - Developers must manually include the token in each request.
+
+#### 2. JWT in HTTP-Only Cookies (More Secure)
+
+- **Storage:** Stored in a cookie with HttpOnly and Secure flags.
+- **How It Works:** Automatically sent by the browser with every request to your backend (no manual Authorization header needed).
+
+**Set by Backend:**
+
+```javascript
+res.cookie("token", jwtToken, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "Strict",
+  maxAge: 3600000, // 1 hour
+});
+```
+
+**Pros:**
+
+- Immune to XSS (JavaScript cannot access the cookie).
+- Safer for storing sensitive tokens.
+
+**Cons:**
+
+- Slightly more complex to implement.
+- CSRF protection needs to be considered.
+
+```
+
+```
