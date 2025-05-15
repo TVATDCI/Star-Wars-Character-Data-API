@@ -85,12 +85,16 @@ app.post("/login", async (req, res) => {
 });
 
 // #Logout Route
+// This is JWT token base authentication.
+// Since there's no server-side session, we just need to clear the token on the client side.
+// This route is just a placeholder and doesn't need to do anything on the server, not yet.
+// The client-side will handle the JWT token removal.
 app.post("/logout", (req, res) => {
-  // Invalidate the token on the client side by removing it from local storage
-  console.log("Logging out user");
+  // Clear the token from the client-side storage
+  console.log("Logout user HIT");
+  // Send a response indicating successful logout
   res.json({ message: "Logged out successfully" });
 });
-
 //#Protect character routes with authentication middleware
 app.use("/api/characters", authenticateToken, characterRoutes);
 //NOTE: This middleware function is a standalone. Al logic is inside the function.
