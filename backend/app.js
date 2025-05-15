@@ -85,6 +85,10 @@ app.post("/login", async (req, res) => {
 });
 
 // #Logout Route
+// This is JWT token base authentication.
+// Since there's no server-side session, we just need to clear the token on the client side.
+// This route is just a placeholder and doesn't need to do anything on the server, not yet.
+// The client-side will handle the JWT token removal.
 app.post("/logout", (req, res) => {
   // Clear the token from the client-side storage
   console.log("Logout user HIT");
