@@ -1,8 +1,8 @@
 # Star Wars Character Database CRUD API
 
-<img src="/frontend/src/assets/star-wars-gold.svg" alt="Algorithm Challenge" width="100" align="right" style="margin-left: 10px;" />
+<img src="/frontend/src/assets/star-wars-gold.svg" alt="Algorithm Challenge" width="200" align="right" style="margin-left: 10px;" />
 
-This project is a Star Wars-themed CRUD API exercise designed to help developers practice building RESTful endpoints and working with MongoDB/Mongoose.
+This project, for my study recap, is a Star Wars-themed CRUD API exercise designed to help developers practice building RESTful endpoints and working with MongoDB/Mongoose.
 
 ## Table of Contents
 
