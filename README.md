@@ -18,6 +18,7 @@
     - [JWT in Header vs HTTP-Only Cookie Authentication](#jwt-in-header-vs-http-only-cookie-authentication)
       - [1. JWT in Authorization Header (Current Approach)](#1-jwt-in-authorization-header-current-approach)
       - [2. JWT in HTTP-Only Cookies (More Secure)](#2-jwt-in-http-only-cookies-more-secure)
+- [Developer Notes – Creating Admin Users](#developer-notes-creating-admin-users)
 
 ## Project Overview
 
@@ -295,6 +296,56 @@ res.cookie("token", jwtToken, {
 - Slightly more complex to implement.
 - CSRF protection needs to be considered.
 
+---
+
+## Developer Notes – Creating Admin Users
+
+In production, all users are registered with the default "user" role.
+Admin accounts should never be exposed via the frontend form.
+
+#### Creating an Admin User via Postman (Development Only)
+
+**To register an admin user during development:**
+
+- 1.Open Postman or similar API tool.
+- 2.Send a POST request to:
+
+```bash
+http://localhost:5000/register
+```
+
+- 3.Use the following request body:\*\*
+
+```bash
+{
+  "email": "admin@example.com",
+  "password": "yourSecurePassword",
+  "role": "admin"
+}
+```
+
+- 4.If successful, the response should look like:
+
+```bash
+{
+  "message": "User registered successfully"
+}
+```
+
+This method allows you to test requireAdmin middleware and admin-only routes securely in development.
+
+### Frontend Behavior
+
+**RegisterForm.jsx does not expose the ability to set the user role.**
+
+- All users registering through the frontend will always be assigned the "user" role by default, as enforced by the backend.
+
+**⚠️ Giving clients access to register as admin in production would be like handing out lightsabers or Death Star control panels to Jawas — don't!**
+
 $$
 {\color{red}Made \space \color{red} With \space \color{red}❤️ \space \color{green}Headache }
 $$
+
+```
+
+```
