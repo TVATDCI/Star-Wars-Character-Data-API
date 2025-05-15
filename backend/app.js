@@ -86,11 +86,11 @@ app.post("/login", async (req, res) => {
 
 // #Logout Route
 app.post("/logout", (req, res) => {
-  // Invalidate the token on the client side by removing it from local storage
-  console.log("Logging out user");
+  // Clear the token from the client-side storage
+  console.log("Logout user HIT");
+  // Send a response indicating successful logout
   res.json({ message: "Logged out successfully" });
 });
-
 //#Protect character routes with authentication middleware
 app.use("/api/characters", authenticateToken, characterRoutes);
 //NOTE: This middleware function is a standalone. Al logic is inside the function.
