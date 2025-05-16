@@ -350,7 +350,7 @@ This method allows you to test requireAdmin middleware and admin-only routes sec
 **⚠️ Giving clients access to register as admin in production would be like handing out lightsabers or Death Star control panels to Jawas — don't!**
 
 $$
-{\color{red}Made \space \color{red} With \space \color{red}❤️ \space \color{green}Headache }
+{\color{red}Made \space \color{red} With \space \color{red}❤️ \space \color{gold}and \space \color{lightgreen}Headache }
 $$
 
 ![Custom Label](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?label=⭐%20Give%20a%20Star!&color=yellow)
