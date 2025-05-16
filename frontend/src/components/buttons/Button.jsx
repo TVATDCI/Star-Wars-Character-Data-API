@@ -22,8 +22,8 @@ const Button = ({ className, href, onClick, children, px = "px-7", white }) => {
   const location = useLocation();
 
   // Construct the CSS classes for the button/link
-  const classes = `button relative inline-flex items-center justify-center transition-colors hover:text-green-500 ${px} ${
-    white ? "text-neutral-800" : "text-[#ffc500]"
+  const classes = `button relative inline-flex items-center justify-center py-2 transition-colors hover:text-yellow-400 ${px} ${
+    white ? "text-neutral-800" : "text-yellow-400/50"
   } ${className || ""}`;
 
   // CSS classes for the span inside the button/link

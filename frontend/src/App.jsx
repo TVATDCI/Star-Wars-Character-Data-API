@@ -97,29 +97,31 @@ function App() {
       >
         {/* Header/Logo */}
         <header className="flex flex-col items-center text-center py-6 z-30 ">
-          <h2 className="text-2xl text-red-600 font-bold mb-4">Welcome to</h2>
+          <h2 className="text-2xl text-red-600/60 font-bold mb-4">
+            Welcome to
+          </h2>
           <img
             src={starWarsLogo}
             alt="Star Wars Logo"
             className="mb-4 w-48 sm:w-64 md:w-80 lg:w-[28rem] xl:w-[32rem] 2xl:w-[36rem] mx-auto"
           />
-          <h2 className="text-2xl text-red-600/50 font-bold mb-4">
+          <h2 className="text-2xl text-red-600/60 font-bold mb-4">
             Character Database API
           </h2>
         </header>
         {/* Main Content */}
         {view === "info" && (
           <main className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-2 w-full max-w-2xl mx-auto">
-            <p className="text-lg text-neutral-100/20 mb-6 leading-relaxed">
+            <p className="text-lg text-neutral-300 mb-6 leading-relaxed">
               Create a{" "}
-              <span className="text-yellow-400/50 font-semibold">
+              <span className="font-semibold text-yellow-400 ">
                 REST API Admins dashboard
               </span>{" "}
               that manages a database of Star Wars characters. Admins should be
               able to create, read, update, and delete character information
               through various endpoints.
             </p>
-            <p className="text-lg text-yellow-400/50 mt-4 leading-relaxed italic ">
+            <p className="text-lg text-yellow-400/50 mt-4 hover:text-yellow-400 leading-relaxed italic ">
               Please register or login to access the database.
             </p>
             {user ? (
@@ -144,34 +146,31 @@ function App() {
                 </div>
               </div>
             ) : (
-              <div className="flex justify-between mb-flex-col items-center gap-4 mt-4">
-                <ButtonGradient className="p-2 ">RenderBtn</ButtonGradient>
-                <Button
-                  className="text-neutral-100/20 hover:text-cyan-400 transition-colors duration-1000 cursor-pointer mt-4"
-                  onClick={() => setView("characters")}
-                >
+              <div className="flex justify-around mb-flex-col items-center gap-4 mt-4">
+                <ButtonGradient />
+                <Button className="mt-4" onClick={() => setView("characters")}>
                   Characters
                 </Button>
 
-                <Button
-                  className="text-neutral-100/20 hover:text-cyan-400 transition-colors duration-1000 cursor-pointer mt-4"
-                  onClick={() => setView("login")}
-                >
+                <Button className="mt-4" onClick={() => setView("login")}>
                   Login
                 </Button>
-                <SpaceBtn
-                  className="cursor-pointer mt-4"
-                  onClick={() => setView("register")}
-                >
+                <Button className="mt-4" onClick={() => setView("register")}>
                   Register
-                </SpaceBtn>
+                </Button>
               </div>
             )}
-            <button className="mt-4 ml-5 p-4" href={"/"}>
-              <span className="white text-red-600 font-extrabold hover:text-red-300/0 transition-colors duration-1000">
-                I&apos;m LOST!
-              </span>
-            </button>
+            <SpaceBtn className="mt-10">
+              <a
+                href="https://github.com/TVATDCI"
+                alt="GitHub link to TVATDCI profile"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="{alt}"
+              >
+                DEAD STAR!
+              </a>
+            </SpaceBtn>
           </main>
         )}
         {view === "characters" && (
