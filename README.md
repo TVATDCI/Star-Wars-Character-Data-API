@@ -9,6 +9,8 @@
 
 "This Star Wars-themed API project is a full-stack backend exercise crafted to reinforce key skills in RESTful API development. Using Express.js and MongoDB with Mongoose, it allows developers to practice creating and testing CRUD operations, implementing validation, error handling, and working with dynamic routes. It's an engaging, hands-on way to apply theoretical knowledge in a themed and memorable context."
 
+[![🔱May the Fork Be With You](https://img.shields.io/badge/🔱%20May%20the%20Fork%20Be%20With%20You-Fork%20this%20repo!-blue?style=for-the-badge)](https://github.com/TVATDCI/Star-Wars-Character-Data-API/fork)
+
 ## Table of Contents
 
 - [Star Wars Character Database CRUD API](#star-wars-character-database-crud-api)
@@ -352,7 +354,7 @@ $$
 $$
 
 ![Custom Label](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?label=⭐%20Give%20a%20Star!&color=yellow)
-<img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API&title=👁️%20Visitors" alt="Visitors"/>
+<img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API&title=Visitors" alt="Visitors"/>
 
 ```
 
