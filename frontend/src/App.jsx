@@ -9,9 +9,9 @@ import CharactersForm from "./components/CharactersForm";
 import LoginForm from "./components/reg-auth/LoginForm";
 import RegisterForm from "./components/reg-auth/RegisterForm";
 
-import ButtonX from "./components/buttons/ButtonX.jsx";
+import SpaceBtn from "./components/buttons/SpaceBtn.jsx";
 import Button from "./components/buttons/Button.jsx";
-
+import ButtonGradient from "./components/buttons/ButtonGradient";
 function App() {
   const [background, setBackground] = useState("");
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
@@ -145,31 +145,33 @@ function App() {
               </div>
             ) : (
               <div className="flex justify-between mb-flex-col items-center gap-4 mt-4">
+                <ButtonGradient className="p-2 ">RenderBtn</ButtonGradient>
                 <Button
                   className="text-neutral-100/20 hover:text-cyan-400 transition-colors duration-1000 cursor-pointer mt-4"
                   onClick={() => setView("characters")}
                 >
                   Characters
                 </Button>
+
                 <Button
                   className="text-neutral-100/20 hover:text-cyan-400 transition-colors duration-1000 cursor-pointer mt-4"
                   onClick={() => setView("login")}
                 >
                   Login
                 </Button>
-                <Button
-                  className="text-neutral-100/20 hover:text-cyan-400 transition-colors duration-1000 cursor-pointer mt-4"
+                <SpaceBtn
+                  className="cursor-pointer mt-4"
                   onClick={() => setView("register")}
                 >
                   Register
-                </Button>
+                </SpaceBtn>
               </div>
             )}
-            <ButtonX className="mt-4 ml-5 p-4" href={"/"}>
+            <button className="mt-4 ml-5 p-4" href={"/"}>
               <span className="white text-red-600 font-extrabold hover:text-red-300/0 transition-colors duration-1000">
                 I&apos;m LOST!
               </span>
-            </ButtonX>
+            </button>
           </main>
         )}
         {view === "characters" && (

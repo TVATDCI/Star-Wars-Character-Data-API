@@ -27,7 +27,7 @@ const Button = ({ className, href, onClick, children, px = "px-7", white }) => {
   } ${className || ""}`;
 
   // CSS classes for the span inside the button/link
-  const spanClasses = "relative z-50";
+  const spanClasses = "relative z-10";
 
   const handleClick = (e) => {
     e.preventDefault();

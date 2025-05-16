@@ -15,7 +15,7 @@ import ButtonSvg from "./ButtonSvg";
  * - white: Boolean to determine the text color (true for "text-n-8", false for "text-n-1").
  */
 
-const ButtonX = ({
+const SpaceBtn = ({
   className,
   href,
   onClick,
@@ -24,8 +24,8 @@ const ButtonX = ({
   white,
 }) => {
   // Construct the CSS classes for the button/link
-  const classes = `button relative inline-flex items-center justify-center transition-colors hover:text-green-100 ${px} ${
-    white ? "text-neutral-800" : "text-green-400"
+  const classes = `button relative inline-flex items-center justify-center transition-colors duration-1000 cursor-pointer hover:text-red-500 ${px} ${
+    white ? "text-neutral-800" : "text-red-500/10"
   } ${className || ""}`;
 
   // CSS classes for the span inside the button/link
@@ -51,4 +51,4 @@ const ButtonX = ({
   return href ? renderLink() : renderButton();
 };
 
-export default ButtonX;
+export default SpaceBtn;
