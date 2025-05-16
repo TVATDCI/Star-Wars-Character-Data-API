@@ -5,15 +5,16 @@
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)
 [![GitHub Stars](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)](https://github.com/TVATDCI/Star-Wars-Character-Data-API/stargazers)
 
-<img src="/frontend/src/assets/star-wars-gold.svg" alt="Algorithm Challenge" width="200" align="right" style="margin-left: 10px;" />
-
 "This Star Wars-themed API project is a full-stack backend exercise crafted to reinforce key skills in RESTful API development. Using Express.js and MongoDB with Mongoose, it allows developers to practice creating and testing CRUD operations, implementing validation, error handling, and working with dynamic routes. It's an engaging, hands-on way to apply theoretical knowledge in a themed and memorable context."
 
----
+<img src="/frontend/src/assets/star-wars-gold.svg" alt="Algorithm Challenge" width="200" align="right" style="margin-left: 10px;" />
 
 <img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API&title=Visitors" alt="Visitors"/>
 
 ![Custom Label](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?label=⭐%20Give%20a%20Star!&color=yellow)
+
+---
+
 [![🔱May the Fork Be With You](https://img.shields.io/badge/🔱%20May%20the%20Fork%20Be%20With%20You-Fork%20this%20repo!-blue?style=for-the-badge)](https://github.com/TVATDCI/Star-Wars-Character-Data-API/fork)
 
 ## Table of Contents
@@ -30,7 +31,9 @@
     - [JWT in Header vs HTTP-Only Cookie Authentication](#jwt-in-header-vs-http-only-cookie-authentication)
       - [1. JWT in Authorization Header (Current Approach)](#1-jwt-in-authorization-header-current-approach)
       - [2. JWT in HTTP-Only Cookies (More Secure)](#2-jwt-in-http-only-cookies-more-secure)
-- [Developer Notes – Creating Admin Users](#developer-notes-creating-admin-users)
+  - [Developer Notes – Creating Admin Users](#developer-notes--creating-admin-users)
+    - [Creating an Admin User via Postman (Development Only)](#creating-an-admin-user-via-postman-development-only)
+    - [Frontend Behavior](#frontend-behavior)
 
 ## Project Overview
 
