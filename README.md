@@ -352,7 +352,7 @@ $$
 $$
 
 ![Custom Label](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?label=⭐%20Give%20a%20Star!&color=yellow)
-<img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API&title=🧭%20Visitors" alt="Visitors"/>
+<img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API&title=👁️%20Visitors" alt="Visitors"/>
 
 ```
 
