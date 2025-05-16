@@ -4,7 +4,6 @@
 ![GitHub Issues](https://img.shields.io/github/issues/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)
 [![GitHub Stars](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)](https://github.com/TVATDCI/Star-Wars-Character-Data-API/stargazers)
-<img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API" alt="Visitors"/>
 
 <img src="/frontend/src/assets/star-wars-gold.svg" alt="Algorithm Challenge" width="200" align="right" style="margin-left: 10px;" />
 
@@ -353,6 +352,7 @@ $$
 $$
 
 ![Custom Label](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?label=⭐%20Give%20a%20Star!&color=yellow)
+<img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API&title=🧭 %20Visitors" alt="Visitors"/>
 
 ```
 
