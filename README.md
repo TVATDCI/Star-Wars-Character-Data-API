@@ -5,9 +5,9 @@
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)
 [![GitHub Stars](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)](https://github.com/TVATDCI/Star-Wars-Character-Data-API/stargazers)
 
-"This Star Wars-themed API project is a full-stack backend exercise crafted to reinforce key skills in RESTful API development. Using Express.js and MongoDB with Mongoose, it allows developers to practice creating and testing CRUD operations, implementing validation, error handling, and working with dynamic routes. It's an engaging, hands-on way to apply theoretical knowledge in a themed and memorable context."
-
 <img src="/frontend/src/assets/star-wars-gold.svg" alt="Algorithm Challenge" width="200" align="right" style="margin-left: 10px;" />
+
+"This Star Wars-themed API project is a full-stack backend exercise crafted to reinforce key skills in RESTful API development. Using Express.js and MongoDB with Mongoose, it allows developers to practice creating and testing CRUD operations, implementing validation, error handling, and working with dynamic routes. It's an engaging, hands-on way to apply theoretical knowledge in a themed and memorable context."
 
 <img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API&title=Visitors" alt="Visitors"/>
 
