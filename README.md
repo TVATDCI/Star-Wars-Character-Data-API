@@ -1,5 +1,11 @@
 # Star Wars Character Database CRUD API
 
+![GitHub Forks](https://img.shields.io/github/forks/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)
+![GitHub Issues](https://img.shields.io/github/issues/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)
+[![GitHub Stars](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?style=for-the-badge)](https://github.com/TVATDCI/Star-Wars-Character-Data-API/stargazers)
+<img src="https://visitor-badge.laobi.icu/badge?page_id=TVATDCI.Star-Wars-Character-Data-API" alt="Visitors"/>
+
 <img src="/frontend/src/assets/star-wars-gold.svg" alt="Algorithm Challenge" width="200" align="right" style="margin-left: 10px;" />
 
 "This Star Wars-themed API project is a full-stack backend exercise crafted to reinforce key skills in RESTful API development. Using Express.js and MongoDB with Mongoose, it allows developers to practice creating and testing CRUD operations, implementing validation, error handling, and working with dynamic routes. It's an engaging, hands-on way to apply theoretical knowledge in a themed and memorable context."
@@ -345,6 +351,8 @@ This method allows you to test requireAdmin middleware and admin-only routes sec
 $$
 {\color{red}Made \space \color{red} With \space \color{red}❤️ \space \color{green}Headache }
 $$
+
+![Custom Label](https://img.shields.io/github/stars/TVATDCI/Star-Wars-Character-Data-API?label=⭐%20Give%20a%20Star!&color=yellow)
 
 ```
 
