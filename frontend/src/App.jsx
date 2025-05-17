@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import NebulaCanvas from "./components/spaceAtmos/NebulaCanvas";
 import starWarsLogo from "./assets/star-wars-gold.svg";
+import starWarsNeonLogo from "./assets/star-wars-neon.svg";
 
 import Characters from "./components/Characters";
 import CharacterDetail from "./components/CharacterDetail";
@@ -102,7 +103,7 @@ function App() {
             Welcome to
           </h2>
           <img
-            src={starWarsLogo}
+            src={starWarsNeonLogo}
             alt="Star Wars Logo"
             className="mb-4 w-48 sm:w-64 md:w-80 lg:w-[28rem] xl:w-[32rem] 2xl:w-[36rem] mx-auto"
           />
