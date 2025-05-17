@@ -1,5 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import SpaceBtn from "../buttons/SpaceBtn";
+import BtnNeoGradient from "../buttons/BtnNeonGradient";
 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -54,9 +56,14 @@ function LoginForm({ onLogin }) {
           placeholder="Password"
           className="mb-2 p-2 w-full"
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        {/* Future plan - add a checkbox for "Remember Me" */}
+        <BtnNeoGradient />
+        <SpaceBtn
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded mt-4 cursor-pointer"
+        >
           Login
-        </button>
+        </SpaceBtn>
       </form>
     </div>
   );

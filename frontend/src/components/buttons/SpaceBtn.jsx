@@ -13,7 +13,11 @@ import SpaceBtnSvg from "./SpaceBtnSvg"; //It is the shape, is a custom SVG comp
  * - children: Content to be displayed inside the button/link.
  * - px: Padding-x class to apply to the button/link (default is "px-7").
  * - white: Boolean to determine the text color (true for "text-n-8", false for "text-n-1").
+ * - type = "button": is to avoid the default behavior of submitting a form when the button is clicked.
+ * - Check the example in `frontend/src/components/reg-auth/LoginForm.jsx` for usage.
  */
+//NOTE: It is very important to add the `type` prop to the button element to avoid the default behavior of submitting a form when the button is clicked.
+//NOTE: After adding it to props, use must pass it the renderButton function as type={type}.
 
 const SpaceBtn = ({
   className,
@@ -22,6 +26,7 @@ const SpaceBtn = ({
   children,
   px = "px-7",
   white,
+  type = "button",
 }) => {
   // Construct the CSS classes for the button/link
   const classes = `button relative inline-flex items-center justify-center py-[.5rem] font-bold transition-colors duration-1000 cursor-pointer hover:text-red-600 ${px} ${
@@ -33,7 +38,7 @@ const SpaceBtn = ({
 
   // Function to render a button element
   const renderButton = () => (
-    <button className={classes} onClick={onClick}>
+    <button className={classes} onClick={onClick} type={type}>
       <span className={spanClasses}>{children}</span>
       {SpaceBtnSvg(white)}
     </button>
