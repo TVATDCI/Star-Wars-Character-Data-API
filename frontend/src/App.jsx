@@ -99,32 +99,39 @@ function App() {
       >
         {/* Header/Logo */}
         <header className="flex flex-col items-center text-center py-6 z-30 ">
-          <h2 className="text-2xl text-red-600/60 font-bold mb-4">
-            Welcome to
-          </h2>
           <img
             src={starWarsNeonLogo}
             alt="Star Wars Logo"
             className="mb-4 w-48 sm:w-64 md:w-80 lg:w-[28rem] xl:w-[32rem] 2xl:w-[36rem] mx-auto"
           />
-          <h2 className="text-2xl text-red-600/60 font-bold mb-4">
+          <h2 className="text-2xl text-neutral-800/90 font-bold mb-4">
             Character Database API
           </h2>
         </header>
         {/* Main Content */}
         {view === "info" && (
           <main className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-2 w-full max-w-2xl mx-auto">
-            <p className="text-lg text-neutral-300 mb-6 leading-relaxed">
+            <p className="text-lg italic font-semibold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mb-6 leading-relaxed">
               Welcome to{" "}
-              <span className="font-semibold text-yellow-400 ">
-                REST API Admins dashboard
+              <span className="font-semibold text-[#FFC500] ">
+                Star Wars Admin Dashboard
               </span>{" "}
-              that manages a database of Star Wars characters. Admins should be
-              able to create, read, update, and delete character information
-              through various endpoints.
+              a full-stack REST API platform built to manage characters from the
+              galaxy far, far away. Authenticated users can explore character
+              data, while authorized admins have full access to create, update,
+              and delete entries in real time, directly from the client side.
+              Built with role-based access, MongoDB, and Express, this project
+              is a powerful showcase of secure CRUD operations in action.
             </p>
             <p className="text-lg text-yellow-400/50 mt-4 hover:text-yellow-400 leading-relaxed italic ">
               Please register or login to access the database.
+              <br />
+              Or,{" "}
+              <span className="text-[#FFC500] cursor-pointer hover:text-red-500">
+                contact me
+              </span>{" "}
+              to get admin pass for the dashboard
+              <br />
             </p>
             {user ? (
               <div className="flex flex-col items-center gap-4">
