@@ -78,6 +78,7 @@ function App() {
     localStorage.removeItem("userRole"); // Remove userRole as well
     console.log("Token, userEmail and userRole removed from localStorage");
     setView("info");
+    alert("You have successfully logged out.");
   };
 
   const token = localStorage.getItem("token"); // Retrieve token from localStorage
@@ -135,23 +136,25 @@ function App() {
             </p>
             {user ? (
               <div className="flex flex-col items-center gap-4">
-                <h4 className="text-2xl text-red-400 font-semi-bold">
+                <h4 className="text-2xl text-red-400 font-bold">
                   Welcome back, &nbsp;
                   <span className="text-green-500 mb-4">{user.email}!</span>
                 </h4>
                 <div className="flex flex-wrap justify-center gap-4 mt-4">
-                  <button
-                    className="px-6 py-2 bg-cyan-600 hover:bg-cyan-950/10 text-white rounded-lg transition-colors duration-300"
+                  <ButtonGradient />
+                  <BtnNeonGradient />
+                  <Button
+                    className="px-6 py-2"
                     onClick={() => setView("characters")}
                   >
                     Characters Lists
-                  </button>
-                  <button
-                    className="px-6 py-2 bg-red-400 hover:bg-red-600 text-white rounded-lg transition-colors duration-300"
+                  </Button>
+                  <SpaceBtn
+                    className="px-6 py-2 text-neutral-300/70 "
                     onClick={handleLogout}
                   >
                     Logout
-                  </button>
+                  </SpaceBtn>
                 </div>
               </div>
             ) : (

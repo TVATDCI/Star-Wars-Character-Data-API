@@ -16,7 +16,7 @@ import SpaceBtnSvg from "./SpaceBtnSvg"; //It is the shape, is a custom SVG comp
  * - type = "button": is to avoid the default behavior of submitting a form when the button is clicked.
  * - Check the example in `frontend/src/components/reg-auth/LoginForm.jsx` for usage.
  */
-//NOTE: It is very important to add the `type` prop to the button element to avoid the default behavior of submitting a form when the button is clicked.
+//NOTE: To use SpaceBtn inside form. It is important to add `type` prop to the button element to avoid the default behavior of submitting a form when the button is clicked.
 //NOTE: After adding it to props, use must pass it the renderButton function as type={type}.
 
 const SpaceBtn = ({

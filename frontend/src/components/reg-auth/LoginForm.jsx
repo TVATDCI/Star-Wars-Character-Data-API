@@ -58,10 +58,7 @@ function LoginForm({ onLogin }) {
         />
         {/* Future plan - add a checkbox for "Remember Me" */}
         <BtnNeoGradient />
-        <SpaceBtn
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded mt-4 cursor-pointer"
-        >
+        <SpaceBtn type="submit" className="mt-4 text-center text-yellow-400">
           Login
         </SpaceBtn>
       </form>
