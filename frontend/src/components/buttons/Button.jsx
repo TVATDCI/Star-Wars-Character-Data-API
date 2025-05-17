@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import ButtonSvg from "./ButtonSvg";
+import ButtonSvg from "./ButtonSvg"; // Is the shape of the button
 import PropTypes from "prop-types";
 
 /**

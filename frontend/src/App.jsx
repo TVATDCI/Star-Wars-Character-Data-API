@@ -9,9 +9,10 @@ import CharactersForm from "./components/CharactersForm";
 import LoginForm from "./components/reg-auth/LoginForm";
 import RegisterForm from "./components/reg-auth/RegisterForm";
 
-import SpaceBtn from "./components/buttons/SpaceBtn.jsx";
 import Button from "./components/buttons/Button.jsx";
 import ButtonGradient from "./components/buttons/ButtonGradient";
+import SpaceBtn from "./components/buttons/SpaceBtn.jsx";
+import BtnNeonGradient from "./components/buttons/BtnNeonGradient.jsx";
 function App() {
   const [background, setBackground] = useState("");
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
@@ -148,6 +149,7 @@ function App() {
             ) : (
               <div className="flex justify-around mb-flex-col items-center gap-4 mt-4">
                 <ButtonGradient />
+                <BtnNeonGradient />
                 <Button className="mt-4" onClick={() => setView("characters")}>
                   Characters
                 </Button>

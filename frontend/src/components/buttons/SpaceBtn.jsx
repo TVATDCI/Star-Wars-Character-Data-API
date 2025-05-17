@@ -1,4 +1,4 @@
-import ButtonSvg from "./ButtonSvg";
+import SpaceBtnSvg from "./SpaceBtnSvg"; //It is the shape, is a custom SVG component that renders the SpaceBtn.jsx's SVG graphics.
 
 /**
  * Button Component
@@ -35,7 +35,7 @@ const SpaceBtn = ({
   const renderButton = () => (
     <button className={classes} onClick={onClick}>
       <span className={spanClasses}>{children}</span>
-      {ButtonSvg(white)}
+      {SpaceBtnSvg(white)}
     </button>
   );
 
@@ -43,7 +43,7 @@ const SpaceBtn = ({
   const renderLink = () => (
     <a href={href} className={classes}>
       <span className={spanClasses}>{children}</span>
-      {ButtonSvg(white)}
+      {SpaceBtnSvg(white)}
     </a>
   );
 
