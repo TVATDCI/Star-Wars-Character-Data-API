@@ -115,7 +115,7 @@ function App() {
         {view === "info" && (
           <main className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-2 w-full max-w-2xl mx-auto">
             <p className="text-lg text-neutral-300 mb-6 leading-relaxed">
-              Create a{" "}
+              Welcome to{" "}
               <span className="font-semibold text-yellow-400 ">
                 REST API Admins dashboard
               </span>{" "}
