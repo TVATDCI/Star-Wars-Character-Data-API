@@ -103,15 +103,15 @@ function App() {
           <img
             src={starWarsNeonLogo}
             alt="Star Wars Logo"
-            className="mb-4 w-48 sm:w-64 md:w-80 lg:w-[28rem] xl:w-[32rem] 2xl:w-[36rem] mx-auto"
+            className="mb-4 w-48 sm:w-64 md:w-80 lg:w-[28rem] xl:w-[32rem] 2xl:w-[46rem] mx-auto"
           />
-          <h2 className="text-2xl text-neutral-800/90 font-bold mb-4">
+          <h2 className="text-2xl text-neutral-800/90 font-bold mt-2">
             Character Database API
           </h2>
         </header>
         {/* Main Content */}
         {view === "info" && (
-          <main className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-2 w-full max-w-2xl mx-auto">
+          <main className="text-center bg-neutral-800/5 backdrop-blur-sm p-4 rounded-xl shadow-2xl mt-2 2xl:mt-0 w-full max-w-2xl mx-auto">
             <p className="text-lg italic font-semibold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mb-6 leading-relaxed">
               Welcome to{" "}
               <span className="font-semibold text-[#FFC500] ">
