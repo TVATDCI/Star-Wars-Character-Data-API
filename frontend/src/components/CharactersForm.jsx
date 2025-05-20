@@ -113,7 +113,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
   return (
     <div className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
       <form onSubmit={handleSubmit}>
-        <h2 className="text-2xl text-red-600 font-bold mb-4">
+        <h2 className="text-2xl text-red-600 font-bold mb-2">
           {characterId ? "Edit Character" : "Add Character"}
         </h2>
         <input
@@ -148,7 +148,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           placeholder="Affiliation"
           className="mb-2 p-2 w-full"
         />
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Force Rating
           </label>
@@ -161,7 +161,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
             className="mb-2 p-2 w-full"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Combat Skill
           </label>
@@ -174,7 +174,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
             className="mb-2 p-2 w-full"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Piloting Ability
           </label>
@@ -187,7 +187,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
             className="mb-2 p-2 w-full"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Diplomacy Rating
           </label>
@@ -200,7 +200,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
             className="mb-2 p-2 w-full"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Weapon
           </label>
@@ -213,7 +213,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
             className="mb-2 p-2 w-full"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Vehicles
           </label>
@@ -240,7 +240,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           />
           Is Jedi
         </label>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Apparentices
           </label>
@@ -253,7 +253,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
             className="mb-2 p-2 w-full"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Master
           </label>
@@ -266,7 +266,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
             className="mb-2 p-2 w-full"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-left mb-1 text-sm font-semibold text-white">
             Notable Achievements
           </label>
