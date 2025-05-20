@@ -60,7 +60,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
 
   if (error) {
     return (
-      <div className="bg-neutral-800/20 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
+      <div className="bg-neutral-800/10 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
         <h2 className="text-2xl text-red-600 font-bold mb-4">Error</h2>
         <p className="text-red-500">{error}</p>
         <button
@@ -101,7 +101,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
 
   if (error) {
     return (
-      <div className="bg-neutral-800/20 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
+      <div className="bg-neutral-800/10 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
         <h2 className="text-2xl text-red-600 font-bold mb-4">Error</h2>
         <p className="text-red-500">{error}</p>
         <button
@@ -115,7 +115,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   }
 
   return (
-    <div className="text-center bg-neutral-800/10 backdrop-blur-sm p-8 rounded-xl shadow-2xl mt-14 w-full max-w-2xl mx-auto">
+    <div className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
       <h1 className="text-2xl text-red-600 font-bold mb-4">Characters</h1>
 
       <p className="text-sm text-green-400 italic mb-4">
@@ -136,7 +136,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         </>
       )}
       {/* Show characters list */}
-      <div className="bg-red-800/10 backdrop-blur-sm p-4 rounded-lg shadow-lg">
+      <div className="rounded-lg shadow-lg">
         {characters.length === 0 ? (
           <p className="text-neutral-400 text-center">No characters found.</p>
         ) : (

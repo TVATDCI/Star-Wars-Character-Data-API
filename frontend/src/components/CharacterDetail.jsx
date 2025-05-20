@@ -80,7 +80,7 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
   }
 
   return (
-    <div className="text-center bg-neutral-800/80 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
+    <div className="text-center bg-neutral-800/10 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
       {/* Header */}
       <p className="text-sm text-green-400 text-center italic mb-4">
         {userRole === "admin"

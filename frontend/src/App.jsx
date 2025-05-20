@@ -89,7 +89,7 @@ function App() {
     <>
       <NebulaCanvas className="z-0" />
       <div
-        className="h-screen flex flex-col items-center justify-center bg-cover bg-no-repeat bg-center"
+        className="min-h-screen flex flex-col items-center justify-center bg-cover bg-no-repeat bg-center mt-10"
         style={{
           backgroundImage: `url(${background})`,
           backgroundSize: "cover",
