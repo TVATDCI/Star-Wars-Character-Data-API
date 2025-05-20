@@ -148,54 +148,84 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           placeholder="Affiliation"
           className="mb-2 p-2 w-full"
         />
-        <input
-          type="number"
-          name="forceRating"
-          value={character.stats.forceRating}
-          onChange={handleStatsChange}
-          placeholder="Force Rating"
-          className="mb-2 p-2 w-full"
-        />
-        <input
-          type="number"
-          name="combatSkill"
-          value={character.stats.combatSkill}
-          onChange={handleStatsChange}
-          placeholder="Combat Skill"
-          className="mb-2 p-2 w-full"
-        />
-        <input
-          type="number"
-          name="pilotingAbility"
-          value={character.stats.pilotingAbility}
-          onChange={handleStatsChange}
-          placeholder="Piloting Ability"
-          className="mb-2 p-2 w-full"
-        />
-        <input
-          type="number"
-          name="diplomacyRating"
-          value={character.stats.diplomacyRating}
-          onChange={handleStatsChange}
-          placeholder="Diplomacy Rating"
-          className="mb-2 p-2 w-full"
-        />
-        <input
-          type="text"
-          name="weapons"
-          value={character.weapons.join(",")}
-          onChange={(e) => handleArrayChange(e, "weapons")}
-          placeholder="Weapons (comma separated)"
-          className="mb-2 p-2 w-full"
-        />
-        <input
-          type="text"
-          name="vehicles"
-          value={character.vehicles.join(",")}
-          onChange={(e) => handleArrayChange(e, "vehicles")}
-          placeholder="Vehicles (comma separated)"
-          className="mb-2 p-2 w-full"
-        />
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Force Rating
+          </label>
+          <input
+            type="number"
+            name="forceRating"
+            value={character.stats.forceRating}
+            onChange={handleStatsChange}
+            placeholder="Force Rating"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Combat Skill
+          </label>
+          <input
+            type="number"
+            name="combatSkill"
+            value={character.stats.combatSkill}
+            onChange={handleStatsChange}
+            placeholder="Combat Skill"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Piloting Ability
+          </label>
+          <input
+            type="number"
+            name="pilotingAbility"
+            value={character.stats.pilotingAbility}
+            onChange={handleStatsChange}
+            placeholder="Piloting Ability"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Diplomacy Rating
+          </label>
+          <input
+            type="number"
+            name="diplomacyRating"
+            value={character.stats.diplomacyRating}
+            onChange={handleStatsChange}
+            placeholder="Diplomacy Rating"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Weapon
+          </label>
+          <input
+            type="text"
+            name="weapons"
+            value={character.weapons.join(",")}
+            onChange={(e) => handleArrayChange(e, "weapons")}
+            placeholder="Weapons (comma separated)"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Vehicles
+          </label>
+          <input
+            type="text"
+            name="vehicles"
+            value={character.vehicles.join(",")}
+            onChange={(e) => handleArrayChange(e, "vehicles")}
+            placeholder="Vehicles (comma separated)"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
         <label className="mb-2 p-2 w-full">
           <input
             type="checkbox"
@@ -210,30 +240,45 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           />
           Is Jedi
         </label>
-        <input
-          type="text"
-          name="apprentices"
-          value={character.apprentices.join(",")}
-          onChange={(e) => handleArrayChange(e, "apprentices")}
-          placeholder="Apprentices (comma separated)"
-          className="mb-2 p-2 w-full"
-        />
-        <input
-          type="text"
-          name="master"
-          value={character.master}
-          onChange={handleChange}
-          placeholder="Master"
-          className="mb-2 p-2 w-full"
-        />
-        <input
-          type="text"
-          name="notableAchievements"
-          value={character.notableAchievements.join(",")}
-          onChange={(e) => handleArrayChange(e, "notableAchievements")}
-          placeholder="Notable Achievements (comma separated)"
-          className="mb-2 p-2 w-full"
-        />
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Apparentices
+          </label>
+          <input
+            type="text"
+            name="apprentices"
+            value={character.apprentices.join(",")}
+            onChange={(e) => handleArrayChange(e, "apprentices")}
+            placeholder="Apprentices (comma separated)"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Master
+          </label>
+          <input
+            type="text"
+            name="master"
+            value={character.master}
+            onChange={handleChange}
+            placeholder="Master"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-left mb-1 text-sm font-semibold text-white">
+            Notable Achievements
+          </label>
+          <input
+            type="text"
+            name="notableAchievements"
+            value={character.notableAchievements.join(",")}
+            onChange={(e) => handleArrayChange(e, "notableAchievements")}
+            placeholder="Notable Achievements (comma separated)"
+            className="mb-2 p-2 w-full"
+          />
+        </div>
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
           Save
         </button>
