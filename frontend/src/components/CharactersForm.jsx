@@ -111,7 +111,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
   };
 
   return (
-    <div className="text-center bg-neutral-800/10 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
+    <div className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
       <form onSubmit={handleSubmit}>
         <h2 className="text-2xl text-red-600 font-bold mb-4">
           {characterId ? "Edit Character" : "Add Character"}
