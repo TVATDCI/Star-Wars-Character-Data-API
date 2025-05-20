@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode"; // Import jwtDecode to decode the JWT token
+import Button from "../components/buttons/Button";
+import ButtonGradient from "../components/buttons/ButtonGradient";
+import SpaceBtn from "../components/buttons/SpaceBtn.jsx";
+import BtnNeonGradient from "../components/buttons/BtnNeonGradient.jsx";
 import PropTypes from "prop-types"; // Import PropTypes for props validation
 
 function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
@@ -111,8 +115,8 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   }
 
   return (
-    <div className="text-center bg-neutral-800/10 backdrop-blur-sm p-8 rounded-xl shadow-2xl mt-6 w-full max-w-2xl mx-auto">
-      <h2 className="text-2xl text-red-600 font-bold mb-4">Characters</h2>
+    <div className="text-center bg-neutral-800/10 backdrop-blur-sm p-8 rounded-xl shadow-2xl mt-14 w-full max-w-2xl mx-auto">
+      <h1 className="text-2xl text-red-600 font-bold mb-4">Characters</h1>
 
       <p className="text-sm text-green-400 italic mb-4">
         {userRole === "admin"
@@ -121,12 +125,15 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
       </p>
 
       {userRole === "admin" && (
-        <button
-          onClick={onAddCharacter}
-          className="bg-green-700 text-white font-semibold py-1 px-3 rounded hover:bg-green-900 transition duration-300 mb-4 w-full"
-        >
-          Add Character
-        </button>
+        <>
+          <ButtonGradient />
+          <Button
+            onClick={onAddCharacter}
+            className="font-semibold mb-4 w-full"
+          >
+            Add Character
+          </Button>
+        </>
       )}
       {/* Show characters list */}
       <div className="bg-red-800/10 backdrop-blur-sm p-4 rounded-lg shadow-lg">
@@ -137,22 +144,23 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
             {characters.map((character) => (
               <li
                 key={character._id}
-                className="flex justify-between items-center text-neutral-200 hover:text-red-500 transition duration-300"
+                className="flex justify-between items-center bg-neutral-800/20 p-2 rounded-lg shadow-md hover:bg-neutral-800/35 transition duration-300"
               >
-                <span
-                  className="cursor-pointer hover:text-red-600"
+                <SpaceBtn
+                  className="text-lg font-semibold text-neutral-300"
                   onClick={() => onSelectCharacter(character._id)}
                 >
                   {character.name}
-                </span>
-
+                </SpaceBtn>
+                <BtnNeonGradient />
+                <ButtonGradient />
                 {userRole === "admin" && (
-                  <button
+                  <Button
                     onClick={() => handleDelete(character._id)}
-                    className="bg-red-500 text-white text-sm px-2 py-0.5 rounded hover:bg-red-700 transition duration-300"
+                    className="px-2 py-1 "
                   >
                     Delete
-                  </button>
+                  </Button>
                 )}
               </li>
             ))}
@@ -160,12 +168,9 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         )}
       </div>
 
-      <button
-        onClick={returnToInfo}
-        className="text-blue-500 hover:text-cyan-400 mt-6 block w-full text-center transition duration-300"
-      >
-        ⬅ Return to Info
-      </button>
+      <Button onClick={returnToInfo} className="mt-6 block w-full text-center">
+        Return to Info
+      </Button>
     </div>
   );
 }
