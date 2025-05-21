@@ -9,7 +9,7 @@ import Button from "../components/buttons/Button";
 
 function Detail({ label, value }) {
   return (
-    <p className="text-neutral-300 font-bold mb-2 ">
+    <p className="text-yellow-500 font-bold mb-2 ">
       <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 font-bold">
         {label}:
       </span>{" "}
@@ -89,7 +89,7 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
       </p>
       {/* Header row */}
       <div className="flex flex-wrap gap-2 justify-center sm:justify-between items-center mb-6">
-        <Button onClick={onBack} className="text-neutral-300">
+        <Button onClick={onBack} className="font-bold">
           Back
         </Button>
         <ButtonGradient />
@@ -105,7 +105,7 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
       </div>
 
       {/* Character name */}
-      <h2 className="text-3xl text-red-500 font-bold mb-10 ">
+      <h2 className="text-4xl text-red-500 font-extrabold mb-10 ">
         {character.name}
       </h2>
 
