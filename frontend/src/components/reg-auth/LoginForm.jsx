@@ -39,9 +39,9 @@ function LoginForm({ onLogin }) {
   };
 
   return (
-    <div className="bg-neutral-800/20 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
+    <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
       <form onSubmit={handleSubmit}>
-        <h2 className="text-2xl text-red-600 font-bold mb-4">Login</h2>
+        <h2 className="text-2xl text-red-600 p-2 font-bold mb-2">Login</h2>
         <input
           type="email"
           value={email}
