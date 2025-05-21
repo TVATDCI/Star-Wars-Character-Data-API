@@ -10,7 +10,7 @@ export default function TextInput({
   return (
     <div className="mb-2">
       {label && (
-        <label className="block text-left mb-1 text-sm font-semibold text-white">
+        <label className="block text-left mb-1 text-sm font-semibold text-red-500">
           {label}
         </label>
       )}

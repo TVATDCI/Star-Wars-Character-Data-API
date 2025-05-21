@@ -113,7 +113,7 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         <Detail label="Height" value={`${character.height} cm`} />
         <Detail label="Species" value={character.species} />
-        <Detail label="Homeworld" value={character.homeworld} />
+        <Detail label="Home world" value={character.homeworld} />
         <Detail label="Affiliation" value={character.affiliation} />
         <Detail label="Force Rating" value={character.stats.forceRating} />
         <Detail label="Combat Skill" value={character.stats.combatSkill} />
@@ -125,7 +125,7 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
           label="Diplomacy Rating"
           value={character.stats.diplomacyRating}
         />
-        <Detail label="Is Jedi" value={character.isJedi ? "Yes" : "No"} />
+        <Detail label="Is 👾 Jedi" value={character.isJedi ? "Yes" : "No"} />
         <Detail label="Master" value={character.master || "None"} />
         <Detail
           label="Apprentices"

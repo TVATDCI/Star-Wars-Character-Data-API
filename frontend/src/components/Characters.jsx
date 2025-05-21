@@ -157,7 +157,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
                 {userRole === "admin" && (
                   <Button
                     onClick={() => handleDelete(character._id)}
-                    className="px-2 py-1 "
+                    className="px-2 py-1"
                   >
                     Delete
                   </Button>

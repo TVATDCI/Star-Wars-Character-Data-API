@@ -22,7 +22,7 @@ const Button = ({ className, href, onClick, children, px = "px-7", white }) => {
   const location = useLocation();
 
   // Construct the CSS classes for the button/link
-  const classes = `button relative inline-flex items-center justify-center py-2 transition-colors hover:text-yellow-400 ${px} ${
+  const classes = `button relative inline-flex items-center justify-center py-2 transition-colors hover:text-red-500 ${px} ${
     white ? "text-neutral-800" : "text-yellow-400/50"
   } ${className || ""}`;
 
