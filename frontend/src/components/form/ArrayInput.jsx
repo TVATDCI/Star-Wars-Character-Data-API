@@ -11,7 +11,7 @@ export default function ArrayInput({ label, name, value, onChange }) {
       <input
         type="text"
         name={name}
-        value={value.join(",")}
+        value={value.join(", ")}
         onChange={(e) => onChange(e, name)}
         placeholder={`${label} (comma separated)`}
         className="p-2 w-full"

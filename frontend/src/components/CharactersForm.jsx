@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import PropTypes from "prop-types";
 
+import TextInput from "./form/TextInput";
+import NumberInput from "./form/NumberInput";
+import ArrayInput from "./form/ArrayInput"; // NOTE: Check module logic in form/ArrayInput.jsx
+import CheckboxInput from "./form/CheckboxInput"; // NOTE: Check module logic in form/CheckboxInput.jsx
+
+import BtnNeonGradient from "./buttons/BtnNeonGradient";
+import SpaceBtn from "./buttons/SpaceBtn";
+
 function CharacterForm({ characterId, onSave, onCancel }) {
   const [userRole, setUserRole] = useState("user");
   console.log("User role in CharacterForm:", userRole);
@@ -116,169 +124,110 @@ function CharacterForm({ characterId, onSave, onCancel }) {
         <h2 className="text-2xl text-red-600 font-bold mb-2">
           {characterId ? "Edit Character" : "Add Character"}
         </h2>
-        <input
-          type="text"
+        <TextInput
+          label="Name"
           name="name"
           value={character.name}
           onChange={handleChange}
-          placeholder="Name"
-          className="mb-2 p-2 w-full "
+          placeholder="Character Name"
         />
-        <input
-          type="text"
+        <TextInput
+          label="Species"
           name="species"
           value={character.species}
           onChange={handleChange}
           placeholder="Species"
-          className="mb-2 p-2 w-full"
         />
-        <input
-          type="text"
+        <TextInput
+          label="Home World"
           name="homeworld"
           value={character.homeworld}
           onChange={handleChange}
           placeholder="Homeworld"
-          className="mb-2 p-2 w-full"
         />
-        <input
-          type="text"
+        <TextInput
+          label="Affiliation"
           name="affiliation"
           value={character.affiliation}
           onChange={handleChange}
           placeholder="Affiliation"
+        />
+        <NumberInput
+          label="Force Rating"
+          name="forceRating"
+          value={character.stats.forceRating}
+          onChange={handleStatsChange}
+          placeholder="Force Rating"
+        />
+        <NumberInput
+          label="Combat Skill"
+          name="combatSkill"
+          value={character.stats.combatSkill}
+          onChange={handleStatsChange}
+          placeholder="Combat Skill"
+        />
+        <NumberInput
+          label="Piloting Ability"
+          name="pilotingAbility"
+          value={character.stats.pilotingAbility}
+          onChange={handleStatsChange}
+          placeholder="Piloting Ability"
+        />
+        <NumberInput
+          label="Diplomacy Rating"
+          name="diplomacyRating"
+          value={character.stats.diplomacyRating}
+          onChange={handleStatsChange}
+          placeholder="Diplomacy Rating"
+        />
+        <ArrayInput
+          label="Weapons"
+          name="weapons"
+          value={character.weapons}
+          onChange={handleArrayChange}
+          placeholder="Weapons (comma separated)"
+        />
+        <ArrayInput
+          label="Vehicles"
+          name="vehicles"
+          value={character.vehicles}
+          onChange={handleArrayChange}
+          placeholder="Vehicles (comma separated)"
+        />
+        <CheckboxInput
+          label="Is 👾 Jedi ?"
+          name="isJedi"
+          checked={character.isJedi}
+          onChange={(e) =>
+            setCharacter((prevCharacter) => ({
+              ...prevCharacter,
+              isJedi: e.target.checked,
+            }))
+          }
+          placeholder="Is Jedi"
           className="mb-2 p-2 w-full"
         />
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Force Rating
-          </label>
-          <input
-            type="number"
-            name="forceRating"
-            value={character.stats.forceRating}
-            onChange={handleStatsChange}
-            placeholder="Force Rating"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Combat Skill
-          </label>
-          <input
-            type="number"
-            name="combatSkill"
-            value={character.stats.combatSkill}
-            onChange={handleStatsChange}
-            placeholder="Combat Skill"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Piloting Ability
-          </label>
-          <input
-            type="number"
-            name="pilotingAbility"
-            value={character.stats.pilotingAbility}
-            onChange={handleStatsChange}
-            placeholder="Piloting Ability"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Diplomacy Rating
-          </label>
-          <input
-            type="number"
-            name="diplomacyRating"
-            value={character.stats.diplomacyRating}
-            onChange={handleStatsChange}
-            placeholder="Diplomacy Rating"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Weapon
-          </label>
-          <input
-            type="text"
-            name="weapons"
-            value={character.weapons.join(",")}
-            onChange={(e) => handleArrayChange(e, "weapons")}
-            placeholder="Weapons (comma separated)"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Vehicles
-          </label>
-          <input
-            type="text"
-            name="vehicles"
-            value={character.vehicles.join(",")}
-            onChange={(e) => handleArrayChange(e, "vehicles")}
-            placeholder="Vehicles (comma separated)"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
-        <label className="mb-2 p-2 w-full">
-          <input
-            type="checkbox"
-            name="isJedi"
-            checked={character.isJedi}
-            onChange={(e) =>
-              setCharacter((prevCharacter) => ({
-                ...prevCharacter,
-                isJedi: e.target.checked,
-              }))
-            }
-          />
-          Is Jedi
-        </label>
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Apparentices
-          </label>
-          <input
-            type="text"
-            name="apprentices"
-            value={character.apprentices.join(",")}
-            onChange={(e) => handleArrayChange(e, "apprentices")}
-            placeholder="Apprentices (comma separated)"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Master
-          </label>
-          <input
-            type="text"
-            name="master"
-            value={character.master}
-            onChange={handleChange}
-            placeholder="Master"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
-        <div className="mb-2">
-          <label className="block text-left mb-1 text-sm font-semibold text-white">
-            Notable Achievements
-          </label>
-          <input
-            type="text"
-            name="notableAchievements"
-            value={character.notableAchievements.join(",")}
-            onChange={(e) => handleArrayChange(e, "notableAchievements")}
-            placeholder="Notable Achievements (comma separated)"
-            className="mb-2 p-2 w-full"
-          />
-        </div>
+        <ArrayInput
+          label="Apprentices"
+          name="apprentices"
+          value={character.apprentices}
+          onChange={handleArrayChange}
+          placeholder="Apprentices (comma separated)"
+        />
+        <TextInput
+          label="Master"
+          name="master"
+          value={character.master}
+          onChange={handleChange}
+          placeholder="Master"
+        />
+        <ArrayInput
+          label="Notable Achievements"
+          name="notableAchievements"
+          value={character.notableAchievements}
+          onChange={handleArrayChange}
+          placeholder="Notable Achievements (comma separated)"
+        />
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
           Save
         </button>

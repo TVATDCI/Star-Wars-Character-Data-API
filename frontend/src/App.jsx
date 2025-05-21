@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import NebulaCanvas from "./components/spaceAtmos/NebulaCanvas";
-import starWarsLogo from "./assets/star-wars-gold.svg";
 import starWarsNeonLogo from "./assets/star-wars-neon.svg";
 
 import Characters from "./components/Characters";
