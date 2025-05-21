@@ -16,6 +16,7 @@ function CharacterForm({ characterId, onSave, onCancel }) {
 
   const [character, setCharacter] = useState({
     name: "",
+    height: 0,
     species: "",
     homeworld: "",
     affiliation: "",
@@ -73,11 +74,18 @@ function CharacterForm({ characterId, onSave, onCancel }) {
     }
   }, [characterId]);
 
+  // Modified Handle input changes, converting numeric fields to numbers
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Automatically convert to number if the field is numeric
+    const parsedValue = value !== "" && !isNaN(value) ? Number(value) : value;
+
+    console.log(`Updating field: ${name}, Value: ${parsedValue}`); // Debugging log
+
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      [name]: value,
+      [name]: parsedValue, // Update the field dynamically
     }));
   };
 
@@ -131,6 +139,13 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           value={character.name}
           onChange={handleChange}
           placeholder="Character Name"
+        />
+        <NumberInput
+          label="Height"
+          name="height"
+          value={character.height}
+          onChange={handleChange}
+          placeholder="Height (cm)"
         />
         <TextInput
           label="Species"

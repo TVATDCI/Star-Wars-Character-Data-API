@@ -11,8 +11,9 @@ export default function NumberInput({ label, name, value, onChange }) {
       <input
         type="number"
         name={name}
-        value={value}
+        value={value || ""} // Ensure value is a string for controlled input
         onChange={onChange}
+        min="0"
         placeholder={label}
         className="p-2 w-full"
       />
