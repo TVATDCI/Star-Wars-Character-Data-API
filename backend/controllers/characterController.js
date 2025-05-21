@@ -6,6 +6,7 @@ const formatCharacter = (character) => {
   return {
     name: character.name,
     _id: character._id,
+    height: character.height, // height was added later to the model!
     species: character.species,
     homeworld: character.homeworld,
     affiliation: character.affiliation,

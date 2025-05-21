@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 const characterSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  height: { type: Number, min: 0 }, // Do not forget to add the height field to controller!
   species: { type: String, required: true },
   homeworld: { type: String, required: true },
   affiliation: { type: String, required: true },
@@ -27,4 +28,4 @@ const Character = mongoose.model("Character", characterSchema);
 
 export default Character;
 
-// Next stop creating controllers/characterController.js file to handle the CRUD operations for the characters data.
+// NOTE: Next stop creating controllers/characterController.js file to handle the CRUD operations for the characters data.
