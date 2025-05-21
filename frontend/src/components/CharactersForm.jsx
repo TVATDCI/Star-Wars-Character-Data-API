@@ -244,16 +244,15 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           onChange={handleArrayChange}
           placeholder="Notable Achievements (comma separated)"
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          Save
-        </button>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="bg-red-500 text-white p-2 rounded ml-2"
-        >
-          Cancel
-        </button>
+        <div className="flex justify-between mt-4">
+          <SpaceBtn type="submit" className="text-white">
+            Save
+          </SpaceBtn>
+          <BtnNeonGradient />
+          <SpaceBtn type="button" onClick={onCancel} className="text-white">
+            Cancel
+          </SpaceBtn>
+        </div>
       </form>
     </div>
   );
