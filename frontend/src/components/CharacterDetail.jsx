@@ -9,7 +9,7 @@ import Button from "../components/buttons/Button";
 
 function Detail({ label, value }) {
   return (
-    <p className="text-yellow-500 font-bold mb-2 ">
+    <p className="text-pink-200/70 font-bold mb-2 ">
       <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 font-bold">
         {label}:
       </span>{" "}
