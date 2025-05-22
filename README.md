@@ -70,6 +70,11 @@ project-root/
 │ │ │ ├── Characters.jsx
 │ │ │ ├── CharacterDetail.jsx
 │ │ │ └── CharacterForm.jsx
+│ │ │ ├── form/
+│ │ │ ├── ArrayInput.jsx
+│ │ │ ├── CheckboxInput.jsx
+│ │ │ └── NumberInput.jsx
+│ │ │ └── TextInput.jsx
 │ │ ├── App.jsx
 │ │ └── App.css
 │ │ ├── index.css
