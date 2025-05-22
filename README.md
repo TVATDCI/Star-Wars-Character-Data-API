@@ -56,10 +56,10 @@ project-root/
 │ │ ├── authMiddleware.js
 │ │ └── requireAdmin.js
 │ ├── models/
-│ │ └── characterModel.js
+│ │ ├── characterModel.js
 │ │ └── userModel.js
 │ ├── routes/
-│ │ └── characterRoutes.js
+│ │ ├── characterRoutes.js
 │ │ └── publicRoutes.js
 │ ├── app.js
 │ └── package.json
@@ -71,23 +71,26 @@ project-root/
 │ │ │ ├── CharacterDetail.jsx
 │ │ │ └── CharacterForm.jsx
 │ │ │ ├── form/
-│ │ │ ├── ArrayInput.jsx
-│ │ │ ├── CheckboxInput.jsx
-│ │ │ └── NumberInput.jsx
-│ │ │ └── TextInput.jsx
+│ │ │ │      ├── ArrayInput.jsx
+│ │ │ │      ├── CheckboxInput.jsx
+│ │ │ │      ├── NumberInput.jsx
+│ │ │ │      └── TextInput.jsx
 │ │ │ ├── reg-auth/
-│ │ │ ├── LoginForm.jsx
-│ │ │ ├── RegisterForm.jsx
-│ │ │ ├── space/
-│ │ │ ├── ArrayInput.jsx
-│ │ │ ├── CheckboxInput.jsx
+│ │ │ │      ├── LoginForm.jsx
+│ │ │ │      └── RegisterForm.jsx
+│ │ │ ├── spaceAtmos/
+│ │ │ │      ├── NebulaCanvas.jsx
+│ │ │ │      ├── nebulaCloud.js
+│ │ │ │      └── star.js
+│ │ │ └── utils/
+│ │ │        └── debounce.js
 │ │ ├── App.jsx
-│ │ └── App.css
-│ │ ├── index.css
+│ │ ├── App.css
+│ │ └── index.css
 │ ├── main.jsx
-│ └── package-lock.json
-│ └── package.json
-│ └── postcss.config.js
+│ ├── package-lock.json
+│ ├── package.json
+│ ├── postcss.config.js
 │ └── tailwind.config.js
 ├── .gitignore
 ├── README.md
