@@ -67,6 +67,13 @@ project-root/
 │ ├── public/
 │ ├── src/
 │ │ ├── components/
+│ │ │ ├── buttons/
+│ │ │ │   ├── BtnNeonGradient.jsx
+│ │ │ │   ├── Button.jsx
+│ │ │ │   ├── ButtonGradient.jsx
+│ │ │ │   ├── ButtonSvg.jsx
+│ │ │ │   ├── SpaceBtn.jsx
+│ │ │ │   └── SpaceBtnSvg.jsx
 │ │ │ ├── Characters.jsx
 │ │ │ ├── CharacterDetail.jsx
 │ │ │ └── CharacterForm.jsx
