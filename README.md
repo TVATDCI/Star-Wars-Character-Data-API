@@ -71,19 +71,19 @@ project-root/
 │ │ │ ├── CharacterDetail.jsx
 │ │ │ └── CharacterForm.jsx
 │ │ │ ├── form/
-│ │ │ │      ├── ArrayInput.jsx
-│ │ │ │      ├── CheckboxInput.jsx
-│ │ │ │      ├── NumberInput.jsx
-│ │ │ │      └── TextInput.jsx
+│ │ │ │   ├── ArrayInput.jsx
+│ │ │ │   ├── CheckboxInput.jsx
+│ │ │ │   ├── NumberInput.jsx
+│ │ │ │   └── TextInput.jsx
 │ │ │ ├── reg-auth/
-│ │ │ │      ├── LoginForm.jsx
-│ │ │ │      └── RegisterForm.jsx
+│ │ │ │   ├── LoginForm.jsx
+│ │ │ │   └── RegisterForm.jsx
 │ │ │ ├── spaceAtmos/
-│ │ │ │      ├── NebulaCanvas.jsx
-│ │ │ │      ├── nebulaCloud.js
-│ │ │ │      └── star.js
+│ │ │ │   ├── NebulaCanvas.jsx
+│ │ │ │   ├── nebulaCloud.js
+│ │ │ │   └── star.js
 │ │ │ └── utils/
-│ │ │        └── debounce.js
+│ │ │     └── debounce.js
 │ │ ├── App.jsx
 │ │ ├── App.css
 │ │ └── index.css
