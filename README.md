@@ -75,6 +75,12 @@ project-root/
 │ │ │ ├── CheckboxInput.jsx
 │ │ │ └── NumberInput.jsx
 │ │ │ └── TextInput.jsx
+│ │ │ ├── reg-auth/
+│ │ │ ├── LoginForm.jsx
+│ │ │ ├── RegisterForm.jsx
+│ │ │ ├── space/
+│ │ │ ├── ArrayInput.jsx
+│ │ │ ├── CheckboxInput.jsx
 │ │ ├── App.jsx
 │ │ └── App.css
 │ │ ├── index.css
