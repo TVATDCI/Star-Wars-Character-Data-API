@@ -18,7 +18,10 @@ import User from "./models/userModel.js";
 // npm install jsonwebtoken for token generation
 import jwt from "jsonwebtoken";
 
-dotenv.config();
+const env = process.env.NODE_ENV || "development";
+dotenv.config({
+  path: `.env.${env}`,
+});
 
 connectDB();
 //#Initialize middleware
