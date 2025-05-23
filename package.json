@@ -1,0 +1,23 @@
+{
+  "name": "StarWars Character Database API",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node backend/app.js",
+    "client": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "node backend/app.js",
+    "seed": "node backend/libs/seeds.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
