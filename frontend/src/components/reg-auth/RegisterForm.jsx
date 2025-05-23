@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 function RegisterForm({ onRegister }) {
   const [email, setEmail] = useState("");
@@ -47,5 +48,8 @@ function RegisterForm({ onRegister }) {
     </div>
   );
 }
+RegisterForm.propTypes = {
+  onRegister: PropTypes.func.isRequired,
+};
 
 export default RegisterForm;
