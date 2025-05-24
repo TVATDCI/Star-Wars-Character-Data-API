@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getStoredToken, clearStoredToken } from "./components/utils/auth";
 import "./App.css";
 import NebulaCanvas from "./components/spaceAtmos/NebulaCanvas";
 import starWarsNeonLogo from "./assets/star-wars-neon.svg";
