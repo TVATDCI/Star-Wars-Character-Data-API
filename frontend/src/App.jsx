@@ -25,12 +25,9 @@ function App() {
     const imgUrl = "https://www.transparenttextures.com/patterns/stardust.png";
     setBackground(imgUrl);
 
-    const token = localStorage.getItem("token");
-    const storedUserEmail = localStorage.getItem("userEmail");
-    const storedUserRole = localStorage.getItem("userRole");
-    if (token && storedUserEmail && storedUserRole) {
-      // Set user state and roll from localStorage
-      setUser({ email: storedUserEmail, role: storedUserRole });
+    const storedData = getStoredToken();
+    if (storedData) {
+      setUser(storedData.user);
     }
   }, []);
 
@@ -73,16 +70,12 @@ function App() {
   const handleLogout = () => {
     console.log("Logging out...");
     setUser(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userRole"); // Remove userRole as well
-    console.log("Token, userEmail and userRole removed from localStorage");
+    clearStoredToken();
+    console.log("Token, userEmail, and userRole removed from localStorage");
     setView("info");
     alert("You have successfully logged out.");
   };
-
-  const token = localStorage.getItem("token"); // Retrieve token from localStorage
-
+  // Debugging logs
   console.log("User role in App:", user?.role);
 
   return (
