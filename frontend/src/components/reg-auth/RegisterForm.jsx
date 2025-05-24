@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
+import { registerUser } from "../utils/api";
 
 function RegisterForm({ onRegister }) {
   const [email, setEmail] = useState("");
@@ -7,21 +7,15 @@ function RegisterForm({ onRegister }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
+    try {
+      await registerUser(email, password);
       alert("User registered successfully");
       onRegister();
-    } else {
-      alert(data.error);
+    } catch (error) {
+      alert(error.message);
     }
   };
+  // #:(RBAC) role-based access control from the backend!
 
   return (
     <div className="bg-neutral-800/20 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
@@ -48,8 +42,5 @@ function RegisterForm({ onRegister }) {
     </div>
   );
 }
-RegisterForm.propTypes = {
-  onRegister: PropTypes.func.isRequired,
-};
 
 export default RegisterForm;
