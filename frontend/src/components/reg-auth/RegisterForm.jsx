@@ -23,6 +23,7 @@ function RegisterForm({ onRegister }) {
         <h2 className="text-2xl text-red-600 font-bold mb-4">Register</h2>
         <input
           type="email"
+          autoComplete="current-email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
@@ -30,6 +31,7 @@ function RegisterForm({ onRegister }) {
         />
         <input
           type="password"
+          autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"

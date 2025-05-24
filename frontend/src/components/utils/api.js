@@ -1,4 +1,7 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// This file contains the API call for user registration
+//const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// Check if the environment variable is set
+//console.log("API_BASE_URL:", API_BASE_URL); // Debugging log
 
 // utils/api.js
 export async function registerUser(email, password) {
@@ -17,6 +20,7 @@ export async function registerUser(email, password) {
 }
 
 // The register function is refactored to keep the code DRY
-// 1. Centralized API URL easier to manage endpoints later
-// 2. Easier to test and can be reused anywhere in the app!
+// 1. Extracted API base URL via VITE_API_BASE_URL
+// 2. Centralized API URL easier to manage endpoints later
+// 3. Easier to test and can be reused anywhere in the app!
 // Next stop - import this function in the RegisterForm component
