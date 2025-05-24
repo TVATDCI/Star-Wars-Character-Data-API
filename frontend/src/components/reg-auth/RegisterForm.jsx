@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { registerUser } from "../utils/api";
+import PropTypes from "prop-types";
+
+// Add customized button component
+import SpaceBtn from "../buttons/SpaceBtn";
+import BtnNeoGradient from "../buttons/BtnNeonGradient";
 
 function RegisterForm({ onRegister }) {
   const [email, setEmail] = useState("");
@@ -18,9 +23,9 @@ function RegisterForm({ onRegister }) {
   // #:(RBAC) role-based access control from the backend!
 
   return (
-    <div className="bg-neutral-800/20 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
+    <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
       <form onSubmit={handleSubmit}>
-        <h2 className="text-2xl text-red-600 font-bold mb-4">Register</h2>
+        <h2 className="text-2xl text-red-600 p-2 font-bold mb-2">Register</h2>
         <input
           type="email"
           autoComplete="current-email"
@@ -37,9 +42,10 @@ function RegisterForm({ onRegister }) {
           placeholder="Password"
           className="mb-2 p-2 w-full"
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        <BtnNeoGradient />
+        <SpaceBtn type="submit" className="mt-4 text-center text-yellow-400">
           Register
-        </button>
+        </SpaceBtn>
       </form>
     </div>
   );
