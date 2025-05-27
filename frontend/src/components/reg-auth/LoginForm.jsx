@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { loginUser } from "../utils/api"; // Add refactored API loginUser function
+import { storeAuthData } from "../utils/auth"; // Import extra stareAuthData for loginUser only!
 import PropTypes from "prop-types";
 import SpaceBtn from "../buttons/SpaceBtn";
 import BtnNeoGradient from "../buttons/BtnNeonGradient";
@@ -7,34 +9,18 @@ function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // NOTE: the handleSubmit function logic is now abstracted away to // utils/api.js and utils/auth.js for reusability experiment!
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const data = await loginUser(email, password); // { token, role }
 
-      const data = await response.json();
-      console.log("Login response:", data); // check if the backend is returning the expected data
-      // #:(RBAC) role-based access control from the backend!
-      if (response.ok) {
-        console.log("Token received:", data.token); // Check if the token is received
-        localStorage.setItem("token", data.token); // Store the token in local storage
-        localStorage.setItem("userEmail", email); // Store EXTRA user email in local storage
-        localStorage.setItem("userRole", data.role); // Store user role in local storage
-        // Pass user email and role to the onLogin callback
-        onLogin({ email, role: data.role }); // Pass the user email to the onLogin callback
-      } else {
-        console.error("Login failed:", data.error); // Debugging log
-        alert(data.error);
-      }
+      storeAuthData(data.token, email, data.role); // now abstracted away
+
+      onLogin({ email, role: data.role }); // pass to parent
     } catch (error) {
-      console.error("Error during login:", error); // Debugging log
-      alert("An error occurred. Please try again.");
+      console.error("Login error:", error.message);
+      alert(error.message);
     }
   };
 

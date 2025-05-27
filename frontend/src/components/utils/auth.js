@@ -11,6 +11,12 @@ export const getStoredToken = () => {
   return null;
 };
 
+export const storeAuthData = (token, email, role) => {
+  localStorage.setItem("token", token);
+  localStorage.setItem("userEmail", email);
+  localStorage.setItem("userRole", role);
+};
+
 export const clearStoredToken = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userEmail");

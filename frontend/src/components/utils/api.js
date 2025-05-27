@@ -32,7 +32,7 @@ export async function loginUser(email, password) {
     throw new Error(errorData.error || "Login failed");
   }
 
-  return response.json(); // return token and user role
+  return response.json(); // return token and user
 }
 
 // The register function is refactored to keep the code DRY
