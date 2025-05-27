@@ -1,5 +1,4 @@
-// components/utils/auth.js
-
+// # Utility functions for authentication!
 export const storeAuthData = (token, email, role) => {
   localStorage.setItem("token", token);
   localStorage.setItem("userEmail", email);
