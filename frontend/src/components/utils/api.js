@@ -18,23 +18,6 @@ export async function registerUser(email, password) {
 
   return response.json(); // only call .json() on OK response
 }
-
-// utils/api.js - LoginUser
-export async function loginUser(email, password) {
-  const response = await fetch("http://localhost:5000/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({})); // Prevent crash if empty body
-    throw new Error(errorData.error || "Login failed");
-  }
-
-  return response.json(); // return token and user
-}
-
 // The register function is refactored to keep the code DRY
 // 1. Extracted API base URL via VITE_API_BASE_URL
 // 2. Centralized API URL easier to manage endpoints later

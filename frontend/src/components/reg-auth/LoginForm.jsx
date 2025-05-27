@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { loginUser } from "../utils/api"; // Add refactored API loginUser function
-import { storeAuthData } from "../utils/auth"; // Import extra stareAuthData for loginUser only!
+import { loginUser } from "../utils/auth";
 import PropTypes from "prop-types";
 import SpaceBtn from "../buttons/SpaceBtn";
 import BtnNeoGradient from "../buttons/BtnNeonGradient";
@@ -9,18 +8,13 @@ function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // NOTE: the handleSubmit function logic is now abstracted away to // utils/api.js and utils/auth.js for reusability experiment!
+  // NOTE: the handleSubmit function logic is now abstracted away to // utils/auth.js and utils/auth.js for reusability experiment!
+  // #The loginUser function now returns as loginUser(email, password) from utils/auth.js
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const data = await loginUser(email, password); // { token, role }
-
-      storeAuthData(data.token, email, data.role); // now abstracted away
-
-      onLogin({ email, role: data.role }); // pass to parent
-    } catch (error) {
-      console.error("Login error:", error.message);
-      alert(error.message);
+    const userData = await loginUser(email, password);
+    if (userData) {
+      onLogin(userData); // { email, role }
     }
   };
 

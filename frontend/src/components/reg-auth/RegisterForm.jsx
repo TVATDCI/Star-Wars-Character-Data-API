@@ -10,6 +10,7 @@ function RegisterForm({ onRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // NOTE: the handleSubmit function logic is now abstracted away to // utils/api.js and utils/api.js for reusability experiment!
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
