@@ -3,7 +3,7 @@
 // Check if the environment variable is set
 //console.log("API_BASE_URL:", API_BASE_URL); // Debugging log
 
-// utils/api.js
+// utils/api.js - RegisterUser
 export async function registerUser(email, password) {
   const response = await fetch("http://localhost:5000/register", {
     method: "POST",
@@ -17,6 +17,22 @@ export async function registerUser(email, password) {
   }
 
   return response.json(); // only call .json() on OK response
+}
+
+// utils/api.js - LoginUser
+export async function loginUser(email, password) {
+  const response = await fetch("http://localhost:5000/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({})); // Prevent crash if empty body
+    throw new Error(errorData.error || "Login failed");
+  }
+
+  return response.json(); // return token and user role
 }
 
 // The register function is refactored to keep the code DRY
