@@ -44,7 +44,7 @@ function LoginForm({ onLogin, returnToInfo }) {
         <SpaceBtn type="submit" className="mt-4 text-center text-yellow-400">
           Login
         </SpaceBtn>
-        <Button onClick={returnToInfo} className="ml-4 text-center">
+        <Button onClick={returnToInfo} className="block ml-6 text-center">
           Return to Info
         </Button>
       </form>
