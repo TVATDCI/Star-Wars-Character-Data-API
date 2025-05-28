@@ -90,7 +90,12 @@ project-root/
 │ │ │ │   ├── nebulaCloud.js
 │ │ │ │   └── star.js
 │ │ │ └── utils/
-│ │ │     └── debounce.js
+│ │ │ │   └── debounce.js
+│ │ │ └── views/
+│ │ │ │   └── InfoPage.jsx
+│ │ │ └── ViewRouter.jsx
+│ │ ├── context/
+│ │ │ ├── AppContext.jsx
 │ │ ├── App.jsx
 │ │ ├── App.css
 │ │ └── index.css
