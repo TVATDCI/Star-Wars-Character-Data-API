@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getStoredToken } from "./utils/auth";
 import { jwtDecode } from "jwt-decode"; // Import jwtDecode to decode the JWT token
 import Button from "../components/buttons/Button";
 import ButtonGradient from "../components/buttons/ButtonGradient";
@@ -9,6 +10,7 @@ import PropTypes from "prop-types"; // Import PropTypes for props validation
 function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [characters, setCharacters] = useState([]);
   const [error, setError] = useState(null);
+  const auth = getStoredToken(); // reuse getStoredToken function to get the token
   const [userRole, setUserRole] = useState("user"); // default role to user
   console.log("User role in Characters:", userRole);
   const [loading, setLoading] = useState(true);
@@ -54,7 +56,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   }, []); // Empty dependency array to avoid re-fetching on every render
 
   // Return a msg when the user is not logged in
-  if (!localStorage.getItem("token")) {
+  if (!auth || !auth.token) {
     return (
       <div className="text-neutral-200">
         You are not logged in. Please <ButtonGradient />
