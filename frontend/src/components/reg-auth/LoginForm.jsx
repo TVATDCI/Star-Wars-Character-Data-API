@@ -3,8 +3,10 @@ import { loginUser } from "../utils/auth";
 import PropTypes from "prop-types";
 import SpaceBtn from "../buttons/SpaceBtn";
 import BtnNeoGradient from "../buttons/BtnNeonGradient";
+import Button from "../buttons/Button.jsx";
+import ButtonGradient from "../buttons/ButtonGradient.jsx";
 
-function LoginForm({ onLogin }) {
+function LoginForm({ onLogin, returnToInfo }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,15 +40,20 @@ function LoginForm({ onLogin }) {
         />
         {/* Future plan - add a checkbox for "Remember Me" */}
         <BtnNeoGradient />
+        <ButtonGradient />
         <SpaceBtn type="submit" className="mt-4 text-center text-yellow-400">
           Login
         </SpaceBtn>
+        <Button onClick={returnToInfo} className="ml-4 text-center">
+          Return to Info
+        </Button>
       </form>
     </div>
   );
 }
 LoginForm.propTypes = {
   onLogin: PropTypes.func.isRequired,
+  returnToInfo: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

@@ -89,7 +89,9 @@ export default function ViewRouter() {
       );
 
     case "login":
-      return <LoginForm onLogin={handleLogin} />;
+      return (
+        <LoginForm onLogin={handleLogin} returnToInfo={handleReturnToInfo} />
+      );
 
     case "register":
       return <RegisterForm onRegister={handleRegister} />;

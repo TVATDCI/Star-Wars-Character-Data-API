@@ -39,3 +39,7 @@ export const loginUser = async (email, password) => {
     return null;
   }
 };
+
+export const isLoggedIn = () => {
+  return !!getStoredToken();
+};
