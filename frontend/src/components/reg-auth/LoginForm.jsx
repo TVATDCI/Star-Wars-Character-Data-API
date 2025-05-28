@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { loginUser } from "../utils/auth";
+import { loginUser } from "../utils/api";
+import { storeAuthData } from "../utils/auth";
 import PropTypes from "prop-types";
 import SpaceBtn from "../buttons/SpaceBtn";
 import BtnNeoGradient from "../buttons/BtnNeonGradient";
@@ -10,19 +11,23 @@ function LoginForm({ onLogin, returnToInfo }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // NOTE: the handleSubmit function logic is now abstracted away to // utils/auth.js and utils/auth.js for reusability experiment!
-  // #The loginUser function now returns as loginUser(email, password) from utils/auth.js
-  const handleSubmit = async (e) => {
+  // NOTE: the handleSubmit function logic is now abstracted
+  // #The loginUser function now returns as loginUser(email, password) from utils/api.js
+  // #The data is from storeAuthData function in utils/auth.js
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const userData = await loginUser(email, password);
-    if (userData) {
-      onLogin(userData); // { email, role }
+    try {
+      const result = await loginUser(email, password); // contains token and role
+      storeAuthData(result.token, email, result.role); // persist to localStorage
+      onLogin({ email, role: result.role }); // call parent with user info
+    } catch (err) {
+      alert(err.message); // Already exists in loginUser, but is here for user feedback
     }
   };
 
   return (
     <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <h2 className="text-2xl text-red-600 p-2 font-bold mb-2">Login</h2>
         <input
           type="email"

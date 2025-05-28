@@ -31,4 +31,19 @@ export async function registerUser(email, password) {
 // 1. Extracted API base URL via VITE_API_BASE_URL
 // 2. Centralized API URL easier to manage endpoints later
 // 3. Easier to test and can be reused anywhere in the app!
-// Next stop - import this function in the RegisterForm component
+
+// Login
+export async function loginUser(email, password) {
+  const response = await fetch(`${API_BASE_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data.error || "Login failed");
+  }
+
+  return data || { email, role: "user" }; // Default to 'user' if no role is provided
+}
