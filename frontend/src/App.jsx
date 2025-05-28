@@ -17,7 +17,7 @@ function Layout() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.8,
-          zIndex: 10,
+          zIndex: 0.7,
         }}
       >
         <header className="flex flex-col items-center text-center py-6 z-30">
@@ -26,7 +26,7 @@ function Layout() {
             alt="Star Wars Logo"
             className="mb-4 w-48 sm:w-64 md:w-80 lg:w-[28rem]"
           />
-          <h2 className="text-2xl text-neutral-800/90 font-bold mt-2">
+          <h2 className="text-2xl text-neutral-100/30 font-bold mt-2">
             Character Database API
           </h2>
         </header>
