@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 
 // Add customized button component
 import SpaceBtn from "../buttons/SpaceBtn";
+import Button from "../buttons/Button";
 import BtnNeoGradient from "../buttons/BtnNeonGradient";
+import ButtonGradient from "../buttons/ButtonGradient";
 
-function RegisterForm({ onRegister }) {
+function RegisterForm({ onRegister, returnToInfo }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -44,9 +46,13 @@ function RegisterForm({ onRegister }) {
           className="mb-2 p-2 w-full"
         />
         <BtnNeoGradient />
+        <ButtonGradient />
         <SpaceBtn type="submit" className="mt-4 text-center text-yellow-400">
           Register
         </SpaceBtn>
+        <Button onClick={returnToInfo} className="block ml-2 text-center">
+          Return to Info
+        </Button>
       </form>
     </div>
   );
@@ -54,6 +60,7 @@ function RegisterForm({ onRegister }) {
 
 RegisterForm.propTypes = {
   onRegister: PropTypes.func.isRequired,
+  returnToInfo: PropTypes.func.isRequired,
 };
 
 export default RegisterForm;
