@@ -65,6 +65,7 @@ export default function ViewRouter() {
           onSelectCharacter={handleSelectCharacter}
           onAddCharacter={handleAddCharacter}
           onClick={handleReturnToInfo}
+          returnToInfo={handleReturnToInfo}
         />
       );
 

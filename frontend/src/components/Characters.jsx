@@ -99,21 +99,6 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
       });
   };
 
-  if (error) {
-    return (
-      <div className="bg-neutral-800/10 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
-        <h2 className="text-2xl text-red-600 font-bold mb-4">Error</h2>
-        <p className="text-red-500">{error}</p>
-        <button
-          onClick={returnToInfo}
-          className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 mt-4"
-        >
-          Return to Info
-        </button>
-      </div>
-    );
-  }
-
   return (
     <div className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
       <h1 className="text-2xl text-red-600 font-bold mb-4">Characters</h1>
