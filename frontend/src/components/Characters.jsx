@@ -53,6 +53,21 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
     // Cleanup function to reset loading state
   }, []); // Empty dependency array to avoid re-fetching on every render
 
+  // Return a msg when the user is not logged in
+  if (!localStorage.getItem("token")) {
+    return (
+      <div className="text-neutral-200">
+        You are not logged in. Please <ButtonGradient />
+        <Button
+          onClick={returnToInfo}
+          className="mt-4 block w-full text-center"
+        >
+          return to info
+        </Button>
+      </div>
+    );
+  }
+
   // Show loading state
   if (loading) {
     return <div className="text-neutral-200">Loading... Characters</div>;
@@ -63,6 +78,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
       <div className="bg-neutral-800/10 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
         <h2 className="text-2xl text-red-600 font-bold mb-4">Error</h2>
         <p className="text-red-500">{error}</p>
+        {/** User will only see the btn below if there is an error! The btn will return them to the info page */}
         <button
           onClick={returnToInfo}
           className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 mt-4"
@@ -102,7 +118,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   return (
     <div className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
       <h1 className="text-2xl text-red-600 font-bold mb-4">Characters</h1>
-
+      {error && <p className="text-red-500 mb-4">{error}</p>}
       <p className="text-sm text-green-400 italic mb-4">
         {userRole === "admin"
           ? "As an admin, you can manage the characters below."

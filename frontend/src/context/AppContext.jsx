@@ -1,5 +1,6 @@
 // src/context/AppContext.jsx
 import { createContext, useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { getStoredToken, clearStoredToken } from "../components/utils/auth";
 
 const AppContext = createContext();
@@ -39,6 +40,9 @@ export const AppProvider = ({ children }) => {
       {children}
     </AppContext.Provider>
   );
+};
+AppProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useApp = () => {
