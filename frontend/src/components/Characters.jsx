@@ -10,112 +10,88 @@ import PropTypes from "prop-types"; // Import PropTypes for props validation
 function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [characters, setCharacters] = useState([]);
   const [error, setError] = useState(null);
-  const auth = getStoredToken(); // reuse getStoredToken function to get the token
   const [userRole, setUserRole] = useState("user"); // default role to user
   console.log("User role in Characters:", userRole);
   const [loading, setLoading] = useState(true);
 
+  const auth = getStoredToken(); // reuse getStoredToken function to get the token
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setError("No token found. Please log in.");
+    if (!auth || !auth.token) {
+      setError("Authentication required. Please register or log in.");
+      setLoading(false);
       return;
     }
 
     // Decode the token to get the user role
-    let endpoint = "http://localhost:5000/api/characters"; // default user/public endpoint
-
     try {
-      const decodedToken = jwtDecode(token);
-      const role = decodedToken.role || "user"; // if the role is not present, default to user
-      setUserRole(role); // Otherwise set the user role in state
+      const decoded = jwtDecode(auth.token);
+      const role = decoded.role || "user";
+      setUserRole(role);
 
-      if (role === "admin") {
-        endpoint = "http://localhost:5000/api/characters"; // set to admin endpoint
-      }
-    } catch (error) {
-      console.error("Error Invalid token:", error);
+      const endpoint = "http://localhost:5000/api/characters";
+
+      fetch(endpoint, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch characters");
+          return res.json();
+        })
+        .then((data) => setCharacters(data))
+        .catch((err) => {
+          console.error(err.message);
+          setError("Failed to load characters. Please try again.");
+        })
+        .finally(() => setLoading(false));
+    } catch (err) {
+      console.error("Invalid token:", err);
       setError("Invalid token. Please log in again.");
-      return;
+      setLoading(false);
     }
-    // Fetch characters based on the role
-    fetch(endpoint, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch characters");
-        return response.json();
-      })
-      .then((data) => setCharacters(data))
-      .catch((error) => {
-        console.error("Error fetching characters:", error);
-        setError("Failed to fetch characters. Please log in again.");
-      })
-      .finally(() => setLoading(false));
-    // Cleanup function to reset loading state
-  }, []); // Empty dependency array to avoid re-fetching on every render
+  }, []);
 
-  // Return a msg when the user is not logged in
-  if (!auth || !auth.token) {
-    return (
-      <div className="text-neutral-200">
-        You are not logged in. Please <ButtonGradient />
-        <Button
-          onClick={returnToInfo}
-          className="mt-4 block w-full text-center"
-        >
-          return to info
-        </Button>
-      </div>
-    );
-  }
-
-  // Show loading state
-  if (loading) {
-    return <div className="text-neutral-200">Loading... Characters</div>;
-  }
-
-  if (error) {
-    return (
-      <div className="bg-neutral-800/10 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-xs">
-        <h2 className="text-2xl text-red-600 font-bold mb-4">Error</h2>
-        <p className="text-red-500">{error}</p>
-        {/** User will only see the btn below if there is an error! The btn will return them to the info page */}
-        <button
-          onClick={returnToInfo}
-          className="text-blue-500 hover:text-cyan-400 transition-colors duration-800 mt-4"
-        >
-          Return to Info
-        </button>
-      </div>
-    );
-  }
-
-  // Handle character deletion
   const handleDelete = (id) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setError("No token found. Please log in.");
+    if (!auth || !auth.token) {
+      setError("Authentication required. Please log in.");
       return;
     }
 
     fetch(`http://localhost:5000/api/characters/${id}`, {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${auth.token}` },
     })
-      .then((response) => response.json())
-      .then(() => {
-        setCharacters((prevCharacters) =>
-          prevCharacters.filter((character) => character._id !== id)
-        );
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to delete character");
+        return res.json();
       })
-      .catch((error) => {
-        console.error("Error deleting character:", error);
-        setError("Failed to delete character. Please log in again.");
+      .then(() =>
+        setCharacters((prev) =>
+          prev.filter((character) => character._id !== id)
+        )
+      )
+      .catch((err) => {
+        console.error("Delete failed:", err);
+        setError("Could not delete character. Try again.");
       });
   };
+
+  if (loading) {
+    return <div className="text-neutral-200">Loading characters...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500 text-center bg-neutral-300/10 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto ">
+        <h2 className="text-2xl font-bold mb-4">Error</h2>
+        <p>{error}</p>
+        <ButtonGradient />
+        <Button onClick={returnToInfo} className="mt-4 block text-center">
+          Return to Info
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
