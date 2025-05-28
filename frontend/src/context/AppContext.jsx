@@ -1,5 +1,5 @@
-// Implement global state management using React Context API
-import React, { createContext, useState, useEffect, useContext } from "react";
+// src/context/AppContext.jsx
+import { createContext, useState, useEffect, useContext } from "react";
 import { getStoredToken, clearStoredToken } from "../components/utils/auth";
 
 const AppContext = createContext();
@@ -9,40 +9,30 @@ export const AppProvider = ({ children }) => {
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
   const [view, setView] = useState("info");
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const imgUrl = "https://www.transparenttextures.com/patterns/stardust.png";
-    setBackground(imgUrl);
-
+    setBackground("https://www.transparenttextures.com/patterns/stardust.png");
     const storedData = getStoredToken();
-    if (storedData) {
-      setUser(storedData.user);
-    }
-    setLoading(false);
+    if (storedData) setUser(storedData.user);
   }, []);
 
   const handleLogout = () => {
-    console.log("Logging out...");
     setUser(null);
     clearStoredToken();
-    console.log("Token, userEmail, and userRole removed from localStorage");
     setView("info");
-    alert("You have been logged out successfully.");
+    alert("You have successfully logged out.");
   };
 
   return (
     <AppContext.Provider
       value={{
         background,
-        setBackground,
         selectedCharacterId,
         setSelectedCharacterId,
         view,
         setView,
         user,
         setUser,
-        loading,
         handleLogout,
       }}
     >
@@ -51,4 +41,10 @@ export const AppProvider = ({ children }) => {
   );
 };
 
-export const useApp = () => useContext(AppContext);
+export const useApp = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useApp must be used within an AppProvider");
+  }
+  return context;
+};
