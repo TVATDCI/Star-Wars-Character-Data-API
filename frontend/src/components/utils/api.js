@@ -1,7 +1,11 @@
 // This file contains the API call for user registration
-//const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // Check if the environment variable is set
-//console.log("API_BASE_URL:", API_BASE_URL); // Debugging log
+if (!API_BASE_URL) {
+  console.error(
+    "VITE_API_BASE_URL is not defined. Please set it in your .env file."
+  );
+}
 
 // utils/api.js - RegisterUser
 export async function registerUser(email, password) {
@@ -11,12 +15,17 @@ export async function registerUser(email, password) {
     body: JSON.stringify({ email, password }),
   });
 
+  const data = await response.json().catch(() => ({})); // Prevent crash if empty body
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({})); // Prevent crash if empty body
     throw new Error(errorData.error || "Registration failed");
   }
 
-  return response.json(); // only call .json() on OK response
+  return {
+    email: data.email,
+    role: data.role || "user", // Default to 'user' if role is not provided
+  };
 }
 // The register function is refactored to keep the code DRY
 // 1. Extracted API base URL via VITE_API_BASE_URL
