@@ -12,7 +12,10 @@ function RegisterForm({ onRegister, returnToInfo }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // NOTE: the handleSubmit function logic is now abstracted away to // utils/api.js and utils/api.js for reusability experiment!
+  // One can also generate token directly into storeAuthData and login directly after register
+  // by just adding "storeAuthData(result.token, email, result.role)
+  // # But below is the 2 steps flow registering logic.
+  // NOTE: register logic can be found in utils/api.js_registerUser
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
