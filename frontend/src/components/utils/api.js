@@ -1,3 +1,6 @@
+// import getStoredToken from localStorage to create a user session
+import { getStoredToken } from "./auth";
+
 // Central API_BASE_URL for all API calls!
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // Check if the environment variable is set
@@ -33,13 +36,11 @@ export async function apiRequest(
   body = null,
   token = null
 ) {
+  const authToken = token || getStoredToken()?.token; // Use provided token or get from localStorage
   const headers = {
     "Content-Type": "application/json",
+    ...(authToken && { Authorization: `Bearer ${authToken}` }), // Conditionally add Authorization header
   };
-
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
 
   const options = {
     method,

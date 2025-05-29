@@ -28,7 +28,13 @@ export default function InfoPage() {
       {user ? (
         <div className="flex flex-col items-center gap-4">
           <h4 className="text-2xl text-red-400 font-bold">
-            Welcome back, <span className="text-green-500">{user.email}</span>!
+            Welcome back, <span className="text-green-500">{user.email}</span>
+            <button
+              onClick={() => setView("user-profile")}
+              className="ml-4 text-blue-400 underline hover:text-blue-600"
+            >
+              View Profile
+            </button>
           </h4>
           <div className="flex flex-wrap justify-center gap-4 mt-4">
             <ButtonGradient />
