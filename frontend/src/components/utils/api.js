@@ -22,31 +22,77 @@ function handleApiError(response) {
   return response.json().catch(() => ({}));
 }
 
-// utils/api.js - RegisterUser
+// utils/api.js - Generic API request function
+// # Method stand alone!
+// - Construct headers object based on the presence of a token
+// - Define headers object once and pass  it to options
+// - Use spread with AND (...(body &&{...})) operator
+export async function apiRequest(
+  endpoint,
+  method = "GET",
+  body = null,
+  token = null
+) {
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const options = {
+    method,
+    headers,
+    ...(body && { body: JSON.stringify(body) }),
+  };
+
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+  return handleApiError(response);
+}
+
+// # RegisterUser using generic apiRequest
 export async function registerUser(email, password) {
-  const response = await fetch(`${API_BASE_URL}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  const data = await handleApiError(response); // Generic error handling
-
+  const response = await apiRequest("/register", "POST", { email, password });
   return {
-    email: data.email,
-    role: data.role || "user", // Default to 'user' if role is not provided
+    email: response.email,
+    role: response.role || "user", // Default to 'user' if role is not provided
   };
 }
 
-// utils/api.js - LoginUser
+// # LoginUser using generic apiRequest
 export async function loginUser(email, password) {
-  const response = await fetch(`${API_BASE_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  const data = await handleApiError(response); // Generic error handling
-
-  return data || { email, role: "user" };
+  const response = await apiRequest("/login", "POST", { email, password });
+  return response || { email, role: "user" };
 }
+
+//# Initiating the registerUser function
+// utils/api.js - RegisterUser
+//export async function registerUser(email, password) {
+//  const response = await fetch(`${API_BASE_URL}/register`, {
+//    method: "POST",
+//    headers: { "Content-Type": "application/json" },
+//    body: JSON.stringify({ email, password }),
+//  });
+//
+//  const data = await handleApiError(response); // Generic error handling
+//
+//  return {
+//    email: data.email,
+//    role: data.role || "user", // Default to 'user' if role is not provided
+//  };
+//}
+
+// # Initiating the loginUser function
+// utils/api.js - LoginUser
+//export async function loginUser(email, password) {
+//  const response = await fetch(`${API_BASE_URL}/login`, {
+//    method: "POST",
+//    headers: { "Content-Type": "application/json" },
+//    body: JSON.stringify({ email, password }),
+//  });
+//
+//  const data = await handleApiError(response); // Generic error handling
+//
+//  return data || { email, role: "user" };
+//}
