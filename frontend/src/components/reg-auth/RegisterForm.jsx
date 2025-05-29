@@ -4,13 +4,18 @@ import PropTypes from "prop-types";
 
 // Add customized button component
 import SpaceBtn from "../buttons/SpaceBtn";
+import Button from "../buttons/Button";
 import BtnNeoGradient from "../buttons/BtnNeonGradient";
+import ButtonGradient from "../buttons/ButtonGradient";
 
-function RegisterForm({ onRegister }) {
+function RegisterForm({ onRegister, returnToInfo }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // NOTE: the handleSubmit function logic is now abstracted away to // utils/api.js and utils/api.js for reusability experiment!
+  // One can also generate token directly into storeAuthData and login directly after register
+  // by just adding "storeAuthData(result.token, email, result.role)
+  // # But below is the 2 steps flow registering logic.
+  // NOTE: register logic can be found in utils/api.js_registerUser
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -44,9 +49,13 @@ function RegisterForm({ onRegister }) {
           className="mb-2 p-2 w-full"
         />
         <BtnNeoGradient />
+        <ButtonGradient />
         <SpaceBtn type="submit" className="mt-4 text-center text-yellow-400">
           Register
         </SpaceBtn>
+        <Button onClick={returnToInfo} className="block ml-2 text-center">
+          Return to Info
+        </Button>
       </form>
     </div>
   );
@@ -54,6 +63,7 @@ function RegisterForm({ onRegister }) {
 
 RegisterForm.propTypes = {
   onRegister: PropTypes.func.isRequired,
+  returnToInfo: PropTypes.func.isRequired,
 };
 
 export default RegisterForm;

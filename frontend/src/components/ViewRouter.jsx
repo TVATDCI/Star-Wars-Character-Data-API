@@ -94,7 +94,12 @@ export default function ViewRouter() {
       );
 
     case "register":
-      return <RegisterForm onRegister={handleRegister} />;
+      return (
+        <RegisterForm
+          onRegister={handleRegister}
+          returnToInfo={handleReturnToInfo}
+        />
+      );
 
     default:
       return <InfoPage />;
