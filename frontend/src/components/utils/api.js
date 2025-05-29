@@ -7,30 +7,18 @@ if (!API_BASE_URL) {
   );
 }
 
-// Create a Generic API request function
-// utils/api.js - Generic API request function
-{
-  /*
-    export async function apiRequest(endpoint, method = "GET", body = null) {
-  const options = {
-    method,
-    headers: { "Content-Type": "application/json" },
-  };
-
-  if (body) {
-    options.body = JSON.stringify(body);
-  }
-
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
-
+function handleApiError(response) {
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error || "API request failed");
+    return response
+      .json()
+      .catch(() => ({}))
+      .then((errorData) => {
+        throw new Error(
+          errorData.error || "An error occurred while processing your request."
+        );
+      });
   }
-
-  return response.json();
-}
-*/
+  return response.json().catch(() => ({}));
 }
 
 // utils/api.js - RegisterUser
@@ -41,12 +29,7 @@ export async function registerUser(email, password) {
     body: JSON.stringify({ email, password }),
   });
 
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error || "Registration failed");
-  }
+  const data = await handleApiError(response); // Generic error handling
 
   return {
     email: data.email,
@@ -62,10 +45,7 @@ export async function loginUser(email, password) {
     body: JSON.stringify({ email, password }),
   });
 
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(data.error || "Login failed");
-  }
+  const data = await handleApiError(response); // Generic error handling
 
   return data || { email, role: "user" };
 }
