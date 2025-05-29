@@ -7,6 +7,7 @@ if (!API_BASE_URL) {
   );
 }
 
+// utils/api.js - Generic API errors handling
 function handleApiError(response) {
   if (!response.ok) {
     return response
