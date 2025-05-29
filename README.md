@@ -92,7 +92,8 @@ project-root/
 │ │ │ └── utils/
 │ │ │ │   └── debounce.js
 │ │ │ └── views/
-│ │ │ │   └── InfoPage.jsx
+│ │ │ │   ├── InfoPage.jsx
+│ │ │ │   └── UserProfile.jsx
 │ │ │ └── ViewRouter.jsx
 │ │ ├── context/
 │ │ │ ├── AppContext.jsx
