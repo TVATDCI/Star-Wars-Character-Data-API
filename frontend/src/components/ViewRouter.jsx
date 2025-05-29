@@ -4,6 +4,7 @@ import CharactersForm from "./CharactersForm";
 import LoginForm from "./reg-auth/LoginForm";
 import RegisterForm from "./reg-auth/RegisterForm";
 import InfoPage from "./views/InfoPage";
+import UserProfile from "./views/UserProfile";
 import { useApp } from "../context/AppContext";
 
 export default function ViewRouter() {
@@ -100,6 +101,8 @@ export default function ViewRouter() {
           returnToInfo={handleReturnToInfo}
         />
       );
+    case "user-profile":
+      return <UserProfile returnToInfo={handleReturnToInfo} />;
 
     default:
       return <InfoPage />;

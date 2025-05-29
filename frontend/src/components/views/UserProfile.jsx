@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiRequest } from "../utils/api";
 
-const UserProfile = () => {
+import Button from "../buttons/Button";
+import ButtonGradient from "../buttons/ButtonGradient";
+
+const UserProfile = ({ returnToInfo }) => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -35,8 +38,10 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Edit Your Profile</h2>
+    <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
+      <h2 className="text-2xl text-red-600 p-2 font-bold mb-2">
+        Edit Your Profile
+      </h2>
       <form onSubmit={handleSubmit}>
         <label className="block mb-2">
           Name:
@@ -57,6 +62,10 @@ const UserProfile = () => {
         </button>
       </form>
       {message && <p className="mt-4 text-green-600">{message}</p>}
+      <ButtonGradient />
+      <Button onClick={returnToInfo} className="block mt-4 text-center">
+        Return to Info
+      </Button>
     </div>
   );
 };
