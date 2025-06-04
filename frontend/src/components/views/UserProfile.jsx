@@ -31,6 +31,7 @@ const UserProfile = ({ returnToInfo }) => {
     try {
       await apiRequest("/profile", "PUT", { name });
       setMessage("Profile updated!");
+      console.log("Profile updated successfully:", name);
     } catch (err) {
       setMessage(err.message);
     } finally {

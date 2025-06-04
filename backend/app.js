@@ -16,6 +16,8 @@ import publicRoutes from "./routes/publicRoutes.js";
 // Import the User model for user registration and authentication
 import User from "./models/userModel.js";
 // npm install jsonwebtoken for token generation
+// Import userProfile routes for user profile management
+import userProfileRoutes from "./routes/userProfile.js";
 import jwt from "jsonwebtoken";
 
 const env = process.env.NODE_ENV || "development";
@@ -32,6 +34,10 @@ app.use(cors());
 // Middleware to parse the body but only with tester like Postman or others
 app.use(express.json());
 // CORS middleware to allow requests from any origin eg. frontend!
+
+//#Profile routes for user profile management
+app.use("/profile", userProfileRoutes);
+console.log("User profile routes is initialized");
 
 // Create register route. This route will be responsible for registering users.
 //#Register a new user

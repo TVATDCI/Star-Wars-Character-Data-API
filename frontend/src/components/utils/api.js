@@ -48,6 +48,8 @@ export async function apiRequest(
     ...(body && { body: JSON.stringify(body) }),
   };
 
+  console.log("Sending API request to endpoint:", `${API_BASE_URL}${endpoint}`);
+
   const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
   return handleApiError(response);
 }
