@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { apiRequest } from "../utils/api";
 
 import Button from "../buttons/Button";
@@ -68,6 +69,9 @@ const UserProfile = ({ returnToInfo }) => {
       </Button>
     </div>
   );
+};
+UserProfile.propTypes = {
+  returnToInfo: PropTypes.func.isRequired,
 };
 
 export default UserProfile;

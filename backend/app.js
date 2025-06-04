@@ -67,10 +67,10 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email, password });
 
-  //BUG: Check if user is found
+  //#debugging-Check if user is found
   console.log("Logging in user HIT");
   console.log("Request body:", req.body);
-  //BUG: Check if user is found in the database by token
+  //#debugging-Check if user is found in the database by token
   if (user) {
     const token = jwt.sign(
       { userId: user._id, role: user.role },
@@ -79,7 +79,7 @@ app.post("/login", async (req, res) => {
         expiresIn: "1h",
       }
     );
-    //BUG: Return the token if user is found
+    //#debugging-Check if token is generated
     console.log("User logged in successfully, token generated");
     res.json({ token });
   } else {
