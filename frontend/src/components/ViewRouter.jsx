@@ -56,6 +56,10 @@ export default function ViewRouter() {
     setView("login");
   };
 
+  const handleProfileUpdate = () => {
+    setView("user-profile");
+  };
+
   switch (view) {
     case "info":
       return <InfoPage onRegister={handleRegister} />;
@@ -102,7 +106,12 @@ export default function ViewRouter() {
         />
       );
     case "user-profile":
-      return <UserProfile returnToInfo={handleReturnToInfo} />;
+      return (
+        <UserProfile
+          returnToInfo={handleReturnToInfo}
+          onUpdate={handleProfileUpdate}
+        />
+      );
 
     default:
       return <InfoPage />;

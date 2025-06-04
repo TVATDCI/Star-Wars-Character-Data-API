@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { apiRequest } from "../utils/api";
 
+import SpaceBtn from "../buttons/SpaceBtn";
+import BtnNeoGradient from "../buttons/BtnNeonGradient";
 import Button from "../buttons/Button";
 import ButtonGradient from "../buttons/ButtonGradient";
 
-const UserProfile = ({ returnToInfo }) => {
+const UserProfile = ({ returnToInfo, onUpdate }) => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const isUnchanged = name === ""; // Check if name is unchanged
 
   // Fetch user details on mount
   useEffect(() => {
@@ -17,7 +20,7 @@ const UserProfile = ({ returnToInfo }) => {
         const data = await apiRequest("/profile"); // auto-sends token
         setName(data.name || ""); // placeholder for now
       } catch (err) {
-        setMessage("Failed to load profile.");
+        setMessage(`Error fetching profile: ${err.message}`);
       }
     }
 
@@ -30,8 +33,15 @@ const UserProfile = ({ returnToInfo }) => {
     setLoading(true);
     try {
       await apiRequest("/profile", "PUT", { name });
+      setName(name); // Updated name
       setMessage("Profile updated!");
       console.log("Profile updated successfully:", name);
+
+      // Call the onUpdate callback to notify parent component(ViewRouter) if provided!
+      if (onUpdate) {
+        console.log("Calling onUpdate callback with name:", name);
+        onUpdate(name);
+      }
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -55,13 +65,15 @@ const UserProfile = ({ returnToInfo }) => {
             disabled={loading}
           />
         </label>
-        <button
-          className="bg-blue-500 text-white px-4 py-2 mt-2 rounded"
+        <BtnNeoGradient />
+        <SpaceBtn
           type="submit"
-          disabled={loading}
+          onClick={handleSubmit}
+          className="mt-4 text-center block text-red-700 hover:text-red-400"
+          disabled={loading || isUnchanged}
         >
-          {loading ? "Updating..." : "Save Changes"}
-        </button>
+          {loading ? "Updating..." : "Update Profile"}
+        </SpaceBtn>
       </form>
       {message && <p className="mt-4 text-green-600">{message}</p>}
       <ButtonGradient />
@@ -73,6 +85,7 @@ const UserProfile = ({ returnToInfo }) => {
 };
 UserProfile.propTypes = {
   returnToInfo: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default UserProfile;
