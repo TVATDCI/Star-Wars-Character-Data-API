@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useUserProfileFetcher } from "../hooks/userProfileFetcher";
 import PropTypes from "prop-types";
 import { apiRequest } from "../utils/api";
 
@@ -8,37 +9,22 @@ import Button from "../buttons/Button";
 import ButtonGradient from "../buttons/ButtonGradient";
 
 const UserProfile = ({ returnToInfo, onUpdate }) => {
-  const [name, setName] = useState("");
-  const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const { profile, setProfile, loading, message, setMessage } =
+    useUserProfileFetcher();
+  const [saving, setSaving] = useState(false);
 
+  const { name, bio, location, avatar } = profile;
   // Detect if any field changed - Updated from name only to include all fields
   const isUnchanged =
     name === "" && bio === "" && location === "" && avatar === "";
 
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const data = await apiRequest("/profile");
-        setName(data.name || "");
-        setBio(data.bio || "");
-        setLocation(data.location || "");
-        setAvatar(data.avatar || "");
-      } catch (err) {
-        setMessage(`Error fetching profile: ${err.message}`);
-      }
-    }
-
-    fetchProfile();
-  }, []);
-
+  const handleChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
   // Handle update
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setSaving(true);
     try {
       const payload = {
         name: name.trim(),
@@ -47,7 +33,7 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
         avatar: avatar.trim(),
       };
       await apiRequest("/profile", "PATCH", payload);
-      setName(payload.name);
+      setProfile(payload);
       setMessage("Profile updated!");
       console.log("Profile updated successfully:", name);
 
@@ -64,9 +50,13 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
     } catch (err) {
       setMessage(err.message);
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading) {
+    return <p className="text-yellow-500">Loading profile...</p>;
+  }
 
   return (
     <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
@@ -77,43 +67,52 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
         <label className="block mb-2">
           Name:
           <input
+            name="name"
             className="border p-2 w-full"
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleChange}
             disabled={loading}
+            placeholder="Enter your user name"
           />
         </label>
 
         <label className="block mb-2">
           Bio:
           <textarea
+            name="bio"
             className="border p-2 w-full"
             value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            onChange={handleChange}
             disabled={loading}
+            rows="3"
+            placeholder="Tell us about yourself"
           />
         </label>
 
         <label className="block mb-2">
           Location:
           <input
+            name="location"
             className="border p-2 w-full"
             type="text"
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={handleChange}
             disabled={loading}
+            placeholder="Where are you located?"
           />
         </label>
 
         <label className="block mb-2">
           Avatar URL:
           <input
+            name="avatar"
             className="border p-2 w-full"
             type="text"
             value={avatar}
-            onChange={(e) => setAvatar(e.target.value)}
+            onChange={handleChange}
             disabled={loading}
+            placeholder="Enter your avatar image URL"
           />
         </label>
 
