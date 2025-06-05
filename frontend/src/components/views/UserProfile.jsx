@@ -46,7 +46,7 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
         location: location.trim(),
         avatar: avatar.trim(),
       };
-      await apiRequest("/profile", "PUT", payload);
+      await apiRequest("/profile", "PATCH", payload);
       setName(payload.name);
       setMessage("Profile updated!");
       console.log("Profile updated successfully:", name);

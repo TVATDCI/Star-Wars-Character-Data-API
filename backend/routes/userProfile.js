@@ -18,7 +18,8 @@ router.get("/", authenticateToken, async (req, res) => {
 });
 
 // PUT /profile — update user profile fields!
-router.put("/", authenticateToken, async (req, res) => {
+// Change to PATCH method to allow partial updates
+router.patch("/", authenticateToken, async (req, res) => {
   console.log("Updating user profile:", req.body);
   try {
     const { name, bio, location, avatar } = req.body;
