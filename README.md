@@ -60,7 +60,8 @@ project-root/
 │ │ └── userModel.js
 │ ├── routes/
 │ │ ├── characterRoutes.js
-│ │ └── publicRoutes.js
+│ │ ├── publicRoutes.js
+│ │ └── userProfile.js
 │ ├── app.js
 │ └── package.json
 ├── frontend/
@@ -74,9 +75,6 @@ project-root/
 │ │ │ │   ├── ButtonSvg.jsx
 │ │ │ │   ├── SpaceBtn.jsx
 │ │ │ │   └── SpaceBtnSvg.jsx
-│ │ │ ├── Characters.jsx
-│ │ │ ├── CharacterDetail.jsx
-│ │ │ └── CharacterForm.jsx
 │ │ │ ├── form/
 │ │ │ │   ├── ArrayInput.jsx
 │ │ │ │   ├── CheckboxInput.jsx
@@ -90,10 +88,15 @@ project-root/
 │ │ │ │   ├── nebulaCloud.js
 │ │ │ │   └── star.js
 │ │ │ └── utils/
+│ │ │ │   ├── api.js
+│ │ │ │   ├── auth.js
 │ │ │ │   └── debounce.js
 │ │ │ └── views/
 │ │ │ │   ├── InfoPage.jsx
 │ │ │ │   └── UserProfile.jsx
+│ │ │ ├── CharacterDetail.jsx
+│ │ │ ├── Characters.jsx
+│ │ │ └── CharacterForm.jsx
 │ │ │ └── ViewRouter.jsx
 │ │ ├── context/
 │ │ │ ├── AppContext.jsx
