@@ -18,4 +18,4 @@ export const validateUserProfile = [
   },
 ];
 
-// Using espress-validator to validate user profile fields
+// Using express-validator to validate user profile fields
