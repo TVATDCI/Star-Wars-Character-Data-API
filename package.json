@@ -11,6 +11,7 @@
     "seed": "node backend/libs/seeds.js"
   },
   "dependencies": {
+    "caniuse-lite": "^1.0.30001721",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",

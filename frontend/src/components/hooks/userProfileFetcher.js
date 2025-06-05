@@ -23,6 +23,7 @@ export const useUserProfileFetcher = () => {
         location: data.location || "",
         avatar: data.avatar || "",
       });
+      console.log("Profile state updated:", profile); // Debug log
     } catch (err) {
       setMessage(`Error fetching profile: ${err.message}`);
     } finally {

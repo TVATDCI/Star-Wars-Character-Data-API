@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUserProfileFetcher } from "../hooks/userProfileFetcher";
 import PropTypes from "prop-types";
 import { apiRequest } from "../utils/api";
@@ -8,10 +8,14 @@ import BtnNeoGradient from "../buttons/BtnNeonGradient";
 import Button from "../buttons/Button";
 import ButtonGradient from "../buttons/ButtonGradient";
 
-const UserProfile = ({ returnToInfo, onUpdate }) => {
+const UserProfile = ({ returnToInfo }) => {
   const { profile, setProfile, loading, message, setMessage, refetch } =
     useUserProfileFetcher();
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    refetch(); // Force refetch when the component mounts
+  }, []);
 
   const { name, bio, location, avatar } = profile;
   // Detect if any field changed - Updated from name only to include all fields
@@ -51,6 +55,8 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
   if (loading) {
     return <p className="text-yellow-500">Loading profile...</p>;
   }
+
+  console.log("Rendering UserProfile with profile:", profile);
 
   return (
     <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
