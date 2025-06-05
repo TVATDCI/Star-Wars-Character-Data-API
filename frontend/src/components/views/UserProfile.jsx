@@ -9,16 +9,24 @@ import ButtonGradient from "../buttons/ButtonGradient";
 
 const UserProfile = ({ returnToInfo, onUpdate }) => {
   const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [location, setLocation] = useState("");
+  const [avatar, setAvatar] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const isUnchanged = name === ""; // Check if name is unchanged
 
-  // Fetch user details on mount
+  // Detect if any field changed - Updated from name only to include all fields
+  const isUnchanged =
+    name === "" && bio === "" && location === "" && avatar === "";
+
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const data = await apiRequest("/profile"); // auto-sends token
-        setName(data.name || ""); // placeholder for now
+        const data = await apiRequest("/profile");
+        setName(data.name || "");
+        setBio(data.bio || "");
+        setLocation(data.location || "");
+        setAvatar(data.avatar || "");
       } catch (err) {
         setMessage(`Error fetching profile: ${err.message}`);
       }
@@ -32,15 +40,26 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await apiRequest("/profile", "PUT", { name });
-      setName(name); // Updated name
+      const payload = {
+        name: name.trim(),
+        bio: bio.trim(),
+        location: location.trim(),
+        avatar: avatar.trim(),
+      };
+      await apiRequest("/profile", "PUT", payload);
+      setName(payload.name);
       setMessage("Profile updated!");
       console.log("Profile updated successfully:", name);
 
       // Call the onUpdate callback to notify parent component(ViewRouter) if provided!
       if (onUpdate) {
-        console.log("Calling onUpdate callback with name:", name);
-        onUpdate(name);
+        onUpdate({
+          name: payload.name,
+          bio: payload.bio,
+          location: payload.location,
+          avatar: payload.avatar,
+        });
+        console.log("onUpdate callback called with:", payload);
       }
     } catch (err) {
       setMessage(err.message);
@@ -65,6 +84,48 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
             disabled={loading}
           />
         </label>
+
+        <label className="block mb-2">
+          Bio:
+          <textarea
+            className="border p-2 w-full"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            disabled={loading}
+          />
+        </label>
+
+        <label className="block mb-2">
+          Location:
+          <input
+            className="border p-2 w-full"
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            disabled={loading}
+          />
+        </label>
+
+        <label className="block mb-2">
+          Avatar URL:
+          <input
+            className="border p-2 w-full"
+            type="text"
+            value={avatar}
+            onChange={(e) => setAvatar(e.target.value)}
+            disabled={loading}
+          />
+        </label>
+
+        {avatar && (
+          <div className="mb-2">
+            <img
+              src={avatar}
+              alt="Avatar Preview"
+              className="rounded-full w-20 h-20 object-cover"
+            />
+          </div>
+        )}
         <BtnNeoGradient />
         <SpaceBtn
           type="submit"
@@ -75,6 +136,7 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
           {loading ? "Updating..." : "Update Profile"}
         </SpaceBtn>
       </form>
+      {loading && <p className="mt-2 text-yellow-500">Loading...</p>}
       {message && <p className="mt-4 text-green-600">{message}</p>}
       <ButtonGradient />
       <Button onClick={returnToInfo} className="block mt-4 text-center">
