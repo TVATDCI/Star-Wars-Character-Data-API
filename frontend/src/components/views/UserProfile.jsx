@@ -9,7 +9,7 @@ import Button from "../buttons/Button";
 import ButtonGradient from "../buttons/ButtonGradient";
 
 const UserProfile = ({ returnToInfo, onUpdate }) => {
-  const { profile, setProfile, loading, message, setMessage } =
+  const { profile, setProfile, loading, message, setMessage, refetch } =
     useUserProfileFetcher();
   const [saving, setSaving] = useState(false);
 
@@ -32,21 +32,14 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
         location: location.trim(),
         avatar: avatar.trim(),
       };
-      await apiRequest("/profile", "PATCH", payload);
-      setProfile(payload);
+      await apiRequest("/profile", "PATCH", payload); // Update profile on the backend
+      setProfile(payload); // Update local state
       setMessage("Profile updated!");
       console.log("Profile updated successfully:", name);
 
-      // Call the onUpdate callback to notify parent component(ViewRouter) if provided!
-      if (onUpdate) {
-        onUpdate({
-          name: payload.name,
-          bio: payload.bio,
-          location: payload.location,
-          avatar: payload.avatar,
-        });
-        console.log("onUpdate callback called with:", payload);
-      }
+      // Refetch the profile data from the server to ensure it's up-to-date
+      await refetch();
+      console.log("Refetched profile data:", profile);
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -54,6 +47,7 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
     }
   };
 
+  // If loading, show a loading message
   if (loading) {
     return <p className="text-yellow-500">Loading profile...</p>;
   }
@@ -70,7 +64,7 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
             name="name"
             className="border p-2 w-full"
             type="text"
-            value={name}
+            value={profile.name}
             onChange={handleChange}
             disabled={loading}
             placeholder="Enter your user name"
@@ -82,7 +76,7 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
           <textarea
             name="bio"
             className="border p-2 w-full"
-            value={bio}
+            value={profile.bio}
             onChange={handleChange}
             disabled={loading}
             rows="3"
@@ -96,7 +90,7 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
             name="location"
             className="border p-2 w-full"
             type="text"
-            value={location}
+            value={profile.location}
             onChange={handleChange}
             disabled={loading}
             placeholder="Where are you located?"
@@ -109,7 +103,7 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
             name="avatar"
             className="border p-2 w-full"
             type="text"
-            value={avatar}
+            value={profile.avatar}
             onChange={handleChange}
             disabled={loading}
             placeholder="Enter your avatar image URL"

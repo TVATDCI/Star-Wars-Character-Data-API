@@ -12,25 +12,40 @@ export const useUserProfileFetcher = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const data = await apiRequest("/profile");
-        setProfile({
-          name: data.name || "",
-          bio: data.bio || "",
-          location: data.location || "",
-          avatar: data.avatar || "",
-        });
-      } catch (err) {
-        setMessage(`Error fetching profile: ${err.message}`);
-      } finally {
-        setLoading(false);
-      }
+  const fetchProfile = async () => {
+    setLoading(true);
+    try {
+      const data = await apiRequest("/profile");
+      console.log("Fetched profile data from backend:", data); // Debug log
+      setProfile({
+        name: data.name || "",
+        bio: data.bio || "",
+        location: data.location || "",
+        avatar: data.avatar || "",
+      });
+    } catch (err) {
+      setMessage(`Error fetching profile: ${err.message}`);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    fetchProfile();
+  useEffect(() => {
+    console.log("Fetching profile data on mount..."); // Debug log
+    fetchProfile(); // Fetch profile data on mount
   }, []);
 
-  return { profile, setProfile, loading, message, setMessage };
+  console.log("Fetched profile data:", profile);
+  console.log("Updated profile state:", profile);
+  console.log("Loading state:", loading);
+  console.log("Message state:", message);
+
+  return {
+    profile,
+    setProfile,
+    loading,
+    message,
+    setMessage,
+    refetch: fetchProfile,
+  };
 };
