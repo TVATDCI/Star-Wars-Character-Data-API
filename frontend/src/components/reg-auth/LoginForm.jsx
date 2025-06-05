@@ -18,8 +18,9 @@ function LoginForm({ onLogin, returnToInfo }) {
     e.preventDefault();
     try {
       const result = await loginUser(email, password); // contains token and role
+      console.log("Login result:", result); // Debugging line
       storeAuthData(result.token, email, result.role); // persist to localStorage
-      onLogin({ email, role: result.role }); // call parent with user info
+      onLogin({ email, role: result.role });
     } catch (err) {
       alert(err.message); // Already exists in loginUser, but is here for user feedback
     }

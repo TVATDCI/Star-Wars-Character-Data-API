@@ -48,6 +48,7 @@ export default function ViewRouter() {
   };
 
   const handleLogin = (user) => {
+    console.log("User logged in:", user); // Debugging line
     setUser(user);
     setView("info");
   };

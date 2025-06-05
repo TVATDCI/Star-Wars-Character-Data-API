@@ -28,7 +28,12 @@ export default function InfoPage() {
       {user ? (
         <div className="flex flex-col items-center gap-4">
           <h4 className="text-2xl text-red-400 font-bold">
-            Welcome back, <span className="text-green-500">{user.email}</span>!
+            Welcome back,{" "}
+            {user.name && <span className="text-green-500">{user.name}</span>}
+            {user.email && (
+              <span className="text-neutral-500 ml-2">({user.email})</span>
+            )}
+            !
             <button
               onClick={() => setView("user-profile")}
               className="ml-4 text-blue-400 underline hover:text-blue-600"
