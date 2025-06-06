@@ -28,8 +28,28 @@ dotenv.config({
 connectDB();
 //#Initialize middleware
 const app = express();
+
+//#Enable CORS to allow requests from frontend or other origins.
+const allowedOrigins = [
+  process.env.FRONTEND_URL || "http://localhost:5173", // Default to localhost URL
+  process.env.FRONTEND_URL || "http://starwars-frontend-url.vercel.app", // Example production URL
+];
 //#Also use the cors middleware for cross-origin requests.In this case, frontend requests!
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true); // Allow requests with no origin (like Postman)
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true); // Allow the request if the origin is in the allowed list
+      } else {
+        console.error(`CORS error: Origin ${origin} not allowed`);
+        callback(new Error(`CORS error: Origin ${origin} not allowed`), false); // Reject the request if the origin is not allowed
+      }
+    },
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  })
+);
 
 // Middleware to parse the body but only with tester like Postman or others
 app.use(express.json());
