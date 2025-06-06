@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useUserProfileFetcher } from "../hooks/userProfileFetcher";
 import PropTypes from "prop-types";
 import { apiRequest } from "../utils/api";
@@ -8,24 +8,20 @@ import BtnNeoGradient from "../buttons/BtnNeonGradient";
 import Button from "../buttons/Button";
 import ButtonGradient from "../buttons/ButtonGradient";
 
-const UserProfile = ({ returnToInfo }) => {
+const UserProfile = ({ returnToInfo, onUpdate }) => {
   const { profile, setProfile, loading, message, setMessage, refetch } =
     useUserProfileFetcher();
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    refetch(); // Force refetch when the component mounts
-  }, []);
-
   const { name, bio, location, avatar } = profile;
-  // Detect if any field changed - Updated from name only to include all fields
+
   const isUnchanged =
     name === "" && bio === "" && location === "" && avatar === "";
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
-  // Handle update
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -41,9 +37,17 @@ const UserProfile = ({ returnToInfo }) => {
       setMessage("Profile updated!");
       console.log("Profile updated successfully:", name);
 
-      // Refetch the profile data from the server to ensure it's up-to-date
-      await refetch();
-      console.log("Refetched profile data:", profile);
+      await refetch(); // Refetch the profile data to ensure it's up-to-date
+
+      if (onUpdate) {
+        onUpdate({
+          name: payload.name,
+          bio: payload.bio,
+          location: payload.location,
+          avatar: payload.avatar,
+        });
+        console.log("onUpdate callback called with:", payload);
+      }
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -51,26 +55,32 @@ const UserProfile = ({ returnToInfo }) => {
     }
   };
 
-  // If loading, show a loading message
   if (loading) {
     return <p className="text-yellow-500">Loading profile...</p>;
   }
 
-  console.log("Rendering UserProfile with profile:", profile);
-
   return (
     <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
-      <h2 className="text-2xl text-red-600 p-2 font-bold mb-2">
-        Edit Your Profile
-      </h2>
+      <h3 className="text-2xl text-red-600 p-2 font-bold mb-2 text-center">
+        {name || "User Profile"}
+      </h3>
       <form onSubmit={handleSubmit}>
+        {avatar && (
+          <div className="mb-2 flex justify-center">
+            <img
+              src={avatar}
+              alt="Avatar Preview"
+              className="rounded-full w-24 h-24 object-cover"
+            />
+          </div>
+        )}
         <label className="block mb-2">
           Name:
           <input
             name="name"
             className="border p-2 w-full"
             type="text"
-            value={profile.name}
+            value={name}
             onChange={handleChange}
             disabled={loading}
             placeholder="Enter your user name"
@@ -82,7 +92,7 @@ const UserProfile = ({ returnToInfo }) => {
           <textarea
             name="bio"
             className="border p-2 w-full"
-            value={profile.bio}
+            value={bio}
             onChange={handleChange}
             disabled={loading}
             rows="3"
@@ -96,7 +106,7 @@ const UserProfile = ({ returnToInfo }) => {
             name="location"
             className="border p-2 w-full"
             type="text"
-            value={profile.location}
+            value={location}
             onChange={handleChange}
             disabled={loading}
             placeholder="Where are you located?"
@@ -109,22 +119,13 @@ const UserProfile = ({ returnToInfo }) => {
             name="avatar"
             className="border p-2 w-full"
             type="text"
-            value={profile.avatar}
+            value={avatar}
             onChange={handleChange}
             disabled={loading}
             placeholder="Enter your avatar image URL"
           />
         </label>
 
-        {avatar && (
-          <div className="mb-2">
-            <img
-              src={avatar}
-              alt="Avatar Preview"
-              className="rounded-full w-20 h-20 object-cover"
-            />
-          </div>
-        )}
         <BtnNeoGradient />
         <SpaceBtn
           type="submit"
@@ -144,6 +145,7 @@ const UserProfile = ({ returnToInfo }) => {
     </div>
   );
 };
+
 UserProfile.propTypes = {
   returnToInfo: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
