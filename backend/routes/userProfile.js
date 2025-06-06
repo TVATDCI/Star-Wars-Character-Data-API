@@ -2,6 +2,7 @@
 import express from "express";
 import authenticateToken from "../middleware/authMiddleware.js";
 import User from "../models/userModel.js";
+import { validateUserProfile } from "../middleware/validateUserProfile.js";
 
 const router = express.Router();
 console.log("userProfile routes is loaded");
@@ -28,27 +29,23 @@ router.get("/", authenticateToken, async (req, res) => {
 
 // PUT /profile — update user profile fields!
 // Change to PATCH method to allow partial updates
-router.patch("/", authenticateToken, async (req, res) => {
+// Additional validation middleware to ensure correct data types (validateUserProfile)
+router.patch("/", authenticateToken, validateUserProfile, async (req, res) => {
   console.log("Updating user profile:", req.body);
   try {
     const { name, bio, location, avatar } = req.body;
 
-    // Optional validation
-    if (name && typeof name !== "string") {
-      return res.status(400).json({ error: "Name must be a string" });
-    }
-    if (bio && typeof bio !== "string") {
-      return res.status(400).json({ error: "Bio must be a string" });
-    }
-    if (location && typeof location !== "string") {
-      return res.status(400).json({ error: "Location must be a string" });
-    }
-    if (avatar && typeof avatar !== "string") {
-      return res.status(400).json({ error: "Avatar must be a string (URL)" });
-    }
-
     const user = await User.findById(req.user._id);
     if (!user) return res.status(404).json({ error: "User not found" });
+
+    // Validate that at least one field is provided
+    if (!name && !bio && !location && !avatar) {
+      return res
+        .status(400)
+        .json({ error: "At least one field must be provided" });
+    }
+
+    // user profile validation moved to validateUserProfile middleware!
 
     // Conditionally update only if provided
     if (name !== undefined) user.name = name;
