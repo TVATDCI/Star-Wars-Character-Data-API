@@ -32,7 +32,7 @@ const app = express();
 //#Enable CORS to allow requests from frontend or other origins.
 const allowedOrigins = [
   process.env.FRONTEND_URL || "http://localhost:5173", // Default to localhost URL
-  process.env.FRONTEND_URL || "http://starwars-frontend-url.vercel.app", // Example production URL
+  process.env.FRONTEND_URL_PROD || "http://starwars-frontend-url.vercel.app", // Example production URL
 ];
 //#Also use the cors middleware for cross-origin requests.In this case, frontend requests!
 app.use(
