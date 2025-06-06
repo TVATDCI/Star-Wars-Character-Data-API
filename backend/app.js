@@ -137,7 +137,7 @@ app.use("/api/public", publicRoutes);
 
 //# server health check/fallback route
 app.get("/", (req, res) => {
-  res.send("API is running ...🚀");
+  res.send("Welcome to Star Wars Character Database CRUD API...🚀");
 });
 
 const PORT = process.env.PORT || 5000;
