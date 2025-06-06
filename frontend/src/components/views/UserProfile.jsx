@@ -61,12 +61,12 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
 
   return (
     <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
-      <h3 className="text-2xl text-red-600 p-2 font-bold mb-2 text-center">
+      <h3 className="text-2xl text-red-600 p-2 font-bold mb-1 text-center">
         {name || "User Profile"}
       </h3>
       <form onSubmit={handleSubmit}>
         {avatar && (
-          <div className="mb-2 flex justify-center">
+          <div className="mb-1 flex justify-center">
             <img
               src={avatar}
               alt="Avatar Preview"
