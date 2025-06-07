@@ -1,3 +1,5 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import dotenv from "dotenv";
 // Import cors to allow requests from any origin
@@ -20,40 +22,44 @@ import User from "./models/userModel.js";
 import userProfileRoutes from "./routes/userProfile.js";
 import jwt from "jsonwebtoken";
 
-const env = process.env.NODE_ENV || "development";
-dotenv.config({
-  path: `.env.${env}`,
-});
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = path.dirname(_filename);
+
+// Load environment variables from .env file based on the current environment
+const envPath = path.resolve(
+  __dirname,
+  `.env.${process.env.NODE_ENV || "development"}`
+);
+dotenv.config({ path: envPath });
+
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("MONGO_URL:", process.env.MONGO_URL);
 
 connectDB();
 //#Initialize middleware
 const app = express();
+app.use(express.json());
 
 //#Enable CORS to allow requests from frontend or other origins.
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "http://localhost:5173", // Default to localhost URL
-  process.env.FRONTEND_URL_PROD || "http://starwars-frontend-url.vercel.app", // Example production URL
+  process.env.FRONTEND_URL || "http://localhost:5173",
+  process.env.FRONTEND_URL_PROD || "https://your-frontend.onrender.com",
 ];
-//#Also use the cors middleware for cross-origin requests.In this case, frontend requests!
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true); // Allow requests with no origin (like Postman)
+      if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) {
-        callback(null, true); // Allow the request if the origin is in the allowed list
+        callback(null, true);
       } else {
-        console.error(`CORS error: Origin ${origin} not allowed`);
-        callback(new Error(`CORS error: Origin ${origin} not allowed`), false); // Reject the request if the origin is not allowed
+        console.error(`Blocked by CORS: ${origin}`);
+        callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    credentials: true,
   })
 );
-
-// Middleware to parse the body but only with tester like Postman or others
-app.use(express.json());
-// CORS middleware to allow requests from any origin eg. frontend!
 
 //#Profile routes for user profile management
 app.use("/profile", userProfileRoutes);
