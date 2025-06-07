@@ -1,3 +1,5 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import dotenv from "dotenv";
 // Import cors to allow requests from any origin
@@ -34,12 +36,28 @@ dotenv.config({
 connectDB();
 //#Initialize middleware
 const app = express();
-//#Also use the cors middleware for cross-origin requests.In this case, frontend requests!
-app.use(cors());
-
-// Middleware to parse the body but only with tester like Postman or others
 app.use(express.json());
-// CORS middleware to allow requests from any origin eg. frontend!
+
+//#Enable CORS to allow requests from frontend or other origins.
+const allowedOrigins = [
+  process.env.FRONTEND_URL || "http://localhost:5173",
+  process.env.FRONTEND_URL_PROD || "https://your-frontend.onrender.com",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.error(`Blocked by CORS: ${origin}`);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 //#Profile routes for user profile management
 app.use("/profile", userProfileRoutes);
