@@ -2,7 +2,7 @@
 import { getStoredToken } from "./auth";
 
 // Central API_BASE_URL for all API calls!
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 // Check if the environment variable is set
 if (!API_BASE_URL) {
   console.error(
