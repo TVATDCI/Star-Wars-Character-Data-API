@@ -2,43 +2,32 @@ import path from "path";
 import { fileURLToPath } from "url";
 import express from "express";
 import dotenv from "dotenv";
-// Import cors to allow requests from any origin
 import cors from "cors";
-// Import path to resolve file paths
-import path from "path";
-import { fileURLToPath } from "url";
-// Import the connectDB function from the db.js file
-import connectDB from "./config/db.js";
-// Import the character routes from the routes folder - admins only!
-import characterRoutes from "./routes/characterRoutes.js";
-// Add models/userModel.js to extend register and auth routes with user registration and authentication
-// Import protect character routes from middleware/authMiddleware.js
-import authenticateToken from "./middleware/authMiddleware.js";
-// Import the requiredAdmin middleware to protect routes
-import requireAdmin from "./middleware/requireAdmin.js";
-// Import publicRoutes routes for public access
-import publicRoutes from "./routes/publicRoutes.js";
-// Import the User model for user registration and authentication
-import User from "./models/userModel.js";
-// npm install jsonwebtoken for token generation
-// Import userProfile routes for user profile management
-import userProfileRoutes from "./routes/userProfile.js";
 import jwt from "jsonwebtoken";
 
+import connectDB from "./config/db.js";
+import characterRoutes from "./routes/characterRoutes.js";
+import authenticateToken from "./middleware/authMiddleware.js";
+import publicRoutes from "./routes/publicRoutes.js";
+import userProfileRoutes from "./routes/userProfile.js";
+import User from "./models/userModel.js";
+
+// Setup environment
 const env = process.env.NODE_ENV || "development";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url); // Get the current file name
+const __dirname = path.dirname(__filename); // Get the directory name of the current module
 
 dotenv.config({
   path: path.resolve(__dirname, `.env.${env}`),
 });
 
+// Connect to DB
 connectDB();
-//#Initialize middleware
+
 const app = express();
 app.use(express.json());
 
-//#Enable CORS to allow requests from frontend or other origins.
+// Enable CORS
 const allowedOrigins = [
   process.env.FRONTEND_URL || "http://localhost:5173",
   process.env.FRONTEND_URL_PROD || "https://your-frontend.onrender.com",
@@ -59,17 +48,13 @@ app.use(
   })
 );
 
-//#Profile routes for user profile management
+// Profile routes
 app.use("/profile", userProfileRoutes);
-console.log("User profile routes is initialized");
+console.log("User profile routes initialized");
 
-// Create register route. This route will be responsible for registering users.
-//#Register a new user
+// Register route
 app.post("/register", async (req, res) => {
   const { email, password, role } = req.body;
-
-  console.log("Registering user:", email, password, role);
-  console.log("Request body:", req.body);
 
   if (!email || !password) {
     console.log("Email or password is missing");
@@ -80,7 +65,7 @@ app.post("/register", async (req, res) => {
     const newUser = new User({
       email,
       password,
-      role: role || "user", // ✅ Correct fallback here
+      role: role || "user",
     });
 
     await newUser.save();
@@ -92,59 +77,43 @@ app.post("/register", async (req, res) => {
   }
 });
 
-//#Login Route
+// Login route
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email, password });
 
-  //#debugging-Check if user is found
-  console.log("Logging in user HIT");
-  console.log("Request body:", req.body);
-  //#debugging-Check if user is found in the database by token
   if (user) {
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
+      { expiresIn: "1h" }
     );
-    //#debugging-Check if token is generated
-    console.log("User logged in successfully, token generated");
+    console.log("User logged in, token generated");
     res.json({ token });
   } else {
     res.status(401).json({ error: "Invalid credentials" });
   }
 });
 
-// #Logout Route
-// This is JWT token base authentication.
-// Since there's no server-side session, we just need to clear the token on the client side.
-// This route is just a placeholder and doesn't need to do anything on the server, not yet.
-// The client-side will handle the JWT token removal.
+// Logout route (handled on client)
 app.post("/logout", (req, res) => {
-  // Clear the token from the client-side storage
-  console.log("Logout user HIT");
-  // Send a response indicating successful logout
+  console.log("Logout route hit");
   res.json({ message: "Logged out successfully" });
 });
-//#Protect character routes with authentication middleware
+
+// Protected character routes
 app.use("/api/characters", authenticateToken, characterRoutes);
-//NOTE: This middleware function is a standalone. Al logic is inside the function.
 
-//#The character routes V1
-// app.use("/api/characters", characterRoutes);
-// V1 is commented out. The V2 is the one with authentication middleware.
-
-//#Public routes for public access V2
+// Public routes
 app.use("/api/public", publicRoutes);
 
-//# server health check/fallback route
+// Root route
 app.get("/", (req, res) => {
-  res.send("Welcome to Star Wars Character Database CRUD API server...🚀");
+  res.send("🌌 Welcome to Star Wars Character Database CRUD API server...🚀");
 });
 
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running in on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

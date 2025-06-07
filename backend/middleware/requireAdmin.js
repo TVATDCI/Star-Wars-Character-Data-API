@@ -10,7 +10,7 @@ export default requireAdmin;
 // The one above checks directly if the user is not = "admin".
 // then it returns an error. Otherwise it calls next().!
 // To compare with the one below is the other way around.
-// NOTE: Alternative syntex:
+// NOTE: Alternative syntax:
 // const requireAdmin = (req, res, next) => {
 //     if (req.user && req.user.role === "admin") {
 //         next();
