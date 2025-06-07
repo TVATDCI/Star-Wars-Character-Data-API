@@ -82,13 +82,17 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email, password });
 
+  console.log("Login attempt for user:", email);
+  console.log("Logging in user HIT");
+  console.log("Request body:", req.body);
+
   if (user) {
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    console.log("User logged in, token generated");
+    console.log("User logged in, token generated successfully");
     res.json({ token });
   } else {
     res.status(401).json({ error: "Invalid credentials" });
