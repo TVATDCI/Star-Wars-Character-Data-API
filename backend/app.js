@@ -29,8 +29,9 @@ app.use(express.json());
 
 // Enable CORS
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "http://localhost:5173",
-  process.env.FRONTEND_URL_PROD || "https://your-frontend.onrender.com",
+  process.env.FRONTEND_URL || "http://localhost:5173", // Default for development
+  process.env.FRONTEND_URL_PROD ||
+    "https://star-wars-character-data-api.vercel.app/",
 ];
 
 app.use(
