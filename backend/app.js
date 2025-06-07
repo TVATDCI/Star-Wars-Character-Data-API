@@ -4,6 +4,9 @@ import express from "express";
 import dotenv from "dotenv";
 // Import cors to allow requests from any origin
 import cors from "cors";
+// Import path to resolve file paths
+import path from "path";
+import { fileURLToPath } from "url";
 // Import the connectDB function from the db.js file
 import connectDB from "./config/db.js";
 // Import the character routes from the routes folder - admins only!
@@ -22,18 +25,13 @@ import User from "./models/userModel.js";
 import userProfileRoutes from "./routes/userProfile.js";
 import jwt from "jsonwebtoken";
 
-const _filename = fileURLToPath(import.meta.url);
-const _dirname = path.dirname(_filename);
+const env = process.env.NODE_ENV || "development";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Load environment variables from .env file based on the current environment
-const envPath = path.resolve(
-  __dirname,
-  `.env.${process.env.NODE_ENV || "development"}`
-);
-dotenv.config({ path: envPath });
-
-console.log("NODE_ENV:", process.env.NODE_ENV);
-console.log("MONGO_URL:", process.env.MONGO_URL);
+dotenv.config({
+  path: path.resolve(__dirname, `.env.${env}`),
+});
 
 connectDB();
 //#Initialize middleware
@@ -143,7 +141,7 @@ app.use("/api/public", publicRoutes);
 
 //# server health check/fallback route
 app.get("/", (req, res) => {
-  res.send("Welcome to Star Wars Character Database CRUD API...🚀");
+  res.send("Welcome to Star Wars Character Database CRUD API server...🚀");
 });
 
 const PORT = process.env.PORT || 5000;
