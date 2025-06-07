@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { apiRequest } from "./utils/api"; // Import apiRequest for API calls
 import { getStoredToken } from "./utils/auth";
 import { jwtDecode } from "jwt-decode"; // Import jwtDecode to decode the JWT token
 import Button from "../components/buttons/Button";
