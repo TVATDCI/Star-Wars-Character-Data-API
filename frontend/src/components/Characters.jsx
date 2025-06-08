@@ -13,44 +13,42 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [error, setError] = useState(null);
   const [userRole, setUserRole] = useState("user"); // default role to user
   console.log("User role in Characters:", userRole);
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
   const auth = getStoredToken(); // reuse getStoredToken function to get the token
 
   useEffect(() => {
-    if (!auth || !auth.token) {
-      setError("Authentication required. Please register or log in.");
-      setLoading(false);
-      return;
-    }
+    const fetchCharacters = async () => {
+      try {
+        if (!auth?.token) {
+          setError("No authentication token found.");
+          return;
+        }
 
-    // Decode the token to get the user role
-    try {
-      const decoded = jwtDecode(auth.token);
-      const role = decoded.role || "user";
-      setUserRole(role);
+        const decoded = jwtDecode(auth.token);
+        const role = decoded.role || "user";
+        setUserRole(role);
 
-      const endpoint = "http://localhost:5000/api/characters";
+        // ✅ This works because fetchCharacters is marked as async
+        const data = await apiRequest(
+          "/api/characters",
+          "GET",
+          null,
+          auth.token
+        );
+        setCharacters(data);
+      } catch (err) {
+        console.error("Fetch error:", err.message);
+        setError("Failed to load characters. Please try again.");
+        setMessage(`Error fetching characters: ${err.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      fetch(endpoint, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      })
-        .then((res) => {
-          if (!res.ok) throw new Error("Failed to fetch characters");
-          return res.json();
-        })
-        .then((data) => setCharacters(data))
-        .catch((err) => {
-          console.error(err.message);
-          setError("Failed to load characters. Please try again.");
-        })
-        .finally(() => setLoading(false));
-    } catch (err) {
-      console.error("Invalid token:", err);
-      setError("Invalid token. Please log in again.");
-      setLoading(false);
-    }
-  }, []);
+    fetchCharacters(); // Call the async function inside useEffect
+  }, [auth?.token]); // Dependency on auth.token to refetch if token changes
 
   const handleDelete = (id) => {
     if (!auth || !auth.token) {
