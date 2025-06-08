@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { getStoredToken } from "./utils/auth";
+import { apiRequest } from "./utils/api";
 import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode"; // Using the same logic as in Characters.jsx
 
@@ -28,54 +30,58 @@ Detail.propTypes = {
 };
 
 function CharacterDetail({ characterId, onBack, onEdit }) {
-  const [userRole, setUserRole] = useState("user"); // default role to user
-
-  // Check if userRole is passed correctly
-  console.log("User role in CharacterDetail:", userRole);
+  const [userRole, setUserRole] = useState("user");
   const [character, setCharacter] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  console.log("User role in CharacterDetail:", userRole);
+  // Fetch character details and user role on mount
+  // using the same logic as in Characters.jsx
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("No token found. Please log in.");
+    const storedToken = getStoredToken()?.token;
+
+    if (!storedToken) {
+      setError("No authentication token found.");
       return;
     }
-
+    try {
+      setLoading(true);
+    } catch (err) {
+      console.error("Error setting loading state:", err.message);
+      setError("Failed to set loading state. Please try again.");
+      return;
+    }
     // Decode the token to get the user role
     // repeating the logic from Characters.jsx
     // It can be refactored with a custom hook in the future!!!
-    try {
-      const decodedToken = jwtDecode(token);
-      const role = decodedToken.role || "user"; // if the role is not present, default to user
-      setUserRole(role); // Otherwise set the user role in state
-    } catch (error) {
-      console.error("Error decoding token:", error);
-      return;
-    }
+    const decoded = jwtDecode(storedToken);
+    const role = decoded.role || "user";
+    setUserRole(role);
+    console.log("Decoded user role:", role);
+
     // Fetch character details
-    fetch(`http://localhost:5000/api/characters/${characterId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unauthorized or failed to fetch character");
-        }
-        return response.json();
-      })
-      .then((data) => setCharacter(data))
-      .catch((error) => {
-        console.error("Error fetching character:", error);
-        setCharacter(null); // Optional: reset character if failed
-      });
-  }, [characterId]);
+    const fetchCharacterDetails = async () => {
+      try {
+        const data = await apiRequest(`/api/characters/${characterId}`);
+        setCharacter(data);
+      } catch (err) {
+        console.error("Fetch error:", err.message);
+        setError("Failed to load character details. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  console.log("User role in CharacterDetail:", userRole);
-
+    fetchCharacterDetails();
+  }, [characterId]); // Run only once on mount
   // Show loading state
-  if (!character) {
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
+  if (loading) {
     return <div className="text-neutral-200">Loading character...</div>;
   }
 
