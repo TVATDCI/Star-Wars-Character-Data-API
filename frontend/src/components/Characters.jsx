@@ -50,29 +50,21 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
     fetchCharacters(); // Call the async function inside useEffect
   }, [auth?.token]); // Dependency on auth.token to refetch if token changes
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (!auth || !auth.token) {
       setError("Authentication required. Please log in.");
       return;
     }
 
-    fetch(`http://localhost:5000/api/characters/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${auth.token}` },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to delete character");
-        return res.json();
-      })
-      .then(() =>
-        setCharacters((prev) =>
-          prev.filter((character) => character._id !== id)
-        )
-      )
-      .catch((err) => {
-        console.error("Delete failed:", err);
-        setError("Could not delete character. Try again.");
-      });
+    try {
+      await apiRequest(`/api/characters/${id}`, "DELETE", null, auth.token);
+
+      setCharacters((prev) => prev.filter((char) => char._id !== id));
+      setMessage("Character deleted successfully.");
+    } catch (err) {
+      console.error("Delete failed:", err);
+      setError("Could not delete character. Try again.");
+    }
   };
 
   if (loading) {
