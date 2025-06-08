@@ -16,32 +16,29 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const auth = getStoredToken(); // reuse getStoredToken function to get the token
+  // replace with internal StoredToken set up from // utils/auth.js
+  // Imported to api.js to apiRequest setup
+  // const auth = getStoredToken();
 
   useEffect(() => {
     const fetchCharacters = async () => {
-      try {
-        if (!auth?.token) {
-          setError("No authentication token found.");
-          return;
-        }
+      const storedToken = getStoredToken()?.token;
 
-        const decoded = jwtDecode(auth.token);
+      if (!storedToken) {
+        setError("No authentication token found.");
+        return;
+      }
+
+      try {
+        setLoading(true);
+
+        const decoded = jwtDecode(storedToken);
         const role = decoded.role || "user";
         setUserRole(role);
-
         console.log("Decoded user role:", role);
-        // Set loading state to true before fetching
-        setLoading(true);
-        console.log("Fetching characters with token:", auth.token);
 
-        // Fetch characters from the API
-        const data = await apiRequest(
-          "/api/characters",
-          "GET",
-          null,
-          auth.token
-        );
+        // apiRequest handle token internally
+        const data = await apiRequest("/api/characters");
         setCharacters(data);
       } catch (err) {
         console.error("Fetch error:", err.message);
@@ -52,8 +49,8 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
       }
     };
 
-    fetchCharacters(); // Call the async function inside useEffect
-  }, [auth?.token]); // Dependency on auth.token to refetch if token changes
+    fetchCharacters();
+  }, []); // Empty dependency array to run only once on mount to avoid infinite loop!
 
   // setting timeout for message
   useEffect(() => {
@@ -65,15 +62,17 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
       return () => clearTimeout(timer); // Cleanup timer on unmount
     }
   }, [message, error]); // Run effect when message or error changes
+
   // Function to handle character deletion
   const handleDelete = async (id) => {
-    if (!auth || !auth.token) {
-      setError("Authentication required. Please log in.");
-      return;
-    }
-
     try {
-      await apiRequest(`/api/characters/${id}`, "DELETE", null, auth.token);
+      const storedToken = getStoredToken()?.token;
+      if (!storedToken) {
+        setError("Authentication required. Please log in.");
+        return;
+      }
+
+      await apiRequest(`/api/characters/${id}`, "DELETE");
 
       setCharacters((prev) => prev.filter((char) => char._id !== id));
       setMessage("Character deleted successfully.");
