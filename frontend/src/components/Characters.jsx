@@ -30,7 +30,12 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         const role = decoded.role || "user";
         setUserRole(role);
 
-        // ✅ This works because fetchCharacters is marked as async
+        console.log("Decoded user role:", role);
+        // Set loading state to true before fetching
+        setLoading(true);
+        console.log("Fetching characters with token:", auth.token);
+
+        // Fetch characters from the API
         const data = await apiRequest(
           "/api/characters",
           "GET",
@@ -50,6 +55,17 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
     fetchCharacters(); // Call the async function inside useEffect
   }, [auth?.token]); // Dependency on auth.token to refetch if token changes
 
+  // setting timeout for message
+  useEffect(() => {
+    if (message || error) {
+      const timer = setTimeout(() => {
+        setMessage("");
+        setError("");
+      }, 5000); // clear after 5 seconds
+      return () => clearTimeout(timer); // Cleanup timer on unmount
+    }
+  }, [message, error]); // Run effect when message or error changes
+  // Function to handle character deletion
   const handleDelete = async (id) => {
     if (!auth || !auth.token) {
       setError("Authentication required. Please log in.");
