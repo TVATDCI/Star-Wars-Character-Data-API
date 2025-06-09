@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getStoredToken } from "./utils/auth";
+import { getStoredToken, getUserRole } from "./utils/auth";
 import { apiRequest } from "./utils/api";
 import PropTypes from "prop-types";
 import { jwtDecode } from "jwt-decode"; // Using the same logic as in Characters.jsx
@@ -52,13 +52,10 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
       setError("Failed to set loading state. Please try again.");
       return;
     }
-    // Decode the token to get the user role
-    // repeating the logic from Characters.jsx
-    // It can be refactored with a custom hook in the future!!!
-    const decoded = jwtDecode(storedToken);
-    const role = decoded.role || "user";
-    setUserRole(role);
-    console.log("Decoded user role:", role);
+    // Role decoder is now moved to utils/auth.js
+    const role = getUserRole();
+    setUserRole(role); // Set user role based on token from utils/auth.js
+    console.log("User role", role);
 
     // Fetch character details
     const fetchCharacterDetails = async () => {
