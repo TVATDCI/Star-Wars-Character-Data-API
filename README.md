@@ -80,6 +80,8 @@ project-root/
 │ │ │ │   ├── CheckboxInput.jsx
 │ │ │ │   ├── NumberInput.jsx
 │ │ │ │   └── TextInput.jsx
+│ │ │ ├── hooks/
+│ │ │ │   └── UserProfileFetches.js
 │ │ │ ├── reg-auth/
 │ │ │ │   ├── LoginForm.jsx
 │ │ │ │   └── RegisterForm.jsx
