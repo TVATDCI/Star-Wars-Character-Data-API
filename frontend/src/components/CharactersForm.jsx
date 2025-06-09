@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { apiRequest } from "./utils/api";
+import { getStoredToken, getUserRole } from "./utils/auth";
 import PropTypes from "prop-types";
 
 import TextInput from "./form/TextInput";
@@ -33,45 +35,54 @@ function CharacterForm({ characterId, onSave, onCancel }) {
     master: "",
     notableAchievements: [],
   });
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  // check if user is logged in?
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("No token found. Please log in.");
+    const storedToken = getStoredToken()?.token;
+
+    if (!storedToken) {
+      setError("No authentication token found.");
       return;
     }
 
     try {
-      const decodedToken = jwtDecode(token);
-      const role = decodedToken.role || "user";
-      setUserRole(role);
-    } catch (error) {
-      console.error("Error decoding token:", error);
+      setLoading(true);
+    } catch (err) {
+      console.error("Error setting loading state:", err.message);
+      setError("Failed to set loading state. Please try again.");
       return;
     }
 
-    if (characterId) {
-      fetch(`http://localhost:5000/api/characters/${characterId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setCharacter((prevCharacter) => ({
-            ...prevCharacter,
-            ...data,
-            stats: {
-              forceRating: data.stats?.forceRating || 0,
-              combatSkill: data.stats?.combatSkill || 0,
-              pilotingAbility: data.stats?.pilotingAbility || 0,
-              diplomacyRating: data.stats?.diplomacyRating || 0,
-            },
-          }));
-        })
-        .catch((error) => console.error("Error fetching character:", error));
-    }
+    // Role decoder is now moved to utils/auth.js
+    const role = getUserRole();
+    setUserRole(role); // Set user role based on token from utils/auth.js
+    console.log("User role", role);
+
+    // Fetch fetchCharactersFormData
+    const fetchCharactersFormData = async () => {
+      if (!characterId) return;
+
+      try {
+        const data = await apiRequest(`/api/characters/${characterId}`);
+        setCharacter((prevCharacter) => ({
+          ...prevCharacter,
+          ...data,
+          stats: {
+            forceRating: data.stats?.forceRating || 0,
+            combatSkill: data.stats?.combatSkill || 0,
+            pilotingAbility: data.stats?.pilotingAbility || 0,
+            diplomacyRating: data.stats?.diplomacyRating || 0,
+          },
+        }));
+      } catch (error) {
+        console.error("Error fetching character:", error.message);
+      }
+    };
+
+    fetchCharactersFormData();
   }, [characterId]);
 
   // Modified Handle input changes, converting numeric fields to numbers
