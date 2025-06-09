@@ -118,23 +118,14 @@ function CharacterForm({ characterId, onSave, onCancel }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const method = characterId ? "PUT" : "POST";
-    const url = characterId
-      ? `http://localhost:5000/api/characters/${characterId}`
-      : "http://localhost:5000/api/characters";
 
-    fetch(url, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(character),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        onSave(data);
-      })
+    const method = characterId ? "PUT" : "POST";
+    const endpoint = characterId
+      ? `/api/characters/${characterId}`
+      : "/api/characters";
+
+    apiRequest(endpoint, method, character)
+      .then((data) => onSave(data))
       .catch((error) => console.error("Error saving character:", error));
   };
 

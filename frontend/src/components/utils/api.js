@@ -36,10 +36,10 @@ export async function apiRequest(
   body = null,
   token = null
 ) {
-  const authToken = token || getStoredToken()?.token; // Use provided token or get from localStorage
+  const authToken = token || getStoredToken()?.token;
   const headers = {
     "Content-Type": "application/json",
-    ...(authToken && { Authorization: `Bearer ${authToken}` }), // Conditionally add Authorization header
+    ...(authToken && { Authorization: `Bearer ${authToken}` }),
   };
 
   const options = {
@@ -48,8 +48,7 @@ export async function apiRequest(
     ...(body && { body: JSON.stringify(body) }),
   };
 
-  console.log("Sending API request to endpoint:", `${API_BASE_URL}${endpoint}`);
-
+  console.log("Sending API request to:", `${API_BASE_URL}${endpoint}`);
   const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
   return handleApiError(response);
 }
