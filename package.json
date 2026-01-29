@@ -1,5 +1,5 @@
 {
-  "name": "StarWars Character Database API",
+  "name": "star-wars-character-database",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
