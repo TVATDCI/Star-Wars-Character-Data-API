@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URL, {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
       // These options are now implicit in Mongoose 6.x and above
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
