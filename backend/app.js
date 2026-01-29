@@ -14,12 +14,21 @@ import User from './models/userModel.js';
 
 // Setup environment
 const env = process.env.NODE_ENV || 'development';
-const __filename = fileURLToPath(import.meta.url); // Get the current file name
-const __dirname = path.dirname(__filename); // Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+// 1. .env.development: is being used in development environment.
 dotenv.config({
   path: path.resolve(__dirname, `../.env.${env}`),
 });
+
+// 2. Fallback: Load the base .env file if the variables weren't found
+dotenv.config({
+  path: path.resolve(__dirname, '../.env'),
+});
+// DEBUG: Log loaded environment variables in development
+console.log('🔍 Environment:', env);
+console.log('🔑 MONGO_URL Loaded:', process.env.MONGO_URL ? '✅ Yes' : '❌ No');
 
 // Connect to DB
 connectDB();
