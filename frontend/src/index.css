@@ -1,6 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=zodiak@400,800,900,1&display=swap');
+@import url('https://fonts.cdnfonts.com/css/dune-rise');
+
+@import 'tailwindcss';
+
+@theme {
+  --color-test-1: #ffc500;
+  --font-display: 'Playfair Display', serif;
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
+  --font-zodiak: 'Zodiak', sans-serif;
+  --font-mono:
+    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  --font-dune: 'Dune Rise', sans-serif;
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -8,11 +23,22 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #000000;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply leading-relaxed;
+  background-color: #000000;
+  color: rgba(255, 255, 255, 0.87);
+  font-family: var(--font-sans);
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease-in-out;
 }
