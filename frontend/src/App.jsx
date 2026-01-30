@@ -1,4 +1,3 @@
-import React from 'react';
 import NebulaCanvas from './components/spaceAtmos/NebulaCanvas';
 import starWarsNeonLogo from './assets/star-wars-neon.svg';
 import ViewRouter from './components/ViewRouter';
