@@ -27,7 +27,7 @@ function Layout() {
             alt='Star Wars Logo'
             className='mb-4 w-48 sm:w-64 md:w-80 lg:w-md'
           />
-          <h2 className='text-2xl text-neutral-100/30 font-dune mt-2'>
+          <h2 className='text-2xl text-neutral-100/50 font-dune mt-2'>
             Character Database API
           </h2>
         </header>
