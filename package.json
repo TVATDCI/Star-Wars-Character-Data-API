@@ -4,18 +4,21 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cross-env NODE_ENV=development node backend/app.js",
+    "server": "cross-env NODE_ENV=development node backend/server.js",
     "client": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
-    "start": "node backend/app.js",
+    "start": "node backend/server.js",
     "seed": "node backend/libs/seeds.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "caniuse-lite": "^1.0.30001766",
     "cors": "^2.8.6",
     "dotenv": "^16.6.1",
     "express": "5.2.1",
+    "express-rate-limit": "^8.2.1",
     "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.0"
   },
