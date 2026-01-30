@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { apiRequest } from './utils/api'; // Import apiRequest for API calls
-import { getStoredToken } from './utils/auth';
-import { jwtDecode } from 'jwt-decode'; // Import jwtDecode to decode the JWT token
-import Button from '../components/buttons/Button';
-import ButtonGradient from '../components/buttons/ButtonGradient';
-import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
-import BtnNeonGradient from '../components/buttons/BtnNeonGradient.jsx';
-import PropTypes from 'prop-types'; // Import PropTypes for props validation
+import { useState, useEffect } from "react";
+import { apiRequest } from "./utils/api"; // Import apiRequest for API calls
+import { getStoredToken, getUserRole } from "./utils/auth";
+
+import Button from "../components/buttons/Button";
+import ButtonGradient from "../components/buttons/ButtonGradient";
+import SpaceBtn from "../components/buttons/SpaceBtn.jsx";
+import BtnNeonGradient from "../components/buttons/BtnNeonGradient.jsx";
+import PropTypes from "prop-types"; // Import PropTypes for props validation
 
 function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [characters, setCharacters] = useState([]);
@@ -32,10 +32,10 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
       try {
         setLoading(true);
 
-        const decoded = jwtDecode(storedToken);
-        const role = decoded.role || 'user';
-        setUserRole(role);
-        console.log('Decoded user role:', role);
+        // Role decoder is now moved to utils/auth.js
+        const role = getUserRole();
+        setUserRole(role); // Set user role based on token from utils/auth.js
+        console.log("User role", role);
 
         // apiRequest handle token internally
         const data = await apiRequest('/api/characters');
