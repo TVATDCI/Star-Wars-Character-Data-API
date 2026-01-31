@@ -45,6 +45,9 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
+import authRoutes from './routes/authRoutes.js';
+app.use('/api/auth', authRoutes);
+
 
 // Profile routes
 app.use('/profile', userProfileRoutes);
