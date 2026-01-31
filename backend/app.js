@@ -60,4 +60,8 @@ app.get('/', (req, res) => {
   res.send('🌌 Welcome to Star Wars Character Database CRUD API server...🚀');
 });
 
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+app.use(notFound);
+app.use(errorHandler);
+
 export default app;
