@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import characterRoutes from './routes/characterRoutes.js';
 import authenticateToken from './middleware/authMiddleware.js';
 import publicRoutes from './routes/publicRoutes.js';
-import userProfileRoutes from './routes/userProfile.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
@@ -49,8 +49,8 @@ import authRoutes from './routes/authRoutes.js';
 app.use('/api/auth', authRoutes);
 
 
-// Profile routes
-app.use('/profile', userProfileRoutes);
+// User routes
+app.use('/api/users', userRoutes);
 
 // Protected character routes
 app.use('/api/characters', authenticateToken, characterRoutes);
