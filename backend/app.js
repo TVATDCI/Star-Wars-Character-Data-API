@@ -43,20 +43,20 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP, please try again in an hour!'
 });
-app.use('/api', limiter);
+app.use('/api/v1', limiter);
 
 import authRoutes from './routes/authRoutes.js';
-app.use('/api/auth', authRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 
 // User routes
-app.use('/api/users', userRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Protected character routes
-app.use('/api/characters', authenticateToken, characterRoutes);
+app.use('/api/v1/characters', authenticateToken, characterRoutes);
 
 // Public routes
-app.use('/api/public', publicRoutes);
+app.use('/api/v1/public', publicRoutes);
 
 // Root route
 app.get('/', (req, res) => {
