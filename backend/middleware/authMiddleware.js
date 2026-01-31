@@ -8,7 +8,8 @@ const authenticateToken = async (req, res, next) => {
   console.log("Authorization Header:", authHeader);
 
   if (!authHeader?.startsWith("Bearer ")) {
-    return res.status(401).json({ error: "No token provided" });
+    res.status(401);
+    throw new Error("No token provided");
   }
 
   const token = authHeader.split(" ")[1];
@@ -21,14 +22,14 @@ const authenticateToken = async (req, res, next) => {
     console.log("User Object:", user);
 
     if (!user) {
-      return res.status(401).json({ error: "User not found" });
+      res.status(401);
+      throw new Error("User not found");
     }
 
     req.user = user;
     next();
   } catch (err) {
-    console.error("Token verification failed:", err);
-    return res.status(403).json({ error: "Invalid token" });
+    next(err); // Pass the error to the centralized error handler
   }
 };
 
