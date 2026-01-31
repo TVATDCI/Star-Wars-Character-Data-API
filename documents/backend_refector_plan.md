@@ -307,8 +307,39 @@ app.listen(PORT, () => {
 });
 ```
 
-### ⚡ Next Steps
-
-1. **Generate Files:** Create these four files.
-2. **Update `package.json`:** Change the `"server"` script to run `backend/server.js` instead of `backend/app.js`.
-3. **Update `vite.config.js`:** Since I moved auth routes to `/api/auth`, update your proxy to map `/login` -> `/api/auth/login`.
+Basic done:
+feat: Refactor backend for improved │
+│ structure, security, and error handling │
+│ │
+│ This commit implements a comprehensive refactoring of │
+│ the backend, addressing several key areas: │
+│ │
+│ - **Entry Point Separation**: Separated application │
+│ setup (app.js) from server initialization and database │
+│ connection (server.js) for better modularity and │
+│ testability. │
+│ - **Enhanced Security**: Integrated 'helmet' for │
+│ setting secure HTTP headers and 'express-rate-limit' │
+│ to protect against brute-force attacks on API │
+│ endpoints. 'bcrypt' was also introduced for secure │
+│ password hashing. │
+│ - **Centralized Error Handling**: Implemented a global │
+│ error handling middleware to standardize error │
+│ responses and improve debugging in development while │
+│ providing cleaner messages in production. │
+│ - **Modularized Authentication**: Extracted login and │
+│ registration logic into a dedicated authController and │
+│ authRoutes, moving inline logic from app.js. │
+│ - **Refactored User Profile Management**: Separated │
+│ user profile fetching and updating into a │
+│ userController and userRoutes, replacing the previous │
+│ monolithic userProfile.js. │
+│ - **Secure Password Management**: Updated the User │
+│ model to include pre-save password hashing using │
+│ bcrypt and a method for password comparison, ensuring │
+│ user credentials are handled securely. │
+│ - **Standardized API Versioning**: Introduced │
+│ '/api/v1' prefix for all API routes, providing a clear │
+│ versioning strategy. │
+│ - **Code Cleanup**: Removed redundant code and ensured │
+│ consistency across modified and newly created files
