@@ -26,36 +26,37 @@ const formatCharacter = (character) => {
 // @desc    Get all characters
 // @route   GET /api/characters
 // @access  Public
-const getCharacters = async (req, res) => {
+const getCharacters = async (req, res, next) => {
   try {
     const characters = await Character.find();
     const formatCharacters = characters.map(formatCharacter);
     res.json(formatCharacters);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
 // @desc    Get a single character by ID
 // @route   GET /api/characters/:id
 // @access  Public
-const getCharacterById = async (req, res) => {
+const getCharacterById = async (req, res, next) => {
   try {
     const character = await Character.findById(req.params.id);
     if (character) {
       res.json(formatCharacter(character));
     } else {
-      res.status(404).json({ message: "Character not found" });
+      res.status(404);
+      throw new Error("Character not found");
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
 // @desc    Create a new character
 // @route   POST /api/characters
 // @access  Public
-const createCharacter = async (req, res) => {
+const createCharacter = async (req, res, next) => {
   const character = new Character(req.body);
   // logging just name & id of the character
   console.log("Creating a new character:", {
@@ -66,14 +67,14 @@ const createCharacter = async (req, res) => {
     const newCharacter = await character.save();
     res.status(201).json(formatCharacter(newCharacter));
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 };
 
 // @desc    Update a character
 // @route   PUT /api/characters/:id
 // @access  Public
-const updateCharacter = async (req, res) => {
+const updateCharacter = async (req, res, next) => {
   try {
     const character = await Character.findById(req.params.id);
     if (character) {
@@ -81,17 +82,18 @@ const updateCharacter = async (req, res) => {
       const updatedCharacter = await character.save();
       res.json(updatedCharacter);
     } else {
-      res.status(404).json({ message: "Character not found" });
+      res.status(404);
+      throw new Error("Character not found");
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 };
 
 // @desc    Delete a character
 // @route   DELETE /api/characters/:id
 // @access  Public
-const deleteCharacter = async (req, res) => {
+const deleteCharacter = async (req, res, next) => {
   try {
     console.log("Deleting a character with an id: ", req.params.id);
     const character = await Character.findById(req.params.id);
@@ -99,10 +101,11 @@ const deleteCharacter = async (req, res) => {
       await Character.deleteOne({ _id: req.params.id }); // Correct method to delete
       res.json({ message: "Character removed" });
     } else {
-      res.status(404).json({ message: "Character not found" });
+      res.status(404);
+      throw new Error("Character not found");
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
