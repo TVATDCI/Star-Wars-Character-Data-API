@@ -3,13 +3,14 @@ import { getStoredToken } from './auth';
 
 // Central API_BASE_URL for all API calls!
 // or use '' when Vite proxy is enabled, details in vite.config.js
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = ''; // import.meta.env.VITE_API_BASE_URL;
+// Now API_BASE_URL is set to '' because the Vite proxy will handle routing to the backend server.
 // Check if the environment variable is set
-if (!API_BASE_URL) {
-  console.error(
-    'VITE_API_BASE_URL is not defined. Please set it in your .env file.'
-  );
-}
+// if (!API_BASE_URL) {
+//   console.error(
+//     'VITE_API_BASE_URL is not defined. Please set it in your .env file.'
+//   );
+// }
 
 // utils/api.js - Generic API errors handling
 function handleApiError(response) {
