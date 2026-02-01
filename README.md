@@ -46,72 +46,82 @@ Create a REST API that manages a database of Star Wars characters. Users should 
 ```bash
 project-root/
 ├── backend/
-│ ├── config/
-│ │ └── db.js
-│ ├── controller/
-│ │ └── characterController.js
-│ ├── libs/
-│ │ ├── seeds.js
-│ ├── middleware/
-│ │ ├── authMiddleware.js
-│ │ └── requireAdmin.js
-│ ├── models/
-│ │ ├── characterModel.js
-│ │ └── userModel.js
-│ ├── routes/
-│ │ ├── characterRoutes.js
-│ │ ├── publicRoutes.js
-│ │ └── userProfile.js
-│ ├── app.js
-│ └── package.json
+│   ├── config/
+│   │   └── db.js
+│   ├── controller/
+│   │    ├── authController.js
+│   │    ├── characterController.js
+│   │    └── userController.js
+│   ├── libs/
+│   │    └── seeds.js
+│   ├── middleware/
+│   │    ├── authMiddleware.js
+│   │    ├── errorMiddleware.js
+│   │    ├── validationMiddleware.js
+│   │    └── requireAdmin.js
+│   ├── models/
+│   │    ├── characterModel.js
+│   │    └── userModel.js
+│   ├── routes/
+│   │    ├── authRoutes.js
+│   │    ├── publicRoutes.js
+│   │    ├── publicRoutes.js
+│   │    └── userRoutes.js
+│   ├── app.js
+│   └── server.js
 ├── frontend/
-│ ├── public/
-│ ├── src/
-│ │ ├── components/
-│ │ │ ├── buttons/
-│ │ │ │   ├── BtnNeonGradient.jsx
-│ │ │ │   ├── Button.jsx
-│ │ │ │   ├── ButtonGradient.jsx
-│ │ │ │   ├── ButtonSvg.jsx
-│ │ │ │   ├── SpaceBtn.jsx
-│ │ │ │   └── SpaceBtnSvg.jsx
-│ │ │ ├── form/
-│ │ │ │   ├── ArrayInput.jsx
-│ │ │ │   ├── CheckboxInput.jsx
-│ │ │ │   ├── NumberInput.jsx
-│ │ │ │   └── TextInput.jsx
-│ │ │ ├── hooks/
-│ │ │ │   └── UserProfileFetches.js
-│ │ │ ├── reg-auth/
-│ │ │ │   ├── LoginForm.jsx
-│ │ │ │   └── RegisterForm.jsx
-│ │ │ ├── spaceAtmos/
-│ │ │ │   ├── NebulaCanvas.jsx
-│ │ │ │   ├── nebulaCloud.js
-│ │ │ │   └── star.js
-│ │ │ └── utils/
-│ │ │ │   ├── api.js
-│ │ │ │   ├── auth.js
-│ │ │ │   └── debounce.js
-│ │ │ └── views/
-│ │ │ │   ├── InfoPage.jsx
-│ │ │ │   └── UserProfile.jsx
-│ │ │ ├── CharacterDetail.jsx
-│ │ │ ├── Characters.jsx
-│ │ │ └── CharacterForm.jsx
-│ │ │ └── ViewRouter.jsx
-│ │ ├── context/
-│ │ │ ├── AppContext.jsx
-│ │ ├── App.jsx
-│ │ ├── App.css
-│ │ └── index.css
-│ ├── main.jsx
-│ ├── package-lock.json
-│ ├── package.json
-│ ├── postcss.config.js
-│ └── tailwind.config.js
+│   ├── public/
+│   ├── src/
+│   │ ├── components/
+│   │ │ ├── buttons/
+│   │ │ │   ├── BtnNeonGradient.jsx
+│   │ │ │   ├── Button.jsx
+│   │ │ │   ├── ButtonGradient.jsx
+│   │ │ │   ├── ButtonSvg.jsx
+│   │ │ │   ├── SpaceBtn.jsx
+│   │ │ │   └── SpaceBtnSvg.jsx
+│   │ │ ├── form/
+│   │ │ │   ├── ArrayInput.jsx
+│   │ │ │   ├── CheckboxInput.jsx
+│   │ │ │   ├── NumberInput.jsx
+│   │ │ │   └── TextInput.jsx
+│   │ │ ├── hooks/
+│   │ │ │   └── UserProfileFetches.js
+│   │ │ ├── reg-auth/
+│   │ │ │   ├── LoginForm.jsx
+│   │ │ │   └── RegisterForm.jsx
+│   │ │ ├── spaceAtmos/
+│   │ │ │   ├── NebulaCanvas.jsx
+│   │ │ │   ├── nebulaCloud.js
+│   │ │ │   └── star.js
+│   │ │ └── utils/
+│   │ │ │   ├── api.js
+│   │ │ │   ├── auth.js
+│   │ │ │   └── debounce.js
+│   │ │ └── views/
+│   │ │ │   ├── InfoPage.jsx
+│   │ │ │   └── UserProfile.jsx
+│   │ │ ├── CharacterDetail.jsx
+│   │ │ ├── Characters.jsx
+│   │ │ └── CharacterForm.jsx
+│   │ │ └── ViewRouter.jsx
+│   │ ├── context/
+│   │ │ ├── AppContext.jsx
+│   │ ├── App.jsx
+│   │ ├── App.css
+│   │ └── index.css
+│   ├── main.jsx
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   └── tailwind.config.js
+├── documents/
+│   └── backend_refector_plan.md
 ├── .gitignore
+├── .prettierrc
+├── package.json
 ├── README.md
+└── vercel.json
 ```
 
 ---
