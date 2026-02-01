@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { getStoredToken, getUserRole } from "./utils/auth";
-import { apiRequest } from "./utils/api";
-import PropTypes from "prop-types";
-import { jwtDecode } from "jwt-decode"; // Using the same logic as in Characters.jsx
+import { useState, useEffect } from 'react';
+import { getStoredToken, getUserRole } from './utils/auth';
+import { apiRequest } from './utils/apiX.js';
+import PropTypes from 'prop-types';
+// import { jwtDecode } from "jwt-decode"; // Using the same logic as in Characters.jsx
 
 import ButtonGradient from '../components/buttons/ButtonGradient';
 import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
@@ -55,7 +55,7 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
     // Role decoder is now moved to utils/auth.js
     const role = getUserRole();
     setUserRole(role); // Set user role based on token from utils/auth.js
-    console.log("User role", role);
+    console.log('User role', role);
 
     // Fetch character details
     const fetchCharacterDetails = async () => {
