@@ -1,4 +1,3 @@
-// import getStoredToken from localStorage to create a user session
 import { getStoredToken } from './auth';
 
 // Central API_BASE_URL for all API calls!
@@ -70,34 +69,3 @@ export async function loginUser(email, password) {
   const response = await apiRequest('/login', 'POST', { email, password });
   return response || { email, role: 'user' };
 }
-
-//# Initiating the registerUser function
-// utils/api.js - RegisterUser
-//export async function registerUser(email, password) {
-//  const response = await fetch(`${API_BASE_URL}/register`, {
-//    method: "POST",
-//    headers: { "Content-Type": "application/json" },
-//    body: JSON.stringify({ email, password }),
-//  });
-//
-//  const data = await handleApiError(response); // Generic error handling
-//
-//  return {
-//    email: data.email,
-//    role: data.role || "user", // Default to 'user' if role is not provided
-//  };
-//}
-
-// # Initiating the loginUser function
-// utils/api.js - LoginUser
-//export async function loginUser(email, password) {
-//  const response = await fetch(`${API_BASE_URL}/login`, {
-//    method: "POST",
-//    headers: { "Content-Type": "application/json" },
-//    body: JSON.stringify({ email, password }),
-//  });
-//
-//  const data = await handleApiError(response); // Generic error handling
-//
-//  return data || { email, role: "user" };
-//}
