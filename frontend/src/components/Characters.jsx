@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiRequest } from './utils/api'; // Import apiRequest for API calls
+import { apiRequest } from './utils/api.js'; // Import apiRequest for API calls
 import { getStoredToken, getUserRole } from './utils/auth';
 
 import Button from '../components/buttons/Button';
@@ -38,7 +38,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         console.log('User role', role);
 
         // apiRequest handle token internally
-        const data = await apiRequest('/api/characters');
+        const data = await apiRequest('/characters');
         setCharacters(data);
       } catch (err) {
         console.error('Fetch error:', err.message);
@@ -72,7 +72,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         return;
       }
 
-      await apiRequest(`/api/characters/${id}`, 'DELETE');
+      await apiRequest(`/characters/${id}`, 'DELETE');
 
       setCharacters((prev) => prev.filter((char) => char._id !== id));
       setMessage('Character deleted successfully.');
