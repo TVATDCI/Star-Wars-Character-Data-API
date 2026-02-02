@@ -38,7 +38,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         console.log('User role', role);
 
         // apiRequest handle token internally
-        const data = await apiRequest('/characters');
+        const data = await apiRequest('GET', '/characters');
         setCharacters(data);
       } catch (err) {
         console.error('Fetch error:', err.message);
