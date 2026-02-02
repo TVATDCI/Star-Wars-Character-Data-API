@@ -8,6 +8,7 @@ const api = axios.create({
   withCredentials: true, // Prepared for future HTTP-Only cookie security.
 });
 
+// temporary export for direct use
 export const apiRequest = async (method, url, data) => {
   const response = await api({
     method,
