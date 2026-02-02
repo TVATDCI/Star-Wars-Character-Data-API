@@ -1,71 +1,67 @@
-import { getStoredToken } from './auth';
+import axios from 'axios';
+import { API_BASE_URL } from '../../apiConfig.js';
+import { getStoredToken } from './auth.js';
 
-// Central API_BASE_URL for all API calls!
-// or use '' when Vite proxy is enabled, details in vite.config.js
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-// Now API_BASE_URL is set to '' because the Vite proxy will handle routing to the backend server.
-// Check if the environment variable is set
-if (!API_BASE_URL) {
-  console.error(
-    'VITE_API_BASE_URL is not defined. Please set it in your .env file.'
-  );
-}
+// 1. reusable Axios instance
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true, // Prepared for future HTTP-Only cookie security.
+});
 
-// utils/api.js - Generic API errors handling
-function handleApiError(response) {
-  if (!response.ok) {
-    return response
-      .json()
-      .catch(() => ({}))
-      .then((errorData) => {
-        throw new Error(
-          errorData.error || 'An error occurred while processing your request.'
-        );
-      });
-  }
-  return response.json().catch(() => ({}));
-}
-
-// utils/api.js - Generic API request function
-// # Method stand alone!
-// - Construct headers object based on the presence of a token
-// - Define headers object once and pass  it to options
-// - Use spread with AND (...(body &&{...})) operator
-export async function apiRequest(
-  endpoint,
-  method = 'GET',
-  body = null,
-  token = null
-) {
-  const authToken = token || getStoredToken()?.token; // Use provided token or get from localStorage
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(authToken && { Authorization: `Bearer ${authToken}` }), // Conditionally add Authorization header
-  };
-
-  const options = {
+export const apiRequest = async (method, url, data) => {
+  const response = await api({
     method,
-    headers,
-    ...(body && { body: JSON.stringify(body) }),
-  };
+    url,
+    data,
+  });
+  return response;
+};
 
-  console.log('Sending API request to endpoint:', `${API_BASE_URL}${endpoint}`);
+// 2. Request Interceptor: Automatically attach the Bearer token if it exists.
+api.interceptors.request.use(
+  (config) => {
+    const auth = getStoredToken();
+    if (auth?.token) {
+      config.headers.Authorization = `Bearer ${auth.token}`; // Standardized Bearer logic.
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
-  return handleApiError(response);
-}
+// 3. Response Interceptor: Centralized error formatting.
+api.interceptors.response.use(
+  (response) => response.data, // Automatically extract data so you don't call .json().
+  (error) => {
+    // Axios catches 4xx and 5xx errors automatically.
+    const message =
+      error.response?.data?.error || 'An unexpected error occurred.';
+    return Promise.reject(new Error(message));
+  }
+);
 
-// # RegisterUser using generic apiRequest
-export async function registerUser(email, password) {
-  const response = await apiRequest('/register', 'POST', { email, password });
+/**
+ * Auth Functions / api requests
+ * Note: vite.config.js will rewrites, calling '/login'
+ * triggers the proxy to reach '/api/v1/auth/login'.
+ */
+
+export const loginUser = async (email, password) => {
+  return await api.post('/auth/login', { email, password });
+};
+
+export const registerUser = async (email, password) => {
+  const response = await api.post('/auth/register', { email, password });
   return {
     email: response.email,
-    role: response.role || 'user', // Default to 'user' if role is not provided
+    role: response.role || 'user', // Consistent fallback from nativeApi.js
   };
-}
+};
 
-// # LoginUser using generic apiRequest
-export async function loginUser(email, password) {
-  const response = await apiRequest('/login', 'POST', { email, password });
-  return response || { email, role: 'user' };
-}
+export const getCharacters = async () => {
+  return await api.get('/characters'); // Interceptor adds the token automatically!.
+};
+
+export default api;
