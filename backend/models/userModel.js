@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, default: "" }, // Optional name field
+    name: { type: String, default: '' }, // Optional name field
     email: {
       type: String,
       required: true,
@@ -16,30 +16,37 @@ const userSchema = new mongoose.Schema(
       },
     },
     password: { type: String, required: true }, // Password should be hashed before saving
-    bio: { type: String, default: "" }, // Optional bio field
-    location: { type: String, default: "" }, // Optional location field
+    bio: { type: String, default: '' }, // Optional bio field
+    location: { type: String, default: '' }, // Optional location field
     avatar: {
       type: String,
-      default: "https://avatars.githubusercontent.com/u/165805964?v=4", // Default avatar URL
+      default: 'https://avatars.githubusercontent.com/u/165805964?v=4', // Default avatar URL
     },
     role: {
       type: String,
-      enum: ["admin", "user"],
-      default: "user",
+      enum: ['admin', 'user'],
+      default: 'user',
     },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );
 
 // Hash password before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre('save', async function (next) {
+  // debug: if the hook runs
+  console.log('--- Model: Pre-save hook started ---');
+
+  if (!this.isModified('password')) return;
   try {
     const salt = await bcrypt.genSalt(10);
+    console.log('Salt generated');
     this.password = await bcrypt.hash(this.password, salt);
-    next();
+    console.log('Password hashed successfully');
+    // No next() call here—the async function resolving tells Mongoose to proceed.
   } catch (err) {
-    next(err);
+    console.error('Error in Model Pre-save:', err);
+    // Re-throw the error so it's caught by controller's catch block
+    throw err;
   }
 });
 
@@ -48,6 +55,6 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 export default User;
