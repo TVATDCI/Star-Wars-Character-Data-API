@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { apiRequest } from '../utils/apiX';
+import { apiRequest } from '../utils/api.js';
 
 export const useUserProfileFetcher = () => {
   const [profile, setProfile] = useState({
@@ -15,7 +15,7 @@ export const useUserProfileFetcher = () => {
   const fetchProfile = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await apiRequest('api/profile');
+      const data = await apiRequest('GET', '/users/profile');
       console.log('Fetched profile data from backend:', data); // Debug log
       setProfile({
         name: data.name || '',
@@ -24,7 +24,15 @@ export const useUserProfileFetcher = () => {
         avatar: data.avatar || '',
       });
     } catch (err) {
-      setMessage(`Error fetching profile: ${err.message}`);
+      console.error('PROFILE FETCH ERROR:', err);
+
+      const message =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
+        'Unknown error';
+
+      setMessage(`Error fetching profile: ${message}`);
     } finally {
       setLoading(false);
     }
