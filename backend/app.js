@@ -41,26 +41,25 @@ app.use(
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, please try again in an hour!'
+  message: 'Too many requests from this IP, please try again in an hour!',
 });
 app.use('/api/v1', limiter);
 
 import authRoutes from './routes/authRoutes.js';
 app.use('/api/v1/auth', authRoutes);
 
-
 // User routes
-app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/users', authenticateToken, userRoutes);
 
-// Protected character routes
-app.use('/api/v1/characters', authenticateToken, characterRoutes);
+// Character routes
+app.use('/api/v1/characters', characterRoutes);
 
 // Public routes
 app.use('/api/v1/public', publicRoutes);
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('🌌 Welcome to Star Wars Character Database CRUD API server...🚀');
+  res.send('Welcome to Star Wars Character Database CRUD API server...🚀');
 });
 
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
