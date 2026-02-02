@@ -16,24 +16,10 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api': {
-        // This will catch /api/characters, /api/public
-        target: 'http://localhost:5000',
+      '/api/v1': {
+        target: 'http://localhost:5000', // Backend server
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api/v1'), // Rewrite /api to /api/v1 for the backend
       },
-      '/login': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        rewrite: () => '/api/v1/auth/login', // Rewrite /login to /api/v1/auth/login
-      },
-      '/register': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        rewrite: () => '/api/v1/auth/register', // Rewrite /register to /api/v1/auth/register
-      },
-      // Note: If the frontend starts making calls to /api/v1/ directly,
-      // It might need a separate entry for that which doesn't rewrite the /api/v1 part.
     },
   },
 });
