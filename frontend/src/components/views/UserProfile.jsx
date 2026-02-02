@@ -131,9 +131,9 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
           type='submit'
           onClick={handleSubmit}
           className='mt-4 text-center block text-red-700 hover:text-red-400'
-          disabled={loading || isUnchanged}
+          disabled={loading || saving || isUnchanged}
         >
-          {loading ? 'Updating...' : 'Update Profile'}
+          {saving || loading ? 'Updating...' : 'Update Profile'}
         </SpaceBtn>
       </form>
       {loading && <p className='mt-2 text-yellow-500'>Loading...</p>}
