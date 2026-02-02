@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import viteCompression from 'vite-plugin-compression';
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -14,19 +14,14 @@ export default defineConfig({
       threshold: 1024, // Only compress files larger than 1KB
     }),
   ],
-  // Option: avoid putting http://localhost:5000 directly into the frontend components because it makes the build - brittle.
-  // Proxies all requests starting with /api to the backend
-  // Proxies login and register specifically since they aren't under /api
-  //   server: {
-  //     proxy: {
-  //       '/api': {
-  //         target: 'http://localhost:5000',
-  //         changeOrigin: true,
-  //       },
-  //       '/login': 'http://localhost:5000',
-  //       '/register': 'http://localhost:5000',
-  //     },
-  //   },
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:5000', // Backend server
+        changeOrigin: true,
+      },
+    },
+  },
 });
 
 // Notes: Once the proxy applied, update api.js to avoid hitting undefined or the wrong port:

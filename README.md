@@ -46,72 +46,82 @@ Create a REST API that manages a database of Star Wars characters. Users should 
 ```bash
 project-root/
 ├── backend/
-│ ├── config/
-│ │ └── db.js
-│ ├── controller/
-│ │ └── characterController.js
-│ ├── libs/
-│ │ ├── seeds.js
-│ ├── middleware/
-│ │ ├── authMiddleware.js
-│ │ └── requireAdmin.js
-│ ├── models/
-│ │ ├── characterModel.js
-│ │ └── userModel.js
-│ ├── routes/
-│ │ ├── characterRoutes.js
-│ │ ├── publicRoutes.js
-│ │ └── userProfile.js
-│ ├── app.js
-│ └── package.json
+│   ├── config/
+│   │   └── db.js
+│   ├── controller/
+│   │    ├── authController.js
+│   │    ├── characterController.js
+│   │    └── userController.js
+│   ├── libs/
+│   │    └── seeds.js
+│   ├── middleware/
+│   │    ├── authMiddleware.js
+│   │    ├── errorMiddleware.js
+│   │    ├── validationMiddleware.js
+│   │    └── requireAdmin.js
+│   ├── models/
+│   │    ├── characterModel.js
+│   │    └── userModel.js
+│   ├── routes/
+│   │    ├── authRoutes.js
+│   │    ├── publicRoutes.js
+│   │    ├── publicRoutes.js
+│   │    └── userRoutes.js
+│   ├── app.js
+│   └── server.js
 ├── frontend/
-│ ├── public/
-│ ├── src/
-│ │ ├── components/
-│ │ │ ├── buttons/
-│ │ │ │   ├── BtnNeonGradient.jsx
-│ │ │ │   ├── Button.jsx
-│ │ │ │   ├── ButtonGradient.jsx
-│ │ │ │   ├── ButtonSvg.jsx
-│ │ │ │   ├── SpaceBtn.jsx
-│ │ │ │   └── SpaceBtnSvg.jsx
-│ │ │ ├── form/
-│ │ │ │   ├── ArrayInput.jsx
-│ │ │ │   ├── CheckboxInput.jsx
-│ │ │ │   ├── NumberInput.jsx
-│ │ │ │   └── TextInput.jsx
-│ │ │ ├── hooks/
-│ │ │ │   └── UserProfileFetches.js
-│ │ │ ├── reg-auth/
-│ │ │ │   ├── LoginForm.jsx
-│ │ │ │   └── RegisterForm.jsx
-│ │ │ ├── spaceAtmos/
-│ │ │ │   ├── NebulaCanvas.jsx
-│ │ │ │   ├── nebulaCloud.js
-│ │ │ │   └── star.js
-│ │ │ └── utils/
-│ │ │ │   ├── api.js
-│ │ │ │   ├── auth.js
-│ │ │ │   └── debounce.js
-│ │ │ └── views/
-│ │ │ │   ├── InfoPage.jsx
-│ │ │ │   └── UserProfile.jsx
-│ │ │ ├── CharacterDetail.jsx
-│ │ │ ├── Characters.jsx
-│ │ │ └── CharacterForm.jsx
-│ │ │ └── ViewRouter.jsx
-│ │ ├── context/
-│ │ │ ├── AppContext.jsx
-│ │ ├── App.jsx
-│ │ ├── App.css
-│ │ └── index.css
-│ ├── main.jsx
-│ ├── package-lock.json
-│ ├── package.json
-│ ├── postcss.config.js
-│ └── tailwind.config.js
+│   ├── public/
+│   ├── src/
+│   │ ├── components/
+│   │ │ ├── buttons/
+│   │ │ │   ├── BtnNeonGradient.jsx
+│   │ │ │   ├── Button.jsx
+│   │ │ │   ├── ButtonGradient.jsx
+│   │ │ │   ├── ButtonSvg.jsx
+│   │ │ │   ├── SpaceBtn.jsx
+│   │ │ │   └── SpaceBtnSvg.jsx
+│   │ │ ├── form/
+│   │ │ │   ├── ArrayInput.jsx
+│   │ │ │   ├── CheckboxInput.jsx
+│   │ │ │   ├── NumberInput.jsx
+│   │ │ │   └── TextInput.jsx
+│   │ │ ├── hooks/
+│   │ │ │   └── UserProfileFetches.js
+│   │ │ ├── reg-auth/
+│   │ │ │   ├── LoginForm.jsx
+│   │ │ │   └── RegisterForm.jsx
+│   │ │ ├── spaceAtmos/
+│   │ │ │   ├── NebulaCanvas.jsx
+│   │ │ │   ├── nebulaCloud.js
+│   │ │ │   └── star.js
+│   │ │ └── utils/
+│   │ │ │   ├── api.js
+│   │ │ │   ├── auth.js
+│   │ │ │   └── debounce.js
+│   │ │ └── views/
+│   │ │ │   ├── InfoPage.jsx
+│   │ │ │   └── UserProfile.jsx
+│   │ │ ├── CharacterDetail.jsx
+│   │ │ ├── Characters.jsx
+│   │ │ └── CharacterForm.jsx
+│   │ │ └── ViewRouter.jsx
+│   │ ├── context/
+│   │ │ ├── AppContext.jsx
+│   │ ├── App.jsx
+│   │ ├── App.css
+│   │ └── index.css
+│   ├── main.jsx
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   └── tailwind.config.js
+├── documents/
+│   └── backend_refector_plan.md
 ├── .gitignore
+├── .prettierrc
+├── package.json
 ├── README.md
+└── vercel.json
 ```
 
 ---
@@ -125,24 +135,25 @@ project-root/
 - **Sequential Execution**: Makes asynchronous code look synchronous, which is easier to follow.
 - **Example**:
   \*\*Example
+
   ```javascript
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
       if (response.ok) {
-        console.log("Token received:", data.token);
-        localStorage.setItem("token", data.token);
+        console.log('Token received:', data.token);
+        localStorage.setItem('token', data.token);
       } else {
-        console.error("Login failed:", data.error);
+        console.error('Login failed:', data.error);
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error('Error during login:', error);
     }
   };
   ```
@@ -204,16 +215,16 @@ project-root/
 
 ```javascript
 const handleLogout = () => {
-  console.log("Logging out...");
+  console.log('Logging out...');
   setUser(null);
-  localStorage.removeItem("token");
-  localStorage.removeItem("userEmail");
-  localStorage.removeItem("userRole"); // Remove userRole as well
-  console.log("Token, userEmail and userRole removed from localStorage");
-  setView("info");
+  localStorage.removeItem('token');
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('userRole'); // Remove userRole as well
+  console.log('Token, userEmail and userRole removed from localStorage');
+  setView('info');
 };
 
-<button className="style of your choice" onClick={handleLogout}>
+<button className='style of your choice' onClick={handleLogout}>
   Logout
 </button>;
 ```
@@ -224,25 +235,24 @@ const handleLogout = () => {
 - If needed, a `/logout` route could simply return a success message:
 
   ```javascript
-  app.post("/logout", (req, res) => {
-    res.json({ message: "Logged out successfully" });
+  app.post('/logout', (req, res) => {
+    res.json({ message: 'Logged out successfully' });
   });
   ```
 
 ---
 
 1. **Implement Bearer Token Logic**:
-
    - Protect routes like `/api/characters` by requiring a valid token in the `Authorization` header.
    - Example middleware:
 
      ```javascript
      const authenticateToken = (req, res, next) => {
-       const token = req.headers["authorization"]?.split(" ")[1];
-       if (!token) return res.status(401).json({ error: "Access denied" });
+       const token = req.headers['authorization']?.split(' ')[1];
+       if (!token) return res.status(401).json({ error: 'Access denied' });
 
        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-         if (err) return res.status(403).json({ error: "Invalid token" });
+         if (err) return res.status(403).json({ error: 'Invalid token' });
          req.user = user;
          next();
        });
@@ -250,12 +260,12 @@ const handleLogout = () => {
      ```
 
 2. **Frontend Token Usage**:
-
    - Include the token in the `Authorization` header for authenticated requests:
+
      ```javascript
-     const token = localStorage.getItem("token");
-     fetch("http://localhost:5000/protected-route", {
-       method: "GET",
+     const token = localStorage.getItem('token');
+     fetch('http://localhost:5000/protected-route', {
+       method: 'GET',
        headers: {
          Authorization: `Bearer ${token}`,
        },
@@ -268,17 +278,17 @@ const handleLogout = () => {
 ---
 
 1. **Optional Backend `/logout`**:
-
    - If you want to add a `/logout` route, it could simply return a success message. For example:
+
      ```javascript
-     app.post("/logout", (req, res) => {
-       res.json({ message: "Logged out successfully" });
+     app.post('/logout', (req, res) => {
+       res.json({ message: 'Logged out successfully' });
      });
      ```
+
    - However, this is not strictly necessary unless you want to implement token invalidation.
 
 2. **Protected Routes**:
-
    - Bearer token logic to protect routes like `/api/characters`. This ensures only authenticated users can access certain endpoints.
    - Implement Bearer token logic in the backend to protect routes.
    - Update the frontend to include the token in the `Authorization` header for authenticated requests.
@@ -303,7 +313,7 @@ When building authentication systems, you can store the JWT token in two main wa
 - **Example**:
 
   ```javascript
-  fetch("http://localhost:5000/api/characters", {
+  fetch('http://localhost:5000/api/characters', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -325,10 +335,10 @@ When building authentication systems, you can store the JWT token in two main wa
 **Set by Backend:**
 
 ```javascript
-res.cookie("token", jwtToken, {
+res.cookie('token', jwtToken, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "Strict",
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'Strict',
   maxAge: 3600000, // 1 hour
 });
 ```

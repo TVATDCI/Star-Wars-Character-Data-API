@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
-import { apiRequest } from "./utils/api"; // Import apiRequest for API calls
-import { getStoredToken, getUserRole } from "./utils/auth";
+import { useState, useEffect } from 'react';
+import { apiRequest } from './utils/api.js'; // Import apiRequest for API calls
+import { getStoredToken, getUserRole } from './utils/auth';
 
-import Button from "../components/buttons/Button";
-import ButtonGradient from "../components/buttons/ButtonGradient";
-import SpaceBtn from "../components/buttons/SpaceBtn.jsx";
-import BtnNeonGradient from "../components/buttons/BtnNeonGradient.jsx";
-import PropTypes from "prop-types"; // Import PropTypes for props validation
+import Button from '../components/buttons/Button';
+import ButtonGradient from '../components/buttons/ButtonGradient';
+import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
+import BtnNeonGradient from '../components/buttons/BtnNeonGradient.jsx';
+import PropTypes from 'prop-types'; // Import PropTypes for props validation
 
 function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [characters, setCharacters] = useState([]);
   const [error, setError] = useState(null);
   const [userRole, setUserRole] = useState('user'); // default role to user
-  console.log('User role in Characters:', userRole);
+  //   console.log('User role in Characters:', userRole); // check the role
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -35,10 +35,10 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         // Role decoder is now moved to utils/auth.js
         const role = getUserRole();
         setUserRole(role); // Set user role based on token from utils/auth.js
-        console.log("User role", role);
+        console.log('User role', role);
 
         // apiRequest handle token internally
-        const data = await apiRequest('/api/characters');
+        const data = await apiRequest('GET', '/characters');
         setCharacters(data);
       } catch (err) {
         console.error('Fetch error:', err.message);
@@ -72,7 +72,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         return;
       }
 
-      await apiRequest(`/api/characters/${id}`, 'DELETE');
+      await apiRequest(`/characters/${id}`, 'DELETE');
 
       setCharacters((prev) => prev.filter((char) => char._id !== id));
       setMessage('Character deleted successfully.');
