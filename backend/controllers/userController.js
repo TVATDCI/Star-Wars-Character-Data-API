@@ -5,10 +5,10 @@ import User from '../models/userModel.js';
 // @access  Private
 const getUserProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).select("-password");
+    const user = await User.findById(req.user._id).select('-password');
     if (!user) {
       res.status(404);
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
 
     res.json({
@@ -33,13 +33,13 @@ const updateUserProfile = async (req, res, next) => {
     const user = await User.findById(req.user._id);
     if (!user) {
       res.status(404);
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
 
     // Validate that at least one field is provided
     if (!name && !bio && !location && !avatar) {
       res.status(400);
-      throw new Error("At least one field must be provided");
+      throw new Error('At least one field must be provided');
     }
 
     // Conditionally update only if provided
@@ -53,7 +53,7 @@ const updateUserProfile = async (req, res, next) => {
     const updatedUser = await user.save();
 
     res.json({
-      message: "Profile updated successfully",
+      message: 'Profile updated successfully',
       user: {
         name: updatedUser.name,
         email: updatedUser.email,
