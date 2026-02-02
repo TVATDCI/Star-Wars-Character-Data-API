@@ -38,7 +38,7 @@ api.interceptors.response.use(
   (error) => {
     // Axios catches 4xx and 5xx errors automatically.
     const message =
-      error.response?.data?.error || 'An unexpected error occurred.';
+      error.response?.data?.message || 'An unexpected error occurred.';
     return Promise.reject(new Error(message));
   }
 );
