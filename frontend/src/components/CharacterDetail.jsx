@@ -35,45 +35,29 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  console.log('User role in CharacterDetail:', userRole);
+  // console.log('User role in CharacterDetail:', userRole);
   // Fetch character details and user role on mount
   // using the same logic as in Characters.jsx
   useEffect(() => {
-    const storedToken = getStoredToken()?.token;
-
-    if (!storedToken) {
-      setError('No authentication token found.');
-      return;
-    }
-    try {
-      setLoading(true);
-    } catch (err) {
-      console.error('Error setting loading state:', err.message);
-      setError('Failed to set loading state. Please try again.');
-      return;
-    }
-    // Role decoder is now moved to utils/auth.js
-    const role = getUserRole();
-    setUserRole(role); // Set user role based on token from utils/auth.js
-    console.log('User role', role);
-
-    // Fetch character details
     const fetchCharacterDetails = async () => {
       try {
+        setLoading(true); // Start loading
+
+        const role = getUserRole() || 'user'; // Get role or default to 'user'
+        setUserRole(role);
+
         const data = await apiRequest('GET', `/characters/${characterId}`);
         setCharacter(data);
       } catch (err) {
         console.error('Fetch error:', err.message);
-        setError('Failed to load character details. Please try again.');
+        setError('Failed to load character details.');
       } finally {
-        setLoading(false);
+        setLoading(false); // End loading
       }
     };
 
     fetchCharacterDetails();
-  }, [characterId]); // Run only once on mount
-  // Show loading state
-
+  }, [characterId]);
   if (error) {
     return <div className='text-red-500'>{error}</div>;
   }
