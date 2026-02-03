@@ -16,28 +16,26 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // replace with internal StoredToken set up from // utils/auth.js
-  // Imported to api.js to apiRequest setup
-  // const auth = getStoredToken();
-
   useEffect(() => {
     const fetchCharacters = async () => {
-      const storedToken = getStoredToken()?.token;
+      // storedToken check for public viewing
+      //   const storedToken = getStoredToken()?.token;
 
-      if (!storedToken) {
-        setError('No authentication token found.');
-        return;
-      }
+      //   if (!storedToken) {
+      //     setError('No authentication token found.');
+      //     return;
+      //   }
 
       try {
         setLoading(true);
 
         // Role decoder is now moved to utils/auth.js
-        const role = getUserRole();
+        const role = getUserRole() || 'user';
         setUserRole(role); // Set user role based on token from utils/auth.js
         console.log('User role', role);
 
-        // apiRequest handle token internally
+        // apiRequest handle token internally - the token is removed for now
+        // 2. Fetch data (apiRequest will skip the token header automatically if not logged in)
         const data = await apiRequest('GET', '/characters');
         setCharacters(data);
       } catch (err) {
@@ -67,8 +65,8 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const handleDelete = async (id) => {
     try {
       const storedToken = getStoredToken()?.token;
-      if (!storedToken) {
-        setError('Authentication required. Please log in.');
+      if (!storedToken || userRole !== 'admin') {
+        setError('Unauthorized: Only admins can delete characters.');
         return;
       }
 
