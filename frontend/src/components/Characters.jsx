@@ -70,7 +70,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
         return;
       }
 
-      await apiRequest(`/characters/${id}`, 'DELETE');
+      await apiRequest('DELETE', `/characters/${id}`);
 
       setCharacters((prev) => prev.filter((char) => char._id !== id));
       setMessage('Character deleted successfully.');
