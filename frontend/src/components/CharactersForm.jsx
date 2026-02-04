@@ -129,6 +129,12 @@ function CharacterForm({ characterId, onSave, onCancel }) {
           {characterId ? 'Edit Character' : 'Add Character'}
         </h2>
 
+        <p className='text-sm text-green-400 italic mb-4'>
+          {userRole === 'admin'
+            ? 'You are logged in as an administrator.'
+            : 'You are logged in as a user.'}
+        </p>
+
         {error && (
           <div className='text-red-500 mb-4 p-2 bg-red-900/20 rounded'>
             {error}
