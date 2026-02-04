@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getStoredToken, getUserRole } from './utils/auth';
+import { getUserRole } from './utils/auth';
 import { apiRequest } from './utils/api.js';
 import PropTypes from 'prop-types';
 // import { jwtDecode } from "jwt-decode"; // Using the same logic as in Characters.jsx
@@ -43,7 +43,7 @@ function CharacterDetail({ characterId, onBack, onEdit }) {
       try {
         setLoading(true); // Start loading
 
-        const role = getUserRole() || 'user'; // Get role or default to 'user'
+        const role = getUserRole(); // Returns 'user' by default if no token
         setUserRole(role);
 
         const data = await apiRequest('GET', `/characters/${characterId}`);
