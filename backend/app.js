@@ -5,7 +5,7 @@ import rateLimit from 'express-rate-limit';
 
 import characterRoutes from './routes/characterRoutes.js';
 import authenticateToken from './middleware/authMiddleware.js';
-import publicRoutes from './routes/publicRoutes.js';
+// import publicRoutes from './routes/publicRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 
 const app = express();
@@ -55,7 +55,7 @@ app.use('/api/v1/users', authenticateToken, userRoutes);
 app.use('/api/v1/characters', characterRoutes);
 
 // Public routes
-app.use('/api/v1/public', publicRoutes);
+// app.use('/api/v1/public', publicRoutes);
 
 // Root route
 app.get('/', (req, res) => {
