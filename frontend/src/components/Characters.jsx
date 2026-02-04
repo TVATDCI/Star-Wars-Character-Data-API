@@ -16,28 +16,16 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // replace with internal StoredToken set up from // utils/auth.js
-  // Imported to api.js to apiRequest setup
-  // const auth = getStoredToken();
-
   useEffect(() => {
     const fetchCharacters = async () => {
-      const storedToken = getStoredToken()?.token;
-
-      if (!storedToken) {
-        setError('No authentication token found.');
-        return;
-      }
-
       try {
         setLoading(true);
 
-        // Role decoder is now moved to utils/auth.js
-        const role = getUserRole();
-        setUserRole(role); // Set user role based on token from utils/auth.js
-        console.log('User role', role);
+        const role = getUserRole() || 'user';
+        setUserRole(role);
 
-        // apiRequest handle token internally
+        // apiRequest handle token internally - the token is removed for now
+        // 2. Fetch data (apiRequest will skip the token header automatically if not logged in)
         const data = await apiRequest('GET', '/characters');
         setCharacters(data);
       } catch (err) {
@@ -67,12 +55,12 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   const handleDelete = async (id) => {
     try {
       const storedToken = getStoredToken()?.token;
-      if (!storedToken) {
-        setError('Authentication required. Please log in.');
+      if (!storedToken || userRole !== 'admin') {
+        setError('Unauthorized: Only admins can delete characters.');
         return;
       }
 
-      await apiRequest(`/characters/${id}`, 'DELETE');
+      await apiRequest('DELETE', `/characters/${id}`);
 
       setCharacters((prev) => prev.filter((char) => char._id !== id));
       setMessage('Character deleted successfully.');
@@ -167,19 +155,4 @@ Characters.propTypes = {
 
 export default Characters;
 
-{
-  /**
 
-Characters.jsx Component did not handle the case where the token is missing or invalid. The component should check for the presence of the token and handle the case where the token is missing or invalid.
-
- The reason was the component was not properly handling the case where the token is missing or invalid. I need to ensure that the component checks for the presence of the token and handles the case where the token is missing or invalid.
-
-Redirect to Login if Token is Missing
-
-
-** Check for the presence of the token and handle the case where the token is missing or invalid.
-**Update `App.jsx`**: Ensure that the token is removed from local storage upon logout and that the user is redirected to the login view if the token is missing or invalid.
-
-**With these changes, the application should properly handle token validation and restrict access to protected routes if the token is missing or invalid.
-   */
-}
