@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
 
 import characterRoutes from './routes/characterRoutes.js';
 import authenticateToken from './middleware/authMiddleware.js';
@@ -14,7 +15,7 @@ const app = express();
 app.use(helmet());
 
 app.use(express.json());
-
+app.use(cookieParser());
 // Enable CORS
 const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:5173', // Default for development
