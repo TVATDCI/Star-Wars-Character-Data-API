@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {
-  // debug: if the hook runs
+  // Check: if the hook run
   console.log('--- Model: Pre-save hook started ---');
 
   if (!this.isModified('password')) return;
