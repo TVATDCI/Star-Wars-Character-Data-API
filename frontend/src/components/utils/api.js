@@ -34,7 +34,7 @@ api.interceptors.request.use(
 
 // 3. Response Interceptor: Centralized error formatting.
 api.interceptors.response.use(
-  (response) => response.data, // Automatically extract data so you don't call .json().
+  (response) => response.data, // Automatically extract data. No json() call needed.
   (error) => {
     // Axios catches 4xx and 5xx errors automatically.
     const message =
