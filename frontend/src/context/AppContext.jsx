@@ -1,27 +1,27 @@
 // src/context/AppContext.jsx
-import { createContext, useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
-import { getStoredToken, clearStoredToken } from "../components/utils/auth";
+import { createContext, useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { getStoredAuth, clearStoredAuth } from '../components/utils/auth';
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [background, setBackground] = useState("");
+  const [background, setBackground] = useState('');
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
-  const [view, setView] = useState("info");
+  const [view, setView] = useState('info');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    setBackground("https://www.transparenttextures.com/patterns/stardust.png");
-    const storedData = getStoredToken();
+    setBackground('https://www.transparenttextures.com/patterns/stardust.png');
+    const storedData = getStoredAuth();
     if (storedData) setUser(storedData.user);
   }, []);
 
   const handleLogout = () => {
     setUser(null);
-    clearStoredToken();
-    setView("info");
-    alert("You have successfully logged out.");
+    clearStoredAuth();
+    setView('info');
+    alert('You have successfully logged out.');
   };
 
   return (
@@ -48,7 +48,7 @@ AppProvider.propTypes = {
 export const useApp = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error("useApp must be used within an AppProvider");
+    throw new Error('useApp must be used within an AppProvider');
   }
   return context;
 };
