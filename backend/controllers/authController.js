@@ -108,7 +108,7 @@ const loginUser = async (req, res, next) => {
 // @access  Public (but requires a valid refresh token)
 const refreshAccessToken = async (req, res, next) => {
   try {
-    const { refreshToken } = req.cookies.refreshToken;
+    const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
       res.status(401);
