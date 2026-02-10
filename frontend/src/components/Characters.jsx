@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { apiRequest } from './utils/api.js'; // Import apiRequest for API calls
-import { getStoredToken, getUserRole } from './utils/auth';
+import { getUserRole } from './utils/auth';
 
 import Button from '../components/buttons/Button';
 import ButtonGradient from '../components/buttons/ButtonGradient';
@@ -54,8 +54,7 @@ function Characters({ onSelectCharacter, returnToInfo, onAddCharacter }) {
   // Function to handle character deletion
   const handleDelete = async (id) => {
     try {
-      const storedToken = getStoredToken()?.token;
-      if (!storedToken || userRole !== 'admin') {
+      if (userRole !== 'admin') {
         setError('Unauthorized: Only admins can delete characters.');
         return;
       }
@@ -154,5 +153,3 @@ Characters.propTypes = {
 };
 
 export default Characters;
-
-
