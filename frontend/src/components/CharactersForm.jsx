@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { apiRequest } from './utils/api';
-import { getStoredToken, getUserRole } from './utils/auth';
+import { getUserRole } from './utils/auth';
 import PropTypes from 'prop-types';
 
 import TextInput from './form/TextInput';
@@ -38,11 +38,6 @@ function CharacterForm({ characterId, onSave, onCancel }) {
   useEffect(() => {
     const role = getUserRole();
     setUserRole(role);
-
-    if (!getStoredToken()?.token) {
-      setError('No authentication token found. Please log in.');
-      return;
-    }
 
     if (characterId) {
       const fetchCharacterData = async () => {
