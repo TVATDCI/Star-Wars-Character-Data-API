@@ -1,41 +1,116 @@
-import { jwtDecode } from "jwt-decode";
-// # Utility functions for authentication!
-// loginUser function has been moved to utils/api.js to keep only localStorage utils
-export const storeAuthData = (token, email, role) => {
-  localStorage.setItem("token", token);
-  localStorage.setItem("userEmail", email);
-  localStorage.setItem("userRole", role);
+import { jwtDecode } from 'jwt-decode';
+
+// ============================================
+// AUTHENTICATION UTILITY FUNCTIONS
+// Dual Token System: Access Token (localStorage) + Refresh Token (HttpOnly Cookie)
+// ============================================
+
+/**
+ * Store authentication data after successful login
+ * @param {string} accessToken - Short-lived JWT (15 min)
+ * @param {object} user - User object { id, email, role }
+ */
+export const storeAuthData = (accessToken, user) => {
+  localStorage.setItem('accessToken', accessToken);
+  localStorage.setItem('userEmail', user.email);
+  localStorage.setItem('userRole', user.role);
+  localStorage.setItem('userId', user.id);
 };
 
+/**
+ * Get stored access token and user info
+ * @returns {object|null} { accessToken, user } or null if not logged in
+ */
+export const getStoredAuth = () => {
+  const accessToken = localStorage.getItem('accessToken');
+  const email = localStorage.getItem('userEmail');
+  const role = localStorage.getItem('userRole');
+  const id = localStorage.getItem('userId');
+
+  if (!accessToken || !email || !role) return null;
+  return {
+    accessToken,
+    user: { id, email, role },
+  };
+};
+
+/**
+ * Get just the access token (for API calls)
+ * @returns {string|null}
+ */
 export const getStoredToken = () => {
-  const token = localStorage.getItem("token");
-  const email = localStorage.getItem("userEmail");
-  const role = localStorage.getItem("userRole");
-
-  if (!token || !email || !role) return null;
-  return { token, user: { email, role } };
+  return getAccessToken();
+};
+export const getAccessToken = () => {
+  return localStorage.getItem('accessToken');
 };
 
-export const clearStoredToken = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("userEmail");
-  localStorage.removeItem("userRole");
+/**
+ * Clear all stored authentication data (logout)
+ */
+export const clearStoredAuth = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('userRole');
+  localStorage.removeItem('userId');
 };
 
+/**
+ * Check if user is logged in
+ * @returns {boolean}
+ */
 export const isLoggedIn = () => {
-  return !!getStoredToken();
+  return !!getAccessToken();
 };
 
-// Role decoder moved here to keep auth logic in one place
-// For less repetition in components DRY principle!
-export const getUserRole = () => {
-  const storedToken = getStoredToken()?.token;
-  if (!storedToken) return "user"; // Default to 'user' if no token found
+/**
+ * Check if access token is expired
+ * @returns {boolean}
+ */
+export const isTokenExpired = () => {
+  const token = getAccessToken();
+  if (!token) return true;
+
   try {
-    const decoded = jwtDecode(storedToken);
-    return decoded.role || "user"; // Default to 'user' if role is not provided
+    const decoded = jwtDecode(token);
+    // Check if expired (with 10 second buffer)
+    return decoded.exp * 1000 < Date.now() + 10000;
   } catch (error) {
-    console.error("Error decoding token:", error);
-    return "user"; // Default to 'user'-Again, if decoding fails
+    console.error('Error decoding token:', error);
+    return true;
+  }
+};
+
+/**
+ * Get user role from token (more secure than localStorage)
+ * @returns {string} 'admin' or 'user'
+ */
+export const getUserRole = () => {
+  const token = getAccessToken();
+  if (!token) return 'user';
+
+  try {
+    const decoded = jwtDecode(token);
+    return decoded.role || 'user';
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return 'user';
+  }
+};
+
+/**
+ * Get user ID from token
+ * @returns {string|null}
+ */
+export const getUserId = () => {
+  const token = getAccessToken();
+  if (!token) return null;
+
+  try {
+    const decoded = jwtDecode(token);
+    return decoded.userId || null;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
   }
 };
