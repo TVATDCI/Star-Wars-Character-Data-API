@@ -37,18 +37,12 @@ const userSchema = new mongoose.Schema(
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {
-  // Check: if the hook run
-  console.log('--- Model: Pre-save hook started ---');
-
   if (!this.isModified('password')) return;
   try {
     const salt = await bcrypt.genSalt(10);
-    console.log('Salt generated');
     this.password = await bcrypt.hash(this.password, salt);
-    console.log('Password hashed successfully');
     // No next() call here—the async function resolving tells Mongoose to proceed.
   } catch (err) {
-    console.error('Error in Model Pre-save:', err);
     // Re-throw the error so it's caught by controller's catch block
     throw err;
   }
