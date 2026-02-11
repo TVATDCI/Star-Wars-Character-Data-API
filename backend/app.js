@@ -19,6 +19,9 @@ app.use(cookieParser());
 // Enable CORS
 const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:5173', // Default for development
+  'http://127.0.0.1:5173', // Alternative localhost address
+  'http://localhost:5174', // Alternative Vite port
+  'http://127.0.0.1:5174', // Alternative Vite port
   process.env.FRONTEND_URL_PROD ||
     'https://star-wars-character-data-api.vercel.app/',
 ];
