@@ -16,7 +16,6 @@ export const useUserProfileFetcher = () => {
     setLoading(true);
     try {
       const data = await apiRequest('GET', '/users/profile');
-      console.log('Fetched profile data from backend:', data); // Debug log
       setProfile({
         name: data.name || '',
         bio: data.bio || '',
@@ -24,8 +23,6 @@ export const useUserProfileFetcher = () => {
         avatar: data.avatar || '',
       });
     } catch (err) {
-      console.error('PROFILE FETCH ERROR:', err);
-
       const message =
         err.response?.data?.message ||
         err.response?.data?.error ||
@@ -39,14 +36,8 @@ export const useUserProfileFetcher = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Fetching profile data on mount...'); // Debug log
     fetchProfile(); // Fetch profile data on mount
   }, [fetchProfile]);
-
-  console.log('Fetched profile data:', profile);
-  console.log('Updated profile state:', profile);
-  console.log('Loading state:', loading);
-  console.log('Message state:', message);
 
   return {
     profile,
