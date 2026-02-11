@@ -78,8 +78,8 @@ function Characters() {
 
   if (loading) {
     return (
-      <div className='text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
-        <h1 className='text-2xl text-red-600 font-bold mb-8'>Characters</h1>
+      <div className='text-center bg-bg-card/50 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
+        <h1 className='text-2xl text-error font-bold mb-8'>Characters</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
           {Array.from({ length: 6 }).map((_, i) => (
             <SkeletonCard key={i} />
@@ -91,7 +91,7 @@ function Characters() {
 
   if (error) {
     return (
-      <div className='text-red-500 text-center bg-neutral-300/10 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
+      <div className='text-error text-center bg-error-subtle backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
         <h2 className='text-2xl font-bold mb-4'>Error</h2>
         <p>{error}</p>
         <Button href='/' className='mt-4'>
@@ -102,8 +102,8 @@ function Characters() {
   }
 
   return (
-    <div className='text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
-      <h1 className='text-2xl text-red-600 font-bold mb-4'>Characters</h1>
+    <div className='text-center bg-bg-card/50 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
+      <h1 className='text-2xl text-error font-bold mb-4'>Characters</h1>
 
       {userRole === 'admin' && (
         <Button
@@ -121,12 +121,12 @@ function Characters() {
           placeholder='Search characters...'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className='w-full max-w-md px-4 py-2 bg-neutral-800/50 border border-neutral-600 rounded-lg text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/50'
+          className='w-full max-w-md px-4 py-2 bg-bg-input border border-border rounded-lg text-text placeholder-text-subtle focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50'
         />
       </div>
 
       {/* Character Count */}
-      <p className='text-neutral-400 text-sm mb-4'>
+      <p className='text-text-muted text-sm mb-4'>
         Showing {paginatedCharacters.length} of {filteredCharacters.length}{' '}
         characters
         {totalPages > 1 && ` (Page ${currentPage} of ${totalPages})`}
@@ -135,7 +135,7 @@ function Characters() {
       {/* Card Grid Layout */}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
         {paginatedCharacters.length === 0 ? (
-          <p className='text-neutral-400 text-center col-span-full'>
+          <p className='text-text-muted text-center col-span-full'>
             {searchQuery
               ? 'No characters match your search.'
               : 'No characters found.'}
@@ -144,26 +144,26 @@ function Characters() {
           paginatedCharacters.map((character) => (
             <div
               key={character._id}
-              className='bg-neutral-800/30 backdrop-blur-sm p-4 rounded-xl shadow-lg hover:bg-neutral-800/50 transition-all duration-300 border border-neutral-700/50 hover:border-yellow-500/30'
+              className='bg-bg-card backdrop-blur-sm p-4 rounded-xl shadow-lg hover:bg-bg-elevated/50 transition-all duration-300 border border-border hover:border-accent/30'
             >
               {/* Character Name */}
-              <h3 className='text-xl font-bold text-yellow-400 mb-2 font-dune'>
+              <h3 className='text-xl font-bold text-accent mb-2 font-dune'>
                 {character.name}
               </h3>
 
               {/* Character Info */}
-              <div className='text-left text-sm text-neutral-300 space-y-1 mb-4'>
+              <div className='text-left text-sm text-text-muted space-y-1 mb-4'>
                 <p>
-                  <span className='text-blue-400'>Species:</span>{' '}
+                  <span className='text-info'>Species:</span>{' '}
                   {character.species}
                 </p>
                 <p>
-                  <span className='text-purple-400'>Affiliation:</span>{' '}
+                  <span className='text-sw-purple'>Affiliation:</span>{' '}
                   {character.affiliation}
                 </p>
                 <p>
-                  <span className='text-green-400'>Force Rating:</span>{' '}
-                  <span className='text-yellow-300'>
+                  <span className='text-success'>Force Rating:</span>{' '}
+                  <span className='text-accent'>
                     {'⭐'.repeat(
                       Math.floor((character.stats?.forceRating || 0) / 20)
                     )}
@@ -191,7 +191,7 @@ function Characters() {
                     </Button>
                     <Button
                       onClick={() => handleDelete(character._id)}
-                      className='text-sm px-4 py-1 text-red-400 hover:text-red-300'
+                      className='text-sm px-4 py-1 text-error hover:text-error-hover'
                     >
                       Delete
                     </Button>
@@ -212,7 +212,7 @@ function Characters() {
           >
             Previous
           </Button>
-          <span className='text-neutral-300'>
+          <span className='text-text-muted'>
             Page {currentPage} of {totalPages}
           </span>
           <Button
