@@ -1,22 +1,14 @@
 import { useState } from 'react';
 import { useUserProfileFetcher } from '../hooks/userProfileFetcher';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { apiRequest } from '../utils/api';
-
 import SpaceBtn from '../buttons/SpaceBtn';
-import BtnNeoGradient from '../buttons/BtnNeonGradient';
 import Button from '../buttons/Button';
-import ButtonGradient from '../buttons/ButtonGradient';
 
-const UserProfile = ({ returnToInfo, onUpdate }) => {
-  const { profile, setProfile, loading, message, setMessage, refetch } =
+const UserProfile = () => {
+  const { profile, setProfile, loading, message, setMessage } =
     useUserProfileFetcher();
   const [saving, setSaving] = useState(false);
-
-  const { name, bio, location, avatar } = profile;
-
-  const isUnchanged =
-    name === '' && bio === '' && location === '' && avatar === '';
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
@@ -27,27 +19,13 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
     setSaving(true);
     try {
       const payload = {
-        name: name.trim(),
-        bio: bio.trim(),
-        location: location.trim(),
-        avatar: avatar.trim(),
+        name: profile.name.trim(),
+        bio: profile.bio.trim(),
+        location: profile.location.trim(),
+        avatar: profile.avatar.trim(),
       };
-      await apiRequest('PATCH', '/users/profile', payload); // Update profile on the backend
-      setProfile(payload); // Update local state
+      await apiRequest('PATCH', '/users/profile', payload);
       setMessage('Profile updated!');
-      console.log('Profile updated successfully:', name);
-
-      await refetch(); // Refetch the profile data to ensure it's up-to-date
-
-      if (onUpdate) {
-        onUpdate({
-          name: payload.name,
-          bio: payload.bio,
-          location: payload.location,
-          avatar: payload.avatar,
-        });
-        console.log('onUpdate callback called with:', payload);
-      }
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -55,35 +33,37 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
     }
   };
 
-  if (loading) {
-    return <p className='text-yellow-500'>Loading profile...</p>;
-  }
+  if (loading)
+    return (
+      <p className='text-yellow-500 text-center mt-20'>Loading profile...</p>
+    );
 
   return (
-    <div className='bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs'>
+    <div className='bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs mx-auto mt-14'>
       <h3 className='text-2xl text-red-600 p-2 font-bold mb-1 text-center'>
-        {name || 'User Profile'}
+        {profile.name || 'User Profile'}
       </h3>
+
       <form onSubmit={handleSubmit}>
-        {avatar && (
+        {profile.avatar && (
           <div className='mb-1 flex justify-center'>
             <img
-              src={avatar}
-              alt='Avatar Preview'
+              src={profile.avatar}
+              alt='Avatar'
               className='rounded-full w-24 h-24 object-cover'
             />
           </div>
         )}
+
         <label className='block mb-2'>
           Name:
           <input
             name='name'
-            className='border p-2 w-full'
+            className='border p-2 w-full bg-neutral-700/50 border-neutral-600 rounded text-white'
             type='text'
-            value={name}
+            value={profile.name}
             onChange={handleChange}
-            disabled={loading}
-            placeholder='Enter your user name'
+            placeholder='Enter your name'
           />
         </label>
 
@@ -91,10 +71,9 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
           Bio:
           <textarea
             name='bio'
-            className='border p-2 w-full'
-            value={bio}
+            className='border p-2 w-full bg-neutral-700/50 border-neutral-600 rounded text-white'
+            value={profile.bio}
             onChange={handleChange}
-            disabled={loading}
             rows='3'
             placeholder='Tell us about yourself'
           />
@@ -104,11 +83,10 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
           Location:
           <input
             name='location'
-            className='border p-2 w-full'
+            className='border p-2 w-full bg-neutral-700/50 border-neutral-600 rounded text-white'
             type='text'
-            value={location}
+            value={profile.location}
             onChange={handleChange}
-            disabled={loading}
             placeholder='Where are you located?'
           />
         </label>
@@ -117,38 +95,29 @@ const UserProfile = ({ returnToInfo, onUpdate }) => {
           Avatar URL:
           <input
             name='avatar'
-            className='border p-2 w-full'
+            className='border p-2 w-full bg-neutral-700/50 border-neutral-600 rounded text-white'
             type='text'
-            value={avatar}
+            value={profile.avatar}
             onChange={handleChange}
-            disabled={loading}
-            placeholder='Enter your avatar image URL'
+            placeholder='Enter avatar image URL'
           />
         </label>
 
-        <BtnNeoGradient />
         <SpaceBtn
           type='submit'
-          onClick={handleSubmit}
-          className='mt-4 text-center block text-red-700 hover:text-red-400'
-          disabled={loading || saving || isUnchanged}
+          className='w-full text-center block text-red-700 hover:text-red-400 mb-2'
+          disabled={saving}
         >
-          {saving || loading ? 'Updating...' : 'Update Profile'}
+          {saving ? 'Updating...' : 'Update Profile'}
         </SpaceBtn>
       </form>
-      {loading && <p className='mt-2 text-yellow-500'>Loading...</p>}
-      {message && <p className='mt-4 text-green-600'>{message}</p>}
-      <ButtonGradient />
-      <Button onClick={returnToInfo} className='block mt-4 text-center'>
-        Return to Info
+
+      {message && <p className='mt-4 text-green-600 text-center'>{message}</p>}
+      <Button href='/' className='block w-full text-center mt-4'>
+        Return to Home
       </Button>
     </div>
   );
-};
-
-UserProfile.propTypes = {
-  returnToInfo: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
 };
 
 export default UserProfile;

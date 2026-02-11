@@ -37,14 +37,13 @@ const userSchema = new mongoose.Schema(
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return;
+  if (!this.isModified('password')) return next();
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    // No next() call here—the async function resolving tells Mongoose to proceed.
+    next();
   } catch (err) {
-    // Re-throw the error so it's caught by controller's catch block
-    throw err;
+    next(err);
   }
 });
 
