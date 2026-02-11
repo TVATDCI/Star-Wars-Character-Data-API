@@ -46,14 +46,14 @@ function LoginForm() {
   };
 
   return (
-    <div className='bg-neutral-800/20 backdrop-blur-sm p-6 rounded-lg shadow-lg max-w-sm mx-auto mt-14'>
+    <div className='bg-bg-card backdrop-blur-sm p-6 rounded-lg shadow-lg max-w-sm mx-auto mt-14'>
       <form onSubmit={handleLogin}>
-        <h2 className='text-2xl text-red-600 p-2 font-bold mb-6 text-center'>
+        <h2 className='text-2xl text-error p-2 font-bold mb-6 text-center'>
           Welcome Back
         </h2>
 
         {error && (
-          <div className='mb-4 p-3 bg-red-900/30 border border-red-500/50 rounded-lg text-red-400 text-sm'>
+          <div className='mb-4 p-3 bg-error-subtle border border-error rounded-lg text-error text-sm'>
             {error}
           </div>
         )}
@@ -74,7 +74,7 @@ function LoginForm() {
           </div>
 
           <div>
-            <label className='block text-neutral-300 text-sm mb-1'>
+            <label className='block text-text-muted text-sm mb-1'>
               Password
             </label>
             <input
@@ -105,12 +105,9 @@ function LoginForm() {
           </Link>
         </div>
 
-        <p className='mt-4 text-center text-neutral-400 text-sm'>
+        <p className='mt-4 text-center text-text-muted text-sm'>
           Don&apos;t have an account?{' '}
-          <Link
-            to='/register'
-            className='text-yellow-400 hover:text-yellow-300'
-          >
+          <Link to='/register' className='text-accent hover:text-accent-hover'>
             Register here
           </Link>
         </p>
