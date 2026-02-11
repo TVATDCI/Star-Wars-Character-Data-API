@@ -33,8 +33,8 @@ const SpaceBtn = ({
   const location = useLocation();
 
   // Construct the CSS classes for the button/link
-  const classes = `button relative inline-flex items-center justify-center py-[.5rem] font-bold transition-colors duration-1000 cursor-pointer hover:text-red-600 ${px} ${
-    white ? 'text-neutral-800' : 'text-neutral-100/5'
+  const classes = `button relative inline-flex items-center justify-center py-[.5rem] font-bold transition-colors duration-1000 cursor-pointer hover:text-error ${px} ${
+    white ? 'text-text-inverse' : 'text-text/5'
   } ${className || ''}`;
 
   // CSS classes for the span inside the button/link
