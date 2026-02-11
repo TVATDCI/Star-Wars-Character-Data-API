@@ -133,7 +133,7 @@ api.interceptors.response.use(
  */
 export const loginUser = async (email, password) => {
   const response = await api.post('/auth/login', { email, password });
-  // Store auth data
+  // Store auth data - response is already response.data due to interceptor
   storeAuthData(response.token, response.user);
   return response;
 };
