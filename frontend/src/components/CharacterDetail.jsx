@@ -1,143 +1,94 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { getUserRole } from './utils/auth';
 import { apiRequest } from './utils/api.js';
-import PropTypes from 'prop-types';
-// import { jwtDecode } from "jwt-decode"; // Using the same logic as in Characters.jsx
-
-import ButtonGradient from '../components/buttons/ButtonGradient';
-import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
-import BtnNeonGradient from '../components/buttons/BtnNeonGradient.jsx';
 import Button from '../components/buttons/Button';
+import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
 
-function Detail({ label, value }) {
-  return (
-    <p className='text-pink-200/70 font-bold mb-2 '>
-      <span className='text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 font-bold'>
-        {label}:
-      </span>{' '}
-      {value}
-    </p>
-  );
-}
-
-Detail.propTypes = {
-  label: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ]).isRequired,
-};
-
-function CharacterDetail({ characterId, onBack, onEdit }) {
+function CharacterDetail() {
+  const { id } = useParams();
   const [userRole, setUserRole] = useState('user');
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // console.log('User role in CharacterDetail:', userRole);
-  // Fetch character details and user role on mount
-  // using the same logic as in Characters.jsx
   useEffect(() => {
     const fetchCharacterDetails = async () => {
       try {
-        setLoading(true); // Start loading
-
-        const role = getUserRole(); // Returns 'user' by default if no token
+        setLoading(true);
+        const role = getUserRole();
         setUserRole(role);
-
-        const data = await apiRequest('GET', `/characters/${characterId}`);
+        const data = await apiRequest('GET', `/characters/${id}`);
         setCharacter(data);
-      } catch (err) {
-        console.error('Fetch error:', err.message);
-        setError('Failed to load character details.');
+      } catch {
+        setError('Failed to load character.');
       } finally {
-        setLoading(false); // End loading
+        setLoading(false);
       }
     };
-
     fetchCharacterDetails();
-  }, [characterId]);
-  if (error) {
-    return <div className='text-red-500'>{error}</div>;
-  }
+  }, [id]);
 
-  if (loading) {
-    return <div className='text-neutral-200'>Loading character...</div>;
-  }
+  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading) return <div className="text-neutral-200 text-center mt-20">Loading...</div>;
 
   return (
-    <div className='text-center bg-neutral-800/10 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
-      {/* Header */}
-      <p className='text-sm text-green-400 text-center italic mb-4'>
-        {userRole === 'admin'
-          ? 'As an admin, you can manage the characters below.'
-          : 'As a user, you can view the available characters.'}
-      </p>
-      {/* Header row */}
-      <div className='flex flex-wrap gap-2 justify-center sm:justify-between items-center mb-6'>
-        <Button onClick={onBack} className='font-bold'>
-          Back
-        </Button>
-        <ButtonGradient />
-        <BtnNeonGradient />
+    <div className="text-center bg-neutral-800/10 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
+      <div className="flex flex-wrap gap-2 justify-center sm:justify-between items-center mb-6">
+        <Button href="/characters" className="font-bold">Back</Button>
         {userRole === 'admin' && (
-          <SpaceBtn
-            onClick={() => onEdit(characterId)}
-            className='font-bold text-neutral-300'
-          >
-            Edit
-          </SpaceBtn>
+          <SpaceBtn href={`/characters/edit/${id}`} className="font-bold text-neutral-300" white>Edit</SpaceBtn>
         )}
       </div>
 
-      {/* Character name */}
-      <h2 className='text-4xl text-red-500 font-extrabold mb-10 '>
-        {character.name}
-      </h2>
+      <h2 className="text-4xl text-red-500 font-extrabold mb-10">{character.name}</h2>
 
-      {/* Stats grid */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8'>
-        <Detail label='Height' value={`${character.height} cm`} />
-        <Detail label='Species' value={character.species} />
-        <Detail label='Home world' value={character.homeworld} />
-        <Detail label='Affiliation' value={character.affiliation} />
-        <Detail label='Force Rating' value={character.stats.forceRating} />
-        <Detail label='Combat Skill' value={character.stats.combatSkill} />
-        <Detail
-          label='Piloting Ability'
-          value={character.stats.pilotingAbility}
-        />
-        <Detail
-          label='Diplomacy Rating'
-          value={character.stats.diplomacyRating}
-        />
-        <Detail label='Is 👾 Jedi' value={character.isJedi ? 'Yes' : 'No'} />
-        <Detail label='Master' value={character.master || 'None'} />
-        <Detail
-          label='Apprentices'
-          value={character.apprentices.join(', ') || 'None'}
-        />
-        <Detail
-          label='Weapons'
-          value={character.weapons.join(', ') || 'None'}
-        />
-        <Detail
-          label='Vehicles'
-          value={character.vehicles.join(', ') || 'None'}
-        />
-        <Detail
-          label='Notable Achievements'
-          value={character.notableAchievements.join(', ') || 'None'}
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Height:</span> {character.height} cm
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Species:</span> {character.species}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Home world:</span> {character.homeworld}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Affiliation:</span> {character.affiliation}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Force Rating:</span> {character.stats?.forceRating}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Combat Skill:</span> {character.stats?.combatSkill}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Piloting Ability:</span> {character.stats?.pilotingAbility}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Diplomacy Rating:</span> {character.stats?.diplomacyRating}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Is Jedi:</span> {character.isJedi ? 'Yes' : 'No'}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Master:</span> {character.master || 'None'}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Apprentices:</span> {character.apprentices?.join(', ') || 'None'}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Weapons:</span> {character.weapons?.join(', ') || 'None'}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Vehicles:</span> {character.vehicles?.join(', ') || 'None'}
+        </p>
+        <p className="text-pink-200/70 font-bold">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">Notable Achievements:</span> {character.notableAchievements?.join(', ') || 'None'}
+        </p>
       </div>
     </div>
   );
 }
-CharacterDetail.propTypes = {
-  characterId: PropTypes.string.isRequired,
-  onBack: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-};
 
 export default CharacterDetail;
