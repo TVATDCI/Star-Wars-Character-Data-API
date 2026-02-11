@@ -1,3 +1,4 @@
+import { useNavigate, useLocation } from "react-router-dom";
 import SpaceBtnSvg from "./SpaceBtnSvg"; //It is the shape, is a custom SVG component that renders the SpaceBtn.jsx's SVG graphics.
 
 /**
@@ -8,7 +9,7 @@ import SpaceBtnSvg from "./SpaceBtnSvg"; //It is the shape, is a custom SVG comp
  *
  * Props:
  * - className: Additional CSS classes to apply to the button/link.
- * - href: If provided, the component renders a link instead of a button.
+ * - href: If provided, the component handles navigation or smooth scrolling.
  * - onClick: Click event handler for the button.
  * - children: Content to be displayed inside the button/link.
  * - px: Padding-x class to apply to the button/link (default is "px-7").
@@ -28,6 +29,9 @@ const SpaceBtn = ({
   white,
   type = "button",
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   // Construct the CSS classes for the button/link
   const classes = `button relative inline-flex items-center justify-center py-[.5rem] font-bold transition-colors duration-1000 cursor-pointer hover:text-red-600 ${px} ${
     white ? "text-neutral-800" : "text-neutral-100/5"
@@ -36,24 +40,43 @@ const SpaceBtn = ({
   // CSS classes for the span inside the button/link
   const spanClasses = "relative z-10";
 
+  const handleClick = (e) => {
+    // adding PageHash to the href to check if it is a hash link Then scroll or navigate to the target route!
+    if (href) {
+      const isSamePageHash = href.startsWith("#") && location.pathname === "/";
+
+      if (isSamePageHash) {
+        // Scroll to section within the same page
+        const targetId = href.slice(1); // Remove the "#" symbol
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: "smooth" });
+        }
+      } else if (location.pathname === href) {
+        // Smooth scroll to the top if already on the target route
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      } else {
+        // Navigate to the target route
+        navigate(href);
+      }
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
   // Function to render a button element
   const renderButton = () => (
-    <button className={classes} onClick={onClick} type={type}>
+    <button className={classes} onClick={handleClick} type={type}>
       <span className={spanClasses}>{children}</span>
       {SpaceBtnSvg(white)}
     </button>
   );
 
-  // Function to render a link element
-  const renderLink = () => (
-    <a href={href} className={classes}>
-      <span className={spanClasses}>{children}</span>
-      {SpaceBtnSvg(white)}
-    </a>
-  );
-
-  // Render a link if `href` is provided, otherwise render a button
-  return href ? renderLink() : renderButton();
+  // Render a button (handles both navigation and regular clicks)
+  return renderButton();
 };
 
 export default SpaceBtn;
