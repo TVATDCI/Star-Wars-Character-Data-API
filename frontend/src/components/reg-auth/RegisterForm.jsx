@@ -45,14 +45,14 @@ function RegisterForm() {
   };
 
   return (
-    <div className='bg-neutral-800/20 backdrop-blur-sm p-6 rounded-lg shadow-lg max-w-sm mx-auto mt-14'>
+    <div className='bg-bg-card backdrop-blur-sm p-6 rounded-lg shadow-lg max-w-sm mx-auto mt-14'>
       <form onSubmit={handleSubmit}>
-        <h2 className='text-2xl text-red-600 p-2 font-bold mb-6 text-center'>
+        <h2 className='text-2xl text-error p-2 font-bold mb-6 text-center'>
           Create Account
         </h2>
 
         {error && (
-          <div className='mb-4 p-3 bg-red-900/30 border border-red-500/50 rounded-lg text-red-400 text-sm'>
+          <div className='mb-4 p-3 bg-error-subtle border border-error rounded-lg text-error text-sm'>
             {error}
           </div>
         )}
@@ -74,7 +74,7 @@ function RegisterForm() {
           </div>
 
           <div>
-            <label className='block text-neutral-300 text-sm mb-1'>
+            <label className='block text-text-muted text-sm mb-1'>
               Password
             </label>
             <input
@@ -84,15 +84,15 @@ function RegisterForm() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder='••••••••'
               disabled={loading}
-              className='w-full p-3 bg-neutral-800/50 border border-neutral-600 rounded-lg text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/50 disabled:opacity-50'
+              className='w-full p-3 bg-bg-input border border-border rounded-lg text-text placeholder-text-subtle focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 disabled:opacity-50'
             />
-            <p className='text-neutral-500 text-xs mt-1'>
+            <p className='text-text-subtle text-xs mt-1'>
               Must be at least 6 characters
             </p>
           </div>
 
           <div>
-            <label className='block text-neutral-300 text-sm mb-1'>
+            <label className='block text-text-muted text-sm mb-1'>
               Confirm Password
             </label>
             <input
@@ -124,9 +124,9 @@ function RegisterForm() {
           </Link>
         </div>
 
-        <p className='mt-4 text-center text-neutral-400 text-sm'>
+        <p className='mt-4 text-center text-text-muted text-sm'>
           Already have an account?{' '}
-          <Link to='/login' className='text-yellow-400 hover:text-yellow-300'>
+          <Link to='/login' className='text-accent hover:text-accent-hover'>
             Sign in here
           </Link>
         </p>
