@@ -142,11 +142,21 @@ export const logoutUser = async () => {
 };
 ```
 
+**support reason:**
+professional approach for these reasons:
+
+- Defense in Depth: The middleware ensures only authenticated users can hit the logout endpoint (security layer)
+- Graceful Degradation: The frontend handles failures without breaking user experience
+- State Consistency: Even if the server call fails, local state is cleared
+- Common Pattern: Many production apps use this approach
+
+**However**, there's a subtle issue:
+If the access token is expired, the logout API call fails with 401, triggering the token refresh interceptor, which then tries to refresh before logout. This creates an unnecessary refresh request.
 Even if the API call fails, it clears localStorage and redirects.
 
-**Recommendation:** Option 1 is cleaner - logout should work regardless of access token state since the refresh token in the HttpOnly cookie is what matters for logout.
-
----
+Both approaches are professional. Option 1 is slightly cleaner and more efficient (no unnecessary token refresh). Option 2 provides an extra security layer. Your current implementation is fine for production.
+Alternative for now:
+**Option 1** is cleaner - logout should work regardless of access token state since the refresh token in the HttpOnly cookie is what matters for logout
 
 ### Testing Instructions
 
@@ -223,7 +233,7 @@ curl -X POST http://localhost:5000/api/v1/auth/login \
 
 ### 🟡 Code for Consideration: Logout with Expired Tokens
 
-What is in my head ...
+What is in my head ... TODO?
 The updated logout controller that properly handles token cleanup:
 
 ```javascript
