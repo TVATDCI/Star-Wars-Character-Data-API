@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { registerUser } from '../utils/api';
 import SpaceBtn from '../buttons/SpaceBtn';
 import Button from '../buttons/Button';
+import toast from 'react-hot-toast';
 
 function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -33,8 +34,10 @@ function RegisterForm() {
     setLoading(true);
     try {
       await registerUser(email, password);
+      toast.success('Account created successfully! Please log in.');
       navigate('/login');
     } catch (error) {
+      toast.error(error.message || 'Registration failed. Please try again.');
       setError(error.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
