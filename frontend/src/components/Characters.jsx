@@ -3,6 +3,8 @@ import { apiRequest } from './utils/api.js';
 import { getUserRole } from './utils/auth';
 import Button from '../components/buttons/Button';
 import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
+import SkeletonCard from './ui/SkeletonCard';
+import toast from 'react-hot-toast';
 
 function Characters() {
   const [characters, setCharacters] = useState([]);
@@ -46,14 +48,14 @@ function Characters() {
     if (!window.confirm('Are you sure?')) return;
     try {
       if (userRole !== 'admin') {
-        setError('Only admins can delete.');
+        toast.error('Only admins can delete characters.');
         return;
       }
       await apiRequest('DELETE', `/characters/${id}`);
       setCharacters((prev) => prev.filter((char) => char._id !== id));
-      setMessage('Character deleted.');
+      toast.success('Character deleted successfully!');
     } catch {
-      setError('Delete failed.');
+      toast.error('Failed to delete character.');
     }
   };
 
@@ -74,8 +76,18 @@ function Characters() {
     setCurrentPage(1);
   }, [searchQuery]);
 
-  if (loading)
-    return <div className='text-neutral-200 text-center mt-20'>Loading...</div>;
+  if (loading) {
+    return (
+      <div className='text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
+        <h1 className='text-2xl text-red-600 font-bold mb-8'>Characters</h1>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -92,7 +104,6 @@ function Characters() {
   return (
     <div className='text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
       <h1 className='text-2xl text-red-600 font-bold mb-4'>Characters</h1>
-      {message && <p className='text-green-500 mb-4'>{message}</p>}
 
       {userRole === 'admin' && (
         <Button
