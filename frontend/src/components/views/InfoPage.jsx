@@ -2,70 +2,36 @@
 import { useApp } from '../../context/AppContext';
 import Button from '../buttons/Button';
 import SpaceBtn from '../buttons/SpaceBtn';
-import ButtonGradient from '../buttons/ButtonGradient';
-import BtnNeonGradient from '../buttons/BtnNeonGradient';
 
 export default function InfoPage() {
-  const { user, setView, handleLogout } = useApp();
+  const { user } = useApp();
 
   return (
-    <main className='text-center bg-neutral-800/5 backdrop-blur-sm p-4 rounded-xl shadow-2xl mt-2 w-full max-w-2xl mx-auto'>
-      <p className='text-lg italic font-dune tracking-wider text-transparent bg-clip-text bg-linear-to-br from-blue-500 via-purple-500 to-pink-500 mb-6'>
-        Welcome to{' '}
-        <span className='text-test-1'>Star Wars Admin Dashboard</span>. Built
-        with role-based access and full-stack CRUD power!
-      </p>
-      <p className='text-lg text-yellow-400/50 mt-4 hover:text-yellow-400 italic'>
-        Register or login to access the database, or{' '}
-        <span className='text-[#FFC500] cursor-pointer hover:text-red-500'>
-          contact me
-        </span>{' '}
-        for admin access.
+    <main className="text-center bg-neutral-800/5 backdrop-blur-sm p-4 rounded-xl shadow-2xl w-full max-w-2xl mx-auto">
+      <p className="text-lg italic font-dune tracking-wider text-transparent bg-clip-text bg-linear-to-br from-blue-500 via-purple-500 to-pink-500 mb-6">
+        Welcome to <span className="text-test-1">Star Wars Admin Dashboard</span>.
       </p>
 
       {user ? (
-        <div className='flex flex-col items-center gap-4'>
-          <h4 className='text-2xl text-red-400 font-bold'>
-            Welcome back,{' '}
-            {user.name && <span className='text-green-500'>{user.name}</span>}
-            {user.email && (
-              <span className='text-neutral-500 ml-2'>({user.email})</span>
-            )}
-            !
-            <button
-              onClick={() => setView('user-profile')}
-              className='ml-4 text-blue-400 underline hover:text-blue-600'
-            >
-              View Profile
-            </button>
+        <div className="flex flex-col items-center gap-4 mt-6">
+          <h4 className="text-2xl text-red-400 font-bold">
+            Welcome back, {user.name && <span className="text-green-500">{user.name}</span>}
           </h4>
-          <div className='flex flex-wrap justify-center gap-4 mt-4'>
-            <ButtonGradient />
-            <BtnNeonGradient />
-            <Button onClick={() => setView('characters')}>
-              Characters List
-            </Button>
-            <SpaceBtn onClick={handleLogout}>Logout</SpaceBtn>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button href="/characters">Characters List</Button>
+            <SpaceBtn href="/profile" white>View Profile</SpaceBtn>
           </div>
         </div>
       ) : (
-        <div className='flex flex-wrap justify-around items-center gap-4 mt-4'>
-          <ButtonGradient />
-          <BtnNeonGradient />
-          <Button onClick={() => setView('characters')}>Characters</Button>
-          <Button onClick={() => setView('login')}>Login</Button>
-          <Button onClick={() => setView('register')}>Register</Button>
+        <div className="flex flex-wrap justify-center gap-4 mt-6">
+          <Button href="/characters">View Characters</Button>
+          <Button href="/login">Login</Button>
+          <SpaceBtn href="/register" white>Register</SpaceBtn>
         </div>
       )}
 
-      <SpaceBtn className='mt-10'>
-        <a
-          href='https://github.com/TVATDCI'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          DEAD STAR!
-        </a>
+      <SpaceBtn className="mt-10">
+        <a href="https://github.com/TVATDCI" target="_blank" rel="noopener noreferrer">DEAD STAR!</a>
       </SpaceBtn>
     </main>
   );
