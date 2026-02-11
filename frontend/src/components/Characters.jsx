@@ -5,28 +5,25 @@ import Button from '../components/buttons/Button';
 import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
 
 function Characters() {
-  console.log('Characters component rendering');
-  
   const [characters, setCharacters] = useState([]);
   const [error, setError] = useState(null);
   const [userRole, setUserRole] = useState('user');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const ITEMS_PER_PAGE = 12;
 
   useEffect(() => {
-    console.log('Characters useEffect running');
     const fetchCharacters = async () => {
-      console.log('Fetching characters...');
       try {
         setLoading(true);
         const role = getUserRole() || 'user';
         setUserRole(role);
-        console.log('Making API request to /characters');
         const data = await apiRequest('GET', '/characters');
-        console.log('Characters fetched:', data);
         setCharacters(data);
-      } catch (err) {
-        console.error('Error fetching characters:', err);
+      } catch {
         setError('Failed to load characters.');
       } finally {
         setLoading(false);
@@ -37,7 +34,10 @@ function Characters() {
 
   useEffect(() => {
     if (message || error) {
-      const timer = setTimeout(() => { setMessage(''); setError(''); }, 5000);
+      const timer = setTimeout(() => {
+        setMessage('');
+        setError('');
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [message, error]);
@@ -57,49 +57,166 @@ function Characters() {
     }
   };
 
-  if (loading) return <div className="text-neutral-200 text-center mt-20">Loading...</div>;
+  // Filter characters based on search query
+  const filteredCharacters = characters.filter((character) =>
+    character.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredCharacters.length / ITEMS_PER_PAGE);
+  const paginatedCharacters = filteredCharacters.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  // Reset to page 1 when search query changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
+
+  if (loading)
+    return <div className='text-neutral-200 text-center mt-20'>Loading...</div>;
 
   if (error) {
     return (
-      <div className="text-red-500 text-center bg-neutral-300/10 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold mb-4">Error</h2>
+      <div className='text-red-500 text-center bg-neutral-300/10 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
+        <h2 className='text-2xl font-bold mb-4'>Error</h2>
         <p>{error}</p>
-        <Button href="/" className="mt-4">Return to Home</Button>
+        <Button href='/' className='mt-4'>
+          Return to Home
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto">
-      <h1 className="text-2xl text-red-600 font-bold mb-4">Characters</h1>
-      {message && <p className="text-green-500 mb-4">{message}</p>}
-      
+    <div className='text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-6xl mx-auto'>
+      <h1 className='text-2xl text-red-600 font-bold mb-4'>Characters</h1>
+      {message && <p className='text-green-500 mb-4'>{message}</p>}
+
       {userRole === 'admin' && (
-        <Link to="/characters/new"><Button className="font-semibold mb-4 w-full">Add Character</Button></Link>
+        <Button
+          href='/characters/new'
+          className='font-semibold mb-6 w-full sm:w-auto'
+        >
+          Add Character
+        </Button>
       )}
 
-      <div className="rounded-lg shadow-lg">
-        {characters.length === 0 ? (
-          <p className="text-neutral-400 text-center">No characters found.</p>
+      {/* Search Bar */}
+      <div className='mb-6'>
+        <input
+          type='text'
+          placeholder='Search characters...'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className='w-full max-w-md px-4 py-2 bg-neutral-800/50 border border-neutral-600 rounded-lg text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/50'
+        />
+      </div>
+
+      {/* Character Count */}
+      <p className='text-neutral-400 text-sm mb-4'>
+        Showing {paginatedCharacters.length} of {filteredCharacters.length}{' '}
+        characters
+        {totalPages > 1 && ` (Page ${currentPage} of ${totalPages})`}
+      </p>
+
+      {/* Card Grid Layout */}
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+        {paginatedCharacters.length === 0 ? (
+          <p className='text-neutral-400 text-center col-span-full'>
+            {searchQuery
+              ? 'No characters match your search.'
+              : 'No characters found.'}
+          </p>
         ) : (
-          <ul className="space-y-2">
-            {characters.map((character) => (
-              <li key={character._id} className="flex justify-between items-center bg-neutral-800/20 p-2 rounded-lg">
-                <SpaceBtn href={`/characters/${character._id}`} className="text-lg font-semibold text-neutral-300">{character.name}</SpaceBtn>
+          paginatedCharacters.map((character) => (
+            <div
+              key={character._id}
+              className='bg-neutral-800/30 backdrop-blur-sm p-4 rounded-xl shadow-lg hover:bg-neutral-800/50 transition-all duration-300 border border-neutral-700/50 hover:border-yellow-500/30'
+            >
+              {/* Character Name */}
+              <h3 className='text-xl font-bold text-yellow-400 mb-2 font-dune'>
+                {character.name}
+              </h3>
+
+              {/* Character Info */}
+              <div className='text-left text-sm text-neutral-300 space-y-1 mb-4'>
+                <p>
+                  <span className='text-blue-400'>Species:</span>{' '}
+                  {character.species}
+                </p>
+                <p>
+                  <span className='text-purple-400'>Affiliation:</span>{' '}
+                  {character.affiliation}
+                </p>
+                <p>
+                  <span className='text-green-400'>Force Rating:</span>{' '}
+                  <span className='text-yellow-300'>
+                    {'⭐'.repeat(
+                      Math.floor((character.stats?.forceRating || 0) / 20)
+                    )}
+                  </span>
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className='flex flex-wrap gap-2 justify-center'>
+                <SpaceBtn
+                  href={`/characters/${character._id}`}
+                  className='text-sm px-4 py-1'
+                  white
+                >
+                  View
+                </SpaceBtn>
+
                 {userRole === 'admin' && (
                   <>
-                    <Button href={`/characters/edit/${character._id}`} className="px-2 py-1 text-sm">Edit</Button>
-                    <Button onClick={() => handleDelete(character._id)} className="px-2 py-1 text-sm text-red-400">Delete</Button>
+                    <Button
+                      href={`/characters/edit/${character._id}`}
+                      className='text-sm px-4 py-1'
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      onClick={() => handleDelete(character._id)}
+                      className='text-sm px-4 py-1 text-red-400 hover:text-red-300'
+                    >
+                      Delete
+                    </Button>
                   </>
                 )}
-              </li>
-            ))}
-          </ul>
+              </div>
+            </div>
+          ))
         )}
       </div>
-      
-      <div className="mt-8 flex justify-center">
-        <Button href="/">Return to Home</Button>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className='flex justify-center items-center gap-4 mt-6'>
+          <Button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            className={currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}
+          >
+            Previous
+          </Button>
+          <span className='text-neutral-300'>
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            className={
+              currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
+            }
+          >
+            Next
+          </Button>
+        </div>
+      )}
+
+      <div className='mt-8 flex justify-center'>
+        <Button href='/'>Return to Home</Button>
       </div>
     </div>
   );
