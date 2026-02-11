@@ -4,6 +4,7 @@ import { loginUser } from '../utils/api';
 import { useApp } from '../../context/AppContext';
 import SpaceBtn from '../buttons/SpaceBtn';
 import Button from '../buttons/Button';
+import toast from 'react-hot-toast';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -34,8 +35,10 @@ function LoginForm() {
     try {
       const result = await loginUser(email, password);
       setUser({ email: result.user.email, role: result.user.role });
+      toast.success('Welcome back!');
       navigate('/');
     } catch (err) {
+      toast.error(err.message || 'Login failed. Please try again.');
       setError(err.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);

@@ -6,6 +6,7 @@ import NumberInput from './form/NumberInput';
 import CheckboxInput from './form/CheckboxInput';
 import Button from './buttons/Button';
 import SpaceBtn from './buttons/SpaceBtn';
+import toast from 'react-hot-toast';
 
 function CharacterForm() {
   const { id } = useParams();
@@ -143,8 +144,14 @@ function CharacterForm() {
 
     try {
       await apiRequest(method, endpoint, character);
+      toast.success(
+        isEditing
+          ? 'Character updated successfully!'
+          : 'Character created successfully!'
+      );
       navigate('/characters');
     } catch (err) {
+      toast.error(err.message || 'An error occurred.');
       setError(err.message || 'An error occurred.');
     } finally {
       setSaving(false);
