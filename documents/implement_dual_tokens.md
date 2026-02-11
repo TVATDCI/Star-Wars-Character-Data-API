@@ -207,21 +207,6 @@ curl -X POST http://localhost:5000/api/v1/auth/login \
 
 #### 5. **Test Logout**
 
-#### 4. **Test Token Refresh Flow**
-
-- Login
-- Open DevTools > Application > LocalStorage
-- Delete the `accessToken` (simulating expiry)
-- Refresh the page or navigate to a protected route (User Profile)
-- The API interceptor should automatically:
-  1. Detect 401 error
-  2. Call `/auth/refresh` with the HttpOnly cookie
-  3. Get new access token
-  4. Retry the original request
-  5. User sees data without re-logging in
-
-#### 5. **Test Logout**
-
 - Login
 - Click logout
 - Check:
