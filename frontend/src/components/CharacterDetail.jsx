@@ -40,10 +40,10 @@ function CharacterDetail() {
     return (
       <div className='mb-3'>
         <div className='flex justify-between text-sm mb-1'>
-          <span className='text-neutral-300'>{label}</span>
-          <span className='text-yellow-400'>{percentage}%</span>
+          <span className='text-text-muted'>{label}</span>
+          <span className='text-accent'>{percentage}%</span>
         </div>
-        <div className='w-full bg-neutral-700/50 rounded-full h-3'>
+        <div className='w-full bg-bg-muted rounded-full h-3'>
           <div
             className={`h-3 rounded-full transition-all duration-500 ${color}`}
             style={{ width: `${percentage}%` }}
@@ -60,7 +60,7 @@ function CharacterDetail() {
   };
 
   return (
-    <div className='text-center bg-neutral-800/10 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-4xl mx-auto'>
+    <div className='text-center bg-bg-card/50 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-4xl mx-auto'>
       {/* Back Button */}
       <div className='flex justify-start mb-6'>
         <Button href='/characters' className='font-bold'>
@@ -72,32 +72,30 @@ function CharacterDetail() {
       <div className='flex flex-col md:flex-row gap-6 mb-8'>
         {/* Avatar Placeholder */}
         <div className='flex-shrink-0'>
-          <div className='w-32 h-32 md:w-40 md:h-40 mx-auto bg-gradient-to-br from-yellow-500/20 to-purple-600/20 rounded-full flex items-center justify-center border-2 border-yellow-500/30'>
+          <div className='w-32 h-32 md:w-40 md:h-40 mx-auto bg-gradient-to-br from-accent/20 to-sw-purple/20 rounded-full flex items-center justify-center border-2 border-accent/30'>
             <span className='text-4xl md:text-5xl'>👤</span>
           </div>
         </div>
 
         {/* Character Info */}
         <div className='flex-grow text-left'>
-          <h2 className='text-4xl text-red-500 font-extrabold mb-2 font-dune'>
+          <h2 className='text-4xl text-error font-extrabold mb-2 font-dune'>
             {character.name}
           </h2>
-          <div className='space-y-1 text-neutral-300'>
+          <div className='space-y-1 text-text-muted'>
             <p>
-              <span className='text-blue-400'>Species:</span>{' '}
-              {character.species}
+              <span className='text-info'>Species:</span> {character.species}
             </p>
             <p>
-              <span className='text-purple-400'>Affiliation:</span>{' '}
+              <span className='text-sw-purple'>Affiliation:</span>{' '}
               {character.affiliation}
             </p>
             <p>
-              <span className='text-green-400'>Homeworld:</span>{' '}
+              <span className='text-success'>Homeworld:</span>{' '}
               {character.homeworld}
             </p>
             <p>
-              <span className='text-yellow-400'>Height:</span>{' '}
-              {character.height} cm
+              <span className='text-accent'>Height:</span> {character.height} cm
             </p>
           </div>
 
@@ -117,8 +115,8 @@ function CharacterDetail() {
       </div>
 
       {/* Stats Section */}
-      <div className='bg-neutral-800/30 rounded-xl p-6 mb-6'>
-        <h3 className='text-xl text-yellow-400 font-bold mb-4 font-dune'>
+      <div className='bg-bg-card rounded-xl p-6 mb-6'>
+        <h3 className='text-xl text-accent font-bold mb-4 font-dune'>
           Character Stats
         </h3>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
@@ -148,44 +146,44 @@ function CharacterDetail() {
       {/* Details Section */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6 text-left'>
         {/* Left Column */}
-        <div className='bg-neutral-800/30 rounded-xl p-4'>
-          <h3 className='text-lg text-yellow-400 font-bold mb-3 font-dune'>
+        <div className='bg-bg-card rounded-xl p-4'>
+          <h3 className='text-lg text-accent font-bold mb-3 font-dune'>
             Jedi Information
           </h3>
-          <div className='space-y-2 text-neutral-300'>
+          <div className='space-y-2 text-text-muted'>
             <p>
-              <span className='text-blue-400'>Is Jedi:</span>{' '}
+              <span className='text-info'>Is Jedi:</span>{' '}
               {character.isJedi ? 'Yes ✅' : 'No ❌'}
             </p>
             <p>
-              <span className='text-purple-400'>Master:</span>{' '}
+              <span className='text-sw-purple'>Master:</span>{' '}
               {character.master || 'None'}
             </p>
             <p>
-              <span className='text-green-400'>Apprentices:</span>{' '}
+              <span className='text-success'>Apprentices:</span>{' '}
               {character.apprentices?.join(', ') || 'None'}
             </p>
           </div>
         </div>
 
         {/* Right Column */}
-        <div className='bg-neutral-800/30 rounded-xl p-4'>
-          <h3 className='text-lg text-yellow-400 font-bold mb-3 font-dune'>
+        <div className='bg-bg-card rounded-xl p-4'>
+          <h3 className='text-lg text-accent font-bold mb-3 font-dune'>
             Equipment & Achievements
           </h3>
-          <div className='space-y-2 text-neutral-300'>
+          <div className='space-y-2 text-text-muted'>
             <p>
-              <span className='text-red-400'>Weapons:</span>{' '}
+              <span className='text-error'>Weapons:</span>{' '}
               {character.weapons?.join(', ') || 'None'}
             </p>
             <p>
-              <span className='text-cyan-400'>Vehicles:</span>{' '}
+              <span className='text-sw-cyan'>Vehicles:</span>{' '}
               {character.vehicles?.join(', ') || 'None'}
             </p>
             <p>
-              <span className='text-yellow-400'>Notable Achievements:</span>
+              <span className='text-accent'>Notable Achievements:</span>
             </p>
-            <ul className='list-disc list-inside text-sm text-neutral-400'>
+            <ul className='list-disc list-inside text-sm text-text-muted'>
               {character.notableAchievements?.length > 0 ? (
                 character.notableAchievements.map((achievement, idx) => (
                   <li key={idx}>{achievement}</li>
