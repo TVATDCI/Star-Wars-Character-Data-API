@@ -5,6 +5,7 @@ import { getUserRole } from './utils/auth';
 import { apiRequest } from './utils/api.js';
 import Button from '../components/buttons/Button';
 import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
+import SkeletonDetail from './ui/SkeletonDetail';
 
 function CharacterDetail() {
   const { id } = useParams();
@@ -31,8 +32,7 @@ function CharacterDetail() {
   }, [id]);
 
   if (error) return <div className='text-red-500'>{error}</div>;
-  if (loading)
-    return <div className='text-neutral-200 text-center mt-20'>Loading...</div>;
+  if (loading) return <SkeletonDetail />;
 
   // Helper component for stat bars
   const StatBar = ({ label, value, color }) => {
