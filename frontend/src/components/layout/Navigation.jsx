@@ -15,15 +15,13 @@ export default function Navigation() {
   };
 
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 bg-neutral-900/80 backdrop-blur-md border-b border-neutral-700/50'>
+    <nav className='fixed top-0 left-0 right-0 z-50 bg-bg-elevated/80 backdrop-blur-md border-b border-border'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex items-center justify-between h-16'>
           {/* Logo */}
           <Link to='/' className='flex items-center space-x-2'>
-            <span className='text-2xl font-bold text-yellow-400 font-dune'>
-              SW
-            </span>
-            <span className='text-sm text-neutral-400 hidden sm:block'>
+            <span className='text-2xl font-bold text-accent font-dune'>SW</span>
+            <span className='text-sm text-text-muted hidden sm:block'>
               Character DB
             </span>
           </Link>
@@ -34,7 +32,7 @@ export default function Navigation() {
 
             {user ? (
               <div className='flex items-center space-x-4'>
-                <span className='text-neutral-300 text-sm hidden md:block'>
+                <span className='text-text-muted text-sm hidden md:block'>
                   {user.email}
                 </span>
                 <SpaceBtn onClick={() => navigate('/profile')} white>
@@ -45,7 +43,7 @@ export default function Navigation() {
                 )}
                 <Button
                   onClick={onLogout}
-                  className='text-red-400 hover:text-red-300'
+                  className='text-error hover:text-error-hover'
                 >
                   Logout
                 </Button>
