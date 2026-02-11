@@ -1,5 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import SpaceBtnSvg from "./SpaceBtnSvg"; //It is the shape, is a custom SVG component that renders the SpaceBtn.jsx's SVG graphics.
+import { useNavigate, useLocation } from 'react-router-dom';
+import SpaceBtnSvg from './SpaceBtnSvg'; //It is the shape, is a custom SVG component that renders the SpaceBtn.jsx's SVG graphics.
 
 /**
  * Button Component
@@ -25,38 +25,43 @@ const SpaceBtn = ({
   href,
   onClick,
   children,
-  px = "px-7",
+  px = 'px-7',
   white,
-  type = "button",
+  type = 'button',
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   // Construct the CSS classes for the button/link
   const classes = `button relative inline-flex items-center justify-center py-[.5rem] font-bold transition-colors duration-1000 cursor-pointer hover:text-red-600 ${px} ${
-    white ? "text-neutral-800" : "text-neutral-100/5"
-  } ${className || ""}`;
+    white ? 'text-neutral-800' : 'text-neutral-100/5'
+  } ${className || ''}`;
 
   // CSS classes for the span inside the button/link
-  const spanClasses = "relative z-10";
+  const spanClasses = 'relative z-10';
 
   const handleClick = (e) => {
+    // Prevent default form submission if this is a button inside a form
+    if (type === 'button' && !href) {
+      e.preventDefault();
+    }
+
     // adding PageHash to the href to check if it is a hash link Then scroll or navigate to the target route!
     if (href) {
-      const isSamePageHash = href.startsWith("#") && location.pathname === "/";
+      const isSamePageHash = href.startsWith('#') && location.pathname === '/';
 
       if (isSamePageHash) {
         // Scroll to section within the same page
         const targetId = href.slice(1); // Remove the "#" symbol
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
-          targetElement.scrollIntoView({ behavior: "smooth" });
+          targetElement.scrollIntoView({ behavior: 'smooth' });
         }
       } else if (location.pathname === href) {
         // Smooth scroll to the top if already on the target route
         window.scrollTo({
           top: 0,
-          behavior: "smooth",
+          behavior: 'smooth',
         });
       } else {
         // Navigate to the target route
