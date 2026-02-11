@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 export default function CheckboxInput({ label, name, checked, onChange }) {
   return (
-    <label className="flex items-center space-x-2 mb-2 text-white">
+    <label className='flex items-center space-x-2 mb-2 text-text'>
       <input
-        type="checkbox"
+        type='checkbox'
         name={name}
         checked={checked}
         onChange={onChange}
