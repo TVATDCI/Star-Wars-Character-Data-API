@@ -142,7 +142,11 @@ const refreshAccessToken = async (req, res, next) => {
       user.refreshToken = null; // Clear the stored refresh token
       await user.save();
 
-      (res.clearCookies('refreshToken'), { httpOnly: true });
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict',
+      });
       res.status(403);
       throw new Error(
         'Token reuse detected. All refresh tokens revoked. Please log in again.'

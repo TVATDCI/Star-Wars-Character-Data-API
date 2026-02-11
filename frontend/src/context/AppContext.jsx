@@ -1,21 +1,20 @@
 // src/context/AppContext.jsx
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { getStoredAuth, clearStoredAuth } from '../components/utils/auth';
 
 const AppContext = createContext();
 
-export const AppProvider = ({ children }) => {
-  const [background, setBackground] = useState('');
+function AppProvider({ children }) {
+  const [background] = useState(
+    'https://www.transparenttextures.com/patterns/stardust.png'
+  );
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
   const [view, setView] = useState('info');
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    setBackground('https://www.transparenttextures.com/patterns/stardust.png');
+  const [user, setUser] = useState(() => {
     const storedData = getStoredAuth();
-    if (storedData) setUser(storedData.user);
-  }, []);
+    return storedData ? storedData.user : null;
+  });
 
   const handleLogout = () => {
     setUser(null);
@@ -40,15 +39,18 @@ export const AppProvider = ({ children }) => {
       {children}
     </AppContext.Provider>
   );
-};
+}
+
 AppProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const useApp = () => {
+function useApp() {
   const context = useContext(AppContext);
   if (!context) {
     throw new Error('useApp must be used within an AppProvider');
   }
   return context;
-};
+}
+
+export { AppProvider, useApp };

@@ -107,7 +107,7 @@ api.interceptors.response.use(
 
       // Retry original request
       return api(originalRequest);
-    } catch (refreshError) {
+    } catch {
       // Refresh failed - clear auth and redirect to login
       isRefreshing = false;
       refreshSubscribers = [];

@@ -1,15 +1,14 @@
-import { useState } from "react";
-import { loginUser } from "../utils/api";
-import { storeAuthData } from "../utils/auth";
-import PropTypes from "prop-types";
-import SpaceBtn from "../buttons/SpaceBtn";
-import BtnNeoGradient from "../buttons/BtnNeonGradient";
-import Button from "../buttons/Button.jsx";
-import ButtonGradient from "../buttons/ButtonGradient.jsx";
+import { useState } from 'react';
+import { loginUser } from '../utils/api';
+import PropTypes from 'prop-types';
+import SpaceBtn from '../buttons/SpaceBtn';
+import BtnNeoGradient from '../buttons/BtnNeonGradient';
+import Button from '../buttons/Button.jsx';
+import ButtonGradient from '../buttons/ButtonGradient.jsx';
 
 function LoginForm({ onLogin, returnToInfo }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // NOTE: the handleSubmit function logic is now abstracted
   // #The loginUser function now returns as loginUser(email, password) from utils/api.js
@@ -17,40 +16,41 @@ function LoginForm({ onLogin, returnToInfo }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const result = await loginUser(email, password); // contains token and role
-      console.log("Login result:", result); // Debugging line
-      storeAuthData(result.token, email, result.role); // persist to localStorage
-      onLogin({ email, role: result.role });
+      const result = await loginUser(email, password); // contains token and user object
+      console.log('Login result:', result); // Debugging line
+      // storeAuthData is already called in loginUser api function
+      // Just need to update the app state with user info
+      onLogin({ email: result.user.email, role: result.user.role });
     } catch (err) {
       alert(err.message); // Already exists in loginUser, but is here for user feedback
     }
   };
 
   return (
-    <div className="bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs">
+    <div className='bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs'>
       <form onSubmit={handleLogin}>
-        <h2 className="text-2xl text-red-600 p-2 font-bold mb-2">Login</h2>
+        <h2 className='text-2xl text-red-600 p-2 font-bold mb-2'>Login</h2>
         <input
-          type="email"
+          type='email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          className="mb-2 p-2 w-full"
+          placeholder='Email'
+          className='mb-2 p-2 w-full'
         />
         <input
-          type="password"
+          type='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="mb-2 p-2 w-full"
+          placeholder='Password'
+          className='mb-2 p-2 w-full'
         />
         {/* Future plan - add a checkbox for "Remember Me" */}
         <BtnNeoGradient />
         <ButtonGradient />
-        <SpaceBtn type="submit" className="mt-4 text-center text-yellow-400">
+        <SpaceBtn type='submit' className='mt-4 text-center text-yellow-400'>
           Login
         </SpaceBtn>
-        <Button onClick={returnToInfo} className="block ml-6 text-center">
+        <Button onClick={returnToInfo} className='block ml-6 text-center'>
           Return to Info
         </Button>
       </form>

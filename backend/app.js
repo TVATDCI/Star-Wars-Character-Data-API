@@ -38,7 +38,7 @@ app.use(
   })
 );
 
-// Limit requests from same API
+// Limit requests from same API (general limiter for all routes)
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
@@ -46,8 +46,20 @@ const limiter = rateLimit({
 });
 app.use('/api/v1', limiter);
 
+// Stricter rate limiting for auth endpoints to prevent brute force attacks
+const authLimiter = rateLimit({
+  max: 10, // 10 requests per window
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  message:
+    'Too many authentication attempts. Please try again after 15 minutes.',
+  standardHeaders: true,
+  legacyHeaders: false,
+  // Skip successful requests (login/register success shouldn't count against limit)
+  skipSuccessfulRequests: false, // Set to true if you want to only count failed attempts
+});
+
 import authRoutes from './routes/authRoutes.js';
-app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/auth', authLimiter, authRoutes);
 
 // User routes
 app.use('/api/v1/users', authenticateToken, userRoutes);
