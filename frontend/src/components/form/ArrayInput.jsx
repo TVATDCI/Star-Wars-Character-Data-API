@@ -1,20 +1,20 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 export default function ArrayInput({ label, name, value, onChange }) {
   return (
-    <div className="mb-2">
+    <div className='mb-2'>
       {label && (
-        <label className="block text-left mb-1 text-sm font-semibold text-red-500">
+        <label className='block text-left mb-1 text-sm font-semibold text-red-500'>
           {label}
         </label>
       )}
       <input
-        type="text"
+        type='text'
         name={name}
-        value={value.join(", ")}
-        onChange={(e) => onChange(e, name)}
+        value={Array.isArray(value) ? value.join(', ') : ''}
+        onChange={onChange}
         placeholder={`${label} (comma separated)`}
-        className="p-2 w-full"
+        className='p-2 w-full'
       />
     </div>
   );
