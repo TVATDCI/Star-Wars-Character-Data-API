@@ -2,6 +2,8 @@
 import { useApp } from '../../context/AppContext';
 import Button from '../buttons/Button';
 import SpaceBtn from '../buttons/SpaceBtn';
+// import BtnNeonGradient from '../buttons/BtnNeonGradient';
+// import ButtonGradient from '../buttons/ButtonGradient';
 
 export default function InfoPage() {
   const { user } = useApp();
@@ -19,10 +21,15 @@ export default function InfoPage() {
             Welcome back,{' '}
             {user.name && <span className='text-success'>{user.name}</span>}
           </h4>
+          {/* <BtnNeonGradient /> */}
+          {/* <ButtonGradient /> */}
           <div className='flex flex-wrap justify-center gap-4'>
             <Button href='/characters'>Characters List</Button>
-            <SpaceBtn href='/profile' white>
-              View Profile
+            <SpaceBtn href='/profile'>
+              {' '}
+              <span className='text-accent/50 hover:text-accent-hover'>
+                View Profile
+              </span>
             </SpaceBtn>
           </div>
         </div>
