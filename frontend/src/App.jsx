@@ -14,6 +14,8 @@ import CharactersForm from './components/CharactersForm';
 import LoginForm from './components/reg-auth/LoginForm';
 import RegisterForm from './components/reg-auth/RegisterForm';
 import UserProfile from './components/views/UserProfile';
+import ButtonGradient from './components/buttons/ButtonGradient.jsx';
+import BtnNeonGradient from './components/buttons/BtnNeonGradient.jsx';
 
 const AdminDashboard = () => (
   <div className='p-8 text-center bg-neutral-800/5 backdrop-blur-sm rounded-xl mt-14 max-w-6xl mx-auto'>
@@ -25,6 +27,8 @@ const AdminDashboard = () => (
 function App() {
   return (
     <AppProvider>
+      <BtnNeonGradient />
+      <ButtonGradient />
       <div className='min-h-screen bg-neutral-900 relative'>
         <NebulaCanvas className='fixed inset-0 z-0' />
         <div className='relative z-10'>
