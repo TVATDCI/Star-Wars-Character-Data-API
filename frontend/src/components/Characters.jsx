@@ -3,8 +3,6 @@ import { apiRequest } from './utils/api.js';
 import { getUserRole } from './utils/auth';
 import Button from '../components/buttons/Button';
 import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
-// import ButtonGradient from '../components/buttons/ButtonGradient.jsx';
-import BtnNeonGradient from '../components/buttons/BtnNeonGradient.jsx';
 import SkeletonCard from './ui/SkeletonCard';
 import toast from 'react-hot-toast';
 
@@ -176,7 +174,6 @@ function Characters() {
 
               {/* Action Buttons */}
               <div className='flex flex-wrap gap-2 justify-center'>
-                <BtnNeonGradient />
                 <SpaceBtn
                   href={`/characters/${character._id}`}
                   className='text-sm px-4 py-1'
