@@ -3,6 +3,8 @@ import { apiRequest } from './utils/api.js';
 import { getUserRole } from './utils/auth';
 import Button from '../components/buttons/Button';
 import SpaceBtn from '../components/buttons/SpaceBtn.jsx';
+// import ButtonGradient from '../components/buttons/ButtonGradient.jsx';
+import BtnNeonGradient from '../components/buttons/BtnNeonGradient.jsx';
 import SkeletonCard from './ui/SkeletonCard';
 import toast from 'react-hot-toast';
 
@@ -113,6 +115,7 @@ function Characters() {
           Add Character
         </Button>
       )}
+      {/* <ButtonGradient /> */}
 
       {/* Search Bar */}
       <div className='mb-6'>
@@ -173,22 +176,25 @@ function Characters() {
 
               {/* Action Buttons */}
               <div className='flex flex-wrap gap-2 justify-center'>
+                <BtnNeonGradient />
                 <SpaceBtn
                   href={`/characters/${character._id}`}
                   className='text-sm px-4 py-1'
-                  white
                 >
-                  View
+                  <span className='text-accent/50 hover:text-accent-hover'>
+                    View
+                  </span>
                 </SpaceBtn>
 
                 {userRole === 'admin' && (
                   <>
-                    <Button
+                    <SpaceBtn
                       href={`/characters/edit/${character._id}`}
                       className='text-sm px-4 py-1'
+                      white
                     >
                       Edit
-                    </Button>
+                    </SpaceBtn>
                     <Button
                       onClick={() => handleDelete(character._id)}
                       className='text-sm px-4 py-1 text-error hover:text-error-hover'
@@ -227,7 +233,11 @@ function Characters() {
       )}
 
       <div className='mt-8 flex justify-center'>
-        <Button href='/'>Return to Home</Button>
+        <SpaceBtn href='/'>
+          <span className='text-accent/50 hover:text-accent-hover'>
+            Return to Home
+          </span>
+        </SpaceBtn>
       </div>
     </div>
   );
