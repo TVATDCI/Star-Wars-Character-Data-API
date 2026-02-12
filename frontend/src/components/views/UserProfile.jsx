@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useUserProfileFetcher } from '../hooks/userProfileFetcher';
-import { Link } from 'react-router-dom';
 import { apiRequest } from '../utils/api';
 import SpaceBtn from '../buttons/SpaceBtn';
 import Button from '../buttons/Button';
@@ -35,87 +34,135 @@ const UserProfile = () => {
 
   if (loading)
     return (
-      <p className='text-yellow-500 text-center mt-20'>Loading profile...</p>
+      <div className='text-center mt-20'>
+        <p className='text-accent text-lg'>Loading profile...</p>
+      </div>
     );
 
   return (
-    <div className='bg-neutral-800/20 backdrop-blur-sm p-4 rounded-lg shadow-lg max-w-xs mx-auto mt-14'>
-      <h3 className='text-2xl text-red-600 p-2 font-bold mb-1 text-center'>
-        {profile.name || 'User Profile'}
-      </h3>
+    <div className='bg-bg-card/50 backdrop-blur-sm p-6 rounded-xl shadow-2xl max-w-2xl mx-auto mt-14 border border-border'>
+      {/* Header */}
+      <div className='text-center mb-6'>
+        <h2 className='text-3xl text-error font-extrabold mb-2 font-dune'>
+          User Profile
+        </h2>
+        <p className='text-text-muted text-sm'>
+          Manage your personal information
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        {profile.avatar && (
-          <div className='mb-1 flex justify-center'>
+      {/* Avatar Section */}
+      <div className='flex justify-center mb-8'>
+        <div className='relative'>
+          {profile.avatar ? (
             <img
               src={profile.avatar}
               alt='Avatar'
-              className='rounded-full w-24 h-24 object-cover'
+              className='rounded-full w-32 h-32 object-cover border-4 border-accent/30 shadow-lg'
             />
+          ) : (
+            <div className='w-32 h-32 rounded-full bg-gradient-to-br from-accent/20 to-sw-purple/20 border-4 border-accent/30 flex items-center justify-center'>
+              <span className='text-5xl'>👤</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        {/* Profile Information Section */}
+        <div className='bg-bg-card rounded-xl p-6 mb-6 border border-border'>
+          <h3 className='text-xl text-accent font-bold mb-4 font-dune'>
+            Profile Information
+          </h3>
+
+          <div className='space-y-4'>
+            {/* Name Field */}
+            <div>
+              <label className='block text-left mb-2 text-sm font-semibold text-text-muted'>
+                Display Name
+              </label>
+              <input
+                name='name'
+                className='p-3 w-full bg-bg-input border border-border rounded-lg text-text placeholder-text-subtle focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-colors'
+                type='text'
+                value={profile.name}
+                onChange={handleChange}
+                placeholder='Enter your name'
+              />
+            </div>
+
+            {/* Bio Field */}
+            <div>
+              <label className='block text-left mb-2 text-sm font-semibold text-text-muted'>
+                Bio
+              </label>
+              <textarea
+                name='bio'
+                className='p-3 w-full bg-bg-input border border-border rounded-lg text-text placeholder-text-subtle focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-colors resize-none'
+                value={profile.bio}
+                onChange={handleChange}
+                rows='4'
+                placeholder='Tell us about yourself...'
+              />
+            </div>
+
+            {/* Location Field */}
+            <div>
+              <label className='block text-left mb-2 text-sm font-semibold text-text-muted'>
+                Location
+              </label>
+              <input
+                name='location'
+                className='p-3 w-full bg-bg-input border border-border rounded-lg text-text placeholder-text-subtle focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-colors'
+                type='text'
+                value={profile.location}
+                onChange={handleChange}
+                placeholder='Where are you located?'
+              />
+            </div>
+
+            {/* Avatar URL Field */}
+            <div>
+              <label className='block text-left mb-2 text-sm font-semibold text-text-muted'>
+                Avatar URL
+              </label>
+              <input
+                name='avatar'
+                className='p-3 w-full bg-bg-input border border-border rounded-lg text-text placeholder-text-subtle focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-colors'
+                type='text'
+                value={profile.avatar}
+                onChange={handleChange}
+                placeholder='https://example.com/avatar.jpg'
+              />
+              <p className='text-text-subtle text-xs mt-1'>
+                Provide a URL to your profile image
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Success/Error Message */}
+        {message && (
+          <div className='mb-6 p-4 bg-success-subtle border border-success rounded-lg text-success text-center animate-fade-in'>
+            {message}
           </div>
         )}
 
-        <label className='block mb-2'>
-          Name:
-          <input
-            name='name'
-            className='border p-2 w-full bg-neutral-700/50 border-neutral-600 rounded text-white'
-            type='text'
-            value={profile.name}
-            onChange={handleChange}
-            placeholder='Enter your name'
-          />
-        </label>
-
-        <label className='block mb-2'>
-          Bio:
-          <textarea
-            name='bio'
-            className='border p-2 w-full bg-neutral-700/50 border-neutral-600 rounded text-white'
-            value={profile.bio}
-            onChange={handleChange}
-            rows='3'
-            placeholder='Tell us about yourself'
-          />
-        </label>
-
-        <label className='block mb-2'>
-          Location:
-          <input
-            name='location'
-            className='border p-2 w-full bg-neutral-700/50 border-neutral-600 rounded text-white'
-            type='text'
-            value={profile.location}
-            onChange={handleChange}
-            placeholder='Where are you located?'
-          />
-        </label>
-
-        <label className='block mb-2'>
-          Avatar URL:
-          <input
-            name='avatar'
-            className='border p-2 w-full bg-neutral-700/50 border-neutral-600 rounded text-white'
-            type='text'
-            value={profile.avatar}
-            onChange={handleChange}
-            placeholder='Enter avatar image URL'
-          />
-        </label>
-
-        <SpaceBtn
-          type='submit'
-          className='w-full text-center block text-red-700 hover:text-red-400 mb-2'
-          disabled={saving}
-        >
-          {saving ? 'Updating...' : 'Update Profile'}
-        </SpaceBtn>
+        {/* Action Buttons */}
+        <div className='flex flex-col sm:flex-row gap-3 justify-between'>
+          <Button href='/' className='w-full sm:w-auto'>
+            ← Return to Home
+          </Button>
+          <SpaceBtn
+            type='submit'
+            className='w-full sm:w-auto'
+            white
+            disabled={saving}
+          >
+            {saving ? 'Updating...' : 'Update Profile'}
+          </SpaceBtn>
+        </div>
       </form>
-
-      {message && <p className='mt-4 text-green-600 text-center'>{message}</p>}
-      <Button href='/' className='block w-full text-center mt-4'>
-        Return to Home
-      </Button>
     </div>
   );
 };
