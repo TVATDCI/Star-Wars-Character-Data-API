@@ -11,6 +11,10 @@ import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
+// Trust proxy - CRITICAL for Render, Heroku, and other cloud platforms
+// This allows express-rate-limit to correctly identify users behind proxies
+app.set('trust proxy', 1);
+
 // Set security HTTP headers
 app.use(helmet());
 
