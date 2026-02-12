@@ -117,11 +117,13 @@ function RegisterForm() {
             {loading ? 'Creating Account...' : 'Create Account'}
           </SpaceBtn>
 
-          <Link to='/'>
-            <Button className='block w-full text-center' disabled={loading}>
-              Return to Home
-            </Button>
-          </Link>
+          <Button
+            href='/'
+            className='block w-full text-center'
+            disabled={loading}
+          >
+            Return to Home
+          </Button>
         </div>
 
         <p className='mt-4 text-center text-text-muted text-sm'>
