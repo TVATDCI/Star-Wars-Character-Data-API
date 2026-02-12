@@ -27,9 +27,9 @@ export default function Toaster() {
         // Default options for all toasts
         duration: 4000,
         style: {
-          background: 'rgba(23, 23, 23, 0.95)',
-          color: '#fff',
-          border: '1px solid rgba(234, 179, 8, 0.3)',
+          background: 'var(--color-bg-elevated)',
+          color: 'var(--color-text)',
+          border: '1px solid var(--color-border-accent)',
           borderRadius: '12px',
           padding: '16px 24px',
           fontSize: '14px',
@@ -42,11 +42,11 @@ export default function Toaster() {
         success: {
           duration: 3000,
           iconTheme: {
-            primary: '#22c55e',
-            secondary: '#171717',
+            primary: 'var(--color-success)',
+            secondary: 'var(--color-bg-elevated)',
           },
           style: {
-            border: '1px solid rgba(34, 197, 94, 0.5)',
+            border: '1px solid var(--color-success)',
           },
         },
 
@@ -54,11 +54,11 @@ export default function Toaster() {
         error: {
           duration: 5000,
           iconTheme: {
-            primary: '#ef4444',
-            secondary: '#171717',
+            primary: 'var(--color-error)',
+            secondary: 'var(--color-bg-elevated)',
           },
           style: {
-            border: '1px solid rgba(239, 68, 68, 0.5)',
+            border: '1px solid var(--color-border-error)',
           },
         },
 
@@ -66,11 +66,11 @@ export default function Toaster() {
         loading: {
           duration: Infinity,
           iconTheme: {
-            primary: '#eab308',
-            secondary: '#171717',
+            primary: 'var(--color-warning)',
+            secondary: 'var(--color-bg-elevated)',
           },
           style: {
-            border: '1px solid rgba(234, 179, 8, 0.5)',
+            border: '1px solid var(--color-warning)',
           },
         },
       }}

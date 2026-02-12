@@ -1,6 +1,6 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import ButtonSvg from "./ButtonSvg"; // Is the shape of the button
-import PropTypes from "prop-types";
+import { useNavigate, useLocation } from 'react-router-dom';
+import ButtonSvg from './ButtonSvg'; // Is the shape of the button
+import PropTypes from 'prop-types';
 
 /**
  * Button Component
@@ -17,36 +17,36 @@ import PropTypes from "prop-types";
  * - white: Boolean to determine the text color (true for "text-n-8", false for "text-n-1").
  */
 
-const Button = ({ className, href, onClick, children, px = "px-7", white }) => {
+const Button = ({ className, href, onClick, children, px = 'px-7', white }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   // Construct the CSS classes for the button/link
-  const classes = `button relative inline-flex items-center justify-center py-2 transition-colors hover:text-red-500 ${px} ${
-    white ? "text-neutral-800" : "text-yellow-400/50"
-  } ${className || ""}`;
+  const classes = `button relative inline-flex items-center justify-center py-2 transition-colors hover:text-error ${px} ${
+    white ? 'text-text-inverse' : 'text-accent/50'
+  } ${className || ''}`;
 
   // CSS classes for the span inside the button/link
-  const spanClasses = "relative z-10";
+  const spanClasses = 'relative z-10';
 
   const handleClick = (e) => {
     e.preventDefault();
     // adding PageHash to the href to check if it is a hash link Then scroll or navigate to the target route!
     if (href) {
-      const isSamePageHash = href.startsWith("#") && location.pathname === "/";
+      const isSamePageHash = href.startsWith('#') && location.pathname === '/';
 
       if (isSamePageHash) {
         // Scroll to section within the same page
         const targetId = href.slice(1); // Remove the "#" symbol
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
-          targetElement.scrollIntoView({ behavior: "smooth" });
+          targetElement.scrollIntoView({ behavior: 'smooth' });
         }
       } else if (location.pathname === href) {
         // Smooth scroll to the top if already on the target route
         window.scrollTo({
           top: 0,
-          behavior: "smooth",
+          behavior: 'smooth',
         });
       } else {
         // Navigate to the target route

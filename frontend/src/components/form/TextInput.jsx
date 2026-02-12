@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 export default function TextInput({
   label,
@@ -8,19 +8,19 @@ export default function TextInput({
   placeholder,
 }) {
   return (
-    <div className="mb-2">
+    <div className='mb-2'>
       {label && (
-        <label className="block text-left mb-1 text-sm font-semibold text-red-500">
+        <label className='block text-left mb-1 text-sm font-semibold text-error'>
           {label}
         </label>
       )}
       <input
-        type="text"
+        type='text'
         name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder || label}
-        className="p-2 w-full"
+        className='p-2 w-full'
       />
     </div>
   );

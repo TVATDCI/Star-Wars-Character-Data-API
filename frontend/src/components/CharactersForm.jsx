@@ -165,17 +165,17 @@ function CharacterForm() {
           <div
             className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
               step.id === currentStep
-                ? 'bg-yellow-500 text-neutral-900'
+                ? 'bg-accent text-accent-contrast'
                 : step.id < currentStep
-                  ? 'bg-green-500 text-white'
-                  : 'bg-neutral-700 text-neutral-400'
+                  ? 'bg-success text-white'
+                  : 'bg-bg-muted text-text-muted'
             }`}
           >
             {step.id < currentStep ? '✓' : step.id}
           </div>
           <span
             className={`text-xs mt-2 text-center ${
-              step.id === currentStep ? 'text-yellow-400' : 'text-neutral-400'
+              step.id === currentStep ? 'text-accent' : 'text-text-muted'
             }`}
           >
             {step.title}
@@ -190,7 +190,7 @@ function CharacterForm() {
       case 1:
         return (
           <div className='space-y-4'>
-            <h3 className='text-xl text-yellow-400 font-bold mb-4 font-dune'>
+            <h3 className='text-xl text-accent font-bold mb-4 font-dune'>
               Basic Information
             </h3>
             <TextInput
@@ -234,7 +234,7 @@ function CharacterForm() {
       case 2:
         return (
           <div className='space-y-4'>
-            <h3 className='text-xl text-yellow-400 font-bold mb-4 font-dune'>
+            <h3 className='text-xl text-accent font-bold mb-4 font-dune'>
               Character Stats
             </h3>
             <NumberInput
@@ -278,7 +278,7 @@ function CharacterForm() {
       case 3:
         return (
           <div className='space-y-4'>
-            <h3 className='text-xl text-yellow-400 font-bold mb-4 font-dune'>
+            <h3 className='text-xl text-accent font-bold mb-4 font-dune'>
               Relationships
             </h3>
             <TextInput
@@ -289,7 +289,7 @@ function CharacterForm() {
               placeholder='Master'
             />
             <div>
-              <label className='block text-left text-sm font-semibold text-red-500 mb-1'>
+              <label className='block text-left text-sm font-semibold text-error mb-1'>
                 Apprentices (comma-separated)
               </label>
               <input
@@ -302,7 +302,7 @@ function CharacterForm() {
                 }
                 onChange={handleChange}
                 placeholder='Apprentices (comma separated)'
-                className='p-2 w-full bg-neutral-800/50 border border-neutral-600 rounded text-white'
+                className='p-2 w-full bg-bg-input border border-border rounded text-white'
               />
             </div>
           </div>
@@ -311,11 +311,11 @@ function CharacterForm() {
       case 4:
         return (
           <div className='space-y-4'>
-            <h3 className='text-xl text-yellow-400 font-bold mb-4 font-dune'>
+            <h3 className='text-xl text-accent font-bold mb-4 font-dune'>
               Equipment & Achievements
             </h3>
             <div>
-              <label className='block text-left text-sm font-semibold text-red-500 mb-1'>
+              <label className='block text-left text-sm font-semibold text-error mb-1'>
                 Weapons (comma-separated)
               </label>
               <input
@@ -328,11 +328,11 @@ function CharacterForm() {
                 }
                 onChange={handleChange}
                 placeholder='Weapons (comma separated)'
-                className='p-2 w-full bg-neutral-800/50 border border-neutral-600 rounded text-white'
+                className='p-2 w-full bg-bg-input border border-border rounded text-white'
               />
             </div>
             <div>
-              <label className='block text-left text-sm font-semibold text-red-500 mb-1'>
+              <label className='block text-left text-sm font-semibold text-error mb-1'>
                 Vehicles (comma-separated)
               </label>
               <input
@@ -345,11 +345,11 @@ function CharacterForm() {
                 }
                 onChange={handleChange}
                 placeholder='Vehicles (comma separated)'
-                className='p-2 w-full bg-neutral-800/50 border border-neutral-600 rounded text-white'
+                className='p-2 w-full bg-bg-input border border-border rounded text-white'
               />
             </div>
             <div>
-              <label className='block text-left text-sm font-semibold text-red-500 mb-1'>
+              <label className='block text-left text-sm font-semibold text-error mb-1'>
                 Notable Achievements (comma-separated)
               </label>
               <input
@@ -362,7 +362,7 @@ function CharacterForm() {
                 }
                 onChange={handleChange}
                 placeholder='Notable Achievements (comma separated)'
-                className='p-2 w-full bg-neutral-800/50 border border-neutral-600 rounded text-white'
+                className='p-2 w-full bg-bg-input border border-border rounded text-white'
               />
             </div>
           </div>
@@ -375,24 +375,24 @@ function CharacterForm() {
 
   if (loading)
     return (
-      <div className='text-center mt-14 text-neutral-200'>
+      <div className='text-center mt-14 text-text'>
         Loading character data...
       </div>
     );
 
   return (
-    <div className='text-center bg-neutral-800/5 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-2xl mx-auto'>
+    <div className='text-center bg-bg-card/50 backdrop-blur-sm p-6 rounded-xl shadow-2xl mt-14 w-full max-w-2xl mx-auto'>
       <form onSubmit={handleSubmit}>
-        <h2 className='text-2xl text-red-600 font-bold mb-2'>
+        <h2 className='text-2xl text-error font-bold mb-2'>
           {isEditing ? 'Edit Character' : 'Add New Character'}
         </h2>
-        <p className='text-neutral-400 text-sm mb-6'>
+        <p className='text-text-muted text-sm mb-6'>
           Step {currentStep} of {TOTAL_STEPS}:{' '}
           {steps[currentStep - 1].description}
         </p>
 
         {error && (
-          <div className='text-red-500 mb-4 p-3 bg-red-900/20 rounded-lg'>
+          <div className='text-error mb-4 p-3 bg-error-subtle rounded-lg'>
             {error}
           </div>
         )}
